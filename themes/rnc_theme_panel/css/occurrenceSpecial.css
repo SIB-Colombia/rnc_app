@@ -1,0 +1,242 @@
+#twopartheader {
+	margin: 0px 0 10px 0;
+	padding:20px 20px 20px 80px;
+	min-height: 80px;
+	background:rgba(250,249,243, 1) url('images/ico_search_br_big.png') no-repeat 20px 20px ;
+	-webkit-border-radius: 20px;
+    border-radius: 20px;
+	position:relative;
+}
+#twopartheader h2 {
+	color: #7e4717;
+	padding: 5px 0 0 0px;
+	margin: 0;
+	font-size: 2em;
+	font-weight: 300;
+	text-transform: uppercase;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+}
+#twopartheader h3 {
+	padding: 7px 0 0 0px;
+	margin: 0;
+	font-weight: 400;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+	color:black;
+line-height:1.3em;
+	font-size:1em;
+}
+
+#content h1 {
+	margin: 0;
+	padding: 4px 0 0 96px;
+	font-size: 1.1em;
+	color: #7e4717;
+}
+#content h4 {
+}
+#content h5 {
+}
+.lt, a.lt {
+	color: #BBB
+}
+input#search {
+	margin: 0 0 0 18px;
+}
+thead {
+	color: #7e4717;
+}
+table.results th {
+}
+th.sortable a {
+	color: #7e4717;
+	border-bottom: none;
+}
+.prev_next, a.prev_next {
+	color: #A6A6A6;
+}
+.pagelinks strong {
+	color: #494949;
+	background-color: rgba(239, 107, 45, 0.4)
+}
+/* Added by Dave */
+.occurrenceFieldset p {
+	clear: left;
+}
+#occurrenceActions {
+	-webkit-border-radius: 15px;
+    border-radius: 15px;
+	padding: 5px;
+	margin-right: 10px;
+	margin-left: 0px;
+}
+#occurrenceActions h4 {
+	margin: 5px;
+}
+#occurrenceMedia {
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+#occurrenceMedia a {
+	border-bottom: none;
+}
+#occurrenceGeospatial {
+	margin-bottom: 10px;
+}
+#occurrenceGeospatial fieldset{
+	margin-bottom: 10px;
+	width:45%;
+	display:inline-block;
+	vertical-align:top;
+}
+#constructedFilters #warnings {
+	margin: 10px;
+}
+#constructedFilters #warnings ul {
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+#constructedFilters{ margin-right: 20px;}
+.generaSubject {
+	font-weight: bold;
+}
+#furtherActions {
+	margin-top: 10px;
+	padding:5px;
+}
+#furtherActions h4 {
+	padding: 0px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+#changeSearch {
+	background: url('../../images/icons/idea_4.png') no-repeat;
+	padding: 7px 0 10px 40px;
+	border-bottom: none;
+	line-height:2em
+}
+/* classification wizard */
+.conceptLink {
+	margin: 0;
+	padding: 0 10px;
+	border: none;
+	background: url('../../images/filter/plus.png') no-repeat left center;
+	border: none;
+}
+a.treeNodeLinkTentative .conceptLink {
+	background: url('../standard/images/plusSignFlatBG1.gif') no-repeat 8px 3px;
+}
+#smalltree {
+	width: 625px;
+}
+/* Downloads */
+h5#datasetFieldsTitle {
+	margin-top: 0px; /* color: #6abbe3;*/
+}
+h5#taxonomyFieldsTitle {
+	margin-top: 10px; /* color: #34BCE0;*/
+}
+h5#geospatialFieldsTitle {
+	margin-top: 10px; /* color: #f19d5d;*/
+}
+#citationDownload {
+	font-weight: bold;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+/* End of Added by Dave */
+
+/* Added by Tim */
+.feedback {
+	background: url('../../images/icons/mail.png') no-repeat 0px 0px;
+	padding: 4px 35px;
+}
+/* Searching */
+h4#addSearchFilter, h4#currentSearch {
+	margin: 0px 0 5px 0px;
+	padding: 0;
+}
+.cellNote {
+	font-size: 0.7em;
+}
+.helpList {
+	margin-top: 10px;
+	margin-left: 10px;
+}
+fieldset p {
+	clear: left;
+}
+.noHoverDecoration :hover {
+	text-decoration: none;
+}
+.modellingLayers td {
+	vertical-align: top;
+}
+.hidden {
+	display: none;
+}
+.selectedLayerSet {
+	font-weight: bold;
+}
+.nonSelectedLayerSet {
+	font-weight: normal;
+}
+.generatedModel {
+	height: 360px;
+	width: 720px;
+}
+.lastModified {
+	color: gray;
+	font-size: 0.81em;
+}
+
+
+input[type="submit"], button{
+	background-color:#683C0C;
+	color:white;
+}
+
+#searchResultCount{
+	padding:50px 20px 20px 20px;
+	background: rgba(239, 107, 45, 0.6);
+	-webkit-border-radius: 20px;
+    border-radius: 20px;
+	font-family: 'Economica', Helvetica, Arial, sans-serif;
+	margin-top:-30px;
+	font-size:1.7em;
+	font-style:italic;
+	font-weight:400;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+#searchResultCount h4{
+	font-size:1em;
+	margin-top:10px;
+}
+
+.results tr:nth-child(odd) td,
+.statistics .odd td,
+table.actionsList tr:nth-child(odd) td,
+table.actionsList tr:nth-child(odd) th {
+	background-color:rgba(239, 107, 45, 0.1);
+}
+.results th,
+.results td,
+.actionsList th,
+.statistics th,
+.statistics td,
+.actionsList td,
+table.actionsList tr:nth-child(even) td,
+table.actionsList tr:nth-child(even) th{
+	background-color:rgba(239, 107, 45, 0.2);
+	padding:12px 14px;
+}
+
+table.actionsList tr:first-child th:first-child,
+table.actionsList tr:first-child td:first-child{
+	-webkit-border-radius: 15px 0 0 0 ;
+    border-radius:15px 0 0 0 ;
+}
+table.actionsList tr:first-child td:last-child{
+	-webkit-border-radius: 0 15px 0 0;
+    border-radius: 0 15px 0 0;
+}

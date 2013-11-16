@@ -1,0 +1,164 @@
+/** copied from occurrenceSpecial.css **/
+
+p, div {
+	padding: 0;
+	margin: 0;
+}
+table {
+	margin: 0px 0 5px 0;
+	padding: 0;
+}
+#twopartheader {
+	margin: 0px 0 20px 0;
+	padding:20px 20px 20px 85px;
+	min-height: 80px;
+	background:rgba(250,249,243, 1) url('../standard/images/ico_search_big.png')  no-repeat 20px 20px ;
+	-webkit-border-radius: 20px;
+    border-radius: 20px;
+	position:relative;
+
+}
+#twopartheader h2 {
+	color: #34BCE0;
+	padding: 5px 0 0 0;
+	margin: 0;
+	font-size: 2em;
+	font-weight: 300;
+	text-transform: uppercase;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+}
+#twopartheader ul {
+	padding: 9px 0 0 0;
+	margin: 0;
+	font-size: 1em;
+	font-weight: normal;
+	list-style: none;
+}
+#twopartheader ul li {
+	display: inline;
+	padding-right: 5px;
+}
+h2.scNames {
+	padding: 4px 4px 4px 38px;
+	margin: 25px 0 5px 0;
+	font-weight:400;
+	text-transform:uppercase;
+	font-style:italic;
+	/*border-bottom: 1px solid #cda2d7;*/
+	background:url(images/ico_especies_s.png) no-repeat center left;
+}
+h2.scCountries {
+	padding: 4px 4px 4px 38px;
+	margin: 25px 0 5px 0;
+	font-weight:400;
+	text-transform:uppercase;
+	font-style:italic;
+	/*border-bottom: 1px solid #ffbd8b;*/
+	background:url(images/ico_departamentos_s.png) no-repeat center left;
+	
+}
+h2.scDatasets {
+	padding: 4px 4px 4px 38px;
+	margin: 25px 0 5px 0;
+	font-weight:400;
+	text-transform:uppercase;
+	font-style:italic;
+	/*border-bottom: 1px solid #a2c5d7;*/
+	background:url(images/ico_dataset_s.png) no-repeat center left;
+	
+}
+ul.scResults li {
+	color: #AAA;
+}
+ul.scResults li a:hover {
+	background:#fff;
+	color:#eeeedd;
+	
+}
+ul.scResults li a {
+	color:#34BCE0;
+	background-color:#CDE7EF;
+	font-weight: bold;
+	padding:4px 7px;
+	-webkit-border-radius:7px;
+    border-radius:7px;
+}
+li.scNames a {
+	color: #34BCE0;
+}
+li.scDatasets a {
+	color: #6abbe3;
+}
+li.scCountries a {
+	color: #34BCE0;
+}
+td {
+	padding: 10px 12px;
+	margin: 0px;
+}
+td.tdColumn1 {
+	width: 20%;
+	font-weight:700;
+}
+td.tdColumn2 {
+	width: 40%;
+}
+td.tdColumn3 {
+	font-size: 0.9em;
+}
+.moreMatches {
+	margin: 10px 0 0 45px;
+	font-weight: bold;
+	display:block;
+	padding:0 0 0 30px;
+	background: url('../standard/images/plus_blue_1.png') no-repeat 8px 3px;
+	/*text-align:right;
+	display:block;*/
+}
+.interpretedFrom {
+	color: #000000
+}
+ul.searchResults {
+	margin-bottom: 10px;
+	margin-left: 30px;
+}
+ul.searchResults li {
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
+.soundex {
+	padding: 5px 0px 10px 0px;
+}
+.didyoumean {
+	color: #FF0000
+}
+
+tr:nth-child(odd) td {
+	background:rgba(53, 188, 224, 0.4);
+}
+tr:nth-child(even) td {
+	background:rgba(53, 188, 224, 0.2);
+}
+
+tbody:empty{
+	display:none;
+}
+table {
+	margin-left:40px;
+	}
+table tr:first-child td:first-child{
+	-webkit-border-radius: 15px 0 0 0;
+    border-radius:15px 0 0 0;
+}
+table tr:first-child td:last-child{
+	-webkit-border-radius: 0 15px 0 0;
+    border-radius: 0 15px 0 0;
+}
+table tr:last-child td:first-child{
+	-webkit-border-radius: 0 0 0 15px;
+    border-radius: 0 0 0 15px;
+}
+table tr:last-child td:last-child{
+	-webkit-border-radius: 0 0 15px 0;
+    border-radius: 0 0 15px 0;
+}

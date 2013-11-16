@@ -1,0 +1,59 @@
+body {
+	background-attachment: fixed;
+    background-image: url("../images/bg_tayrona.jpg");
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.navbar-inverse .navbar-inner {
+	background-color: #49612B !important;
+	background-image: -moz-linear-gradient(top, #59713B, #49612B) !important;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#59713B), to(#49612B)) !important;
+	background-image: -webkit-linear-gradient(top, #59713B, #49612B) !important;
+	background-image: -o-linear-gradient(top, #59713B, #49612B) !important;
+	background-image: linear-gradient(to bottom, #59713B, #49612B) !important;
+	background-repeat: repeat-x;
+	border-color: #252525;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff59713B', endColorstr='#ff49612B', GradientType=0) !important;
+}
+.navbar-inner {
+	border: 0px !important;
+	-webkit-border-radius: 0px !important;
+	-moz-border-radius: 0px !important;
+	border-radius: 0px !important;
+	min-height: 50px !important;
+}
+.navbar .navbar-inner .container a.brand {
+	color: white;
+}
+.navbar .navbar-inner .container .nav-collapse .nav li {
+	line-height: 30px !important;
+}
+.navbar .navbar-inner .container a.brand {
+	line-height: 30px !important;
+}
+.navbar .navbar-inner .container .nav-collapse .nav li.active a {
+	background-color: rgb(43, 56, 42);
+}
+.navbar .navbar-inner .container .nav-collapse .nav li a {
+	color: #DDDDDD;
+}
+.navbar .navbar-inner .container .nav-collapse .nav li.dropdown .dropdown-menu li a {
+	color: #333333;
+}
+.navbar .navbar-inner .container .nav-collapse .nav li.dropdown .dropdown-menu li a:hover {
+	color: #FFFFFF !important;
+}
+.navbar-inverse .nav > li > a:focus, .navbar-inverse .nav > li > a:hover {
+	color: #ffffff !important;
+}
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle, .navbar-inverse .nav li.dropdown.active > .dropdown-toggle, .navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle {
+	background-color: rgb(43, 56, 42) !important;
+}
+.navbar .nav .dropdown-toggle .caret {
+	margin-top: 12px !important;
+	color: #DDDDDD;
+}
+.navbar-search {
+	margin-top: 10px !important;
+}

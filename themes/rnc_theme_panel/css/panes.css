@@ -1,0 +1,262 @@
+#panes {
+
+border: 0;
+
+margin:0px auto 0;
+
+position: relative;
+
+}
+
+#panes a:hover {
+
+text-decoration: none;
+
+}
+
+
+
+#panes h1{ font-family: 'Open sans', Helvetica, Verdana, Helvetica, Arial; color:#2b7fbc; font-weight:400; font-size:1.6em; text-align:center; line-height:1em; margin: 10px 0 25px 0; }
+
+.panes_div {
+
+margin: 3px 2px;
+
+padding: 0;
+
+width:263px;
+
+border: 0;
+
+display:inline-block;
+
+vertical-align:top;
+
+}
+
+.panes_div p:first-child{
+
+display:block;
+
+text-transform:uppercase;
+
+background:white;
+
+}
+
+
+
+
+
+.panes_div div{
+
+padding:16px 20px;
+
+display:block;
+
+}
+
+
+
+#panes h2 {
+
+margin: 0;
+
+padding: 0;
+
+font: 300 1.7em 'Economica', Arial, Helvetica, sans-serif;
+
+text-align:left;
+
+line-height:0.9em;
+
+text-transform:uppercase;
+
+}
+
+#panes a{  display:inline-block; vertical-align:top; }
+
+#panes p{ font-size:0.9em; color:#fff;}
+
+#panes h3, #panes div h4 {
+
+color:	#fff;
+
+font-size: 1.6em;
+
+text-decoration: none;
+
+padding: 0px;
+
+margin: 0px;
+
+text-transform:uppercase;
+
+font-family:'Economica', Helvetica, Arial, sans-serif;
+
+font-style:italic;
+
+margin-bottom:3px;
+
+line-height: 1.1em;
+
+}
+
+#panes div h4 {
+
+font-size: 1.4em;
+
+font-weight: normal;
+
+}
+
+
+
+#panes aside{ width:240px; display:inline-block; vertical-align:top; float:right;}
+
+#panes aside > div,
+
+#panes aside > a{ padding:20px; text-align:center; background-color:#fff; width:100%;}
+
+#panes aside h4{ color:#2b7fbc; font-style:normal; font-weight:400; font-size: 1.4em; line-height: 1em; margin: 0px; padding: 0px;}
+
+#panes .cifras *{ color:#6e785d !important; text-transform:uppercase;}
+
+#panes .cifras { display: block;}
+
+#panes .cifras span:nth-child(1){font-size:1.7em !important;}
+
+#panes .cifras span:nth-child(2), #panes .cifras span:nth-child(1){ display:block; font-size:1.3em; width: 100%; letter-spacing: -1px;}
+
+#panes .cifras span{ display:inline-block; width: 45%; margin: 0 4px; line-height: 1.1em; }
+
+#panes .cifras strong{ display:block; font-size:1.4em; line-height: 1.5em}
+
+#panes aside a:hover{ background-color: #dadada;}
+
+
+
+#taxonomypane span {background-image:url("images/esp_ico.png"), url("images/shadow_top.png"); background-repeat: no-repeat, no-repeat; background-position: 12px 14px, top center; padding:17px 17px 17px 70px;}
+
+#taxonomypane div { background-color:rgba(60,146, 176, 0.8);}
+
+#taxonomypane {background:url("images/especies.jpg") no-repeat top center;}
+
+
+
+#datasetpane {background:url("images/conjuntos.jpg") no-repeat top center;}
+
+#datasetpane span {background-image:url("images/conjuntos_ico.png") , url("images/shadow_top.png"); background-repeat: no-repeat, no-repeat; background-position: 12px 14px, top center;padding:17px 17px 17px 70px;}
+
+#datasetpane div { background-color:rgba(139, 163, 87, 0.9);}
+
+
+
+#geographypane {background:url("images/mapa_stats.jpg") no-repeat top center; width:803px; position: relative;}
+
+#geographypane > a:first-child { display: block;  width:100%; height: 235px;}
+
+#geographypane > a:last-child  { position: absolute; top:175px; right: 0px; width: 260px; padding:10px 20px 10px 70px; height: 60px; background-color: rgba(0,0,0,0.3);}
+
+#geographypane span {
+
+background-image:url("images/explorador_ico.png"), url("images/shadow_left.png");
+
+background-repeat: no-repeat, no-repeat;
+
+background-position: 12px 14px,
+
+left center; padding:17px 17px 17px 70px;
+
+width:263px;
+
+margin:0 !important;
+
+height:100% !important;
+
+float: right;
+
+}
+
+#geographypane div { background-color:rgba(235, 169, 0, 0.8) !important;}
+
+
+
+
+
+#publisherpane{background:url("images/publicadores.jpg") no-repeat top center;}
+
+#publisherpane span {background:url("images/publicadores_ico.png") no-repeat 10px 10px; padding:17px 17px 17px 70px;}
+
+#publisherpane div { background:rgba(235, 169, 0, 0.8);}
+
+
+
+.panes_div > div:nth-of-type(1) {min-height:150px; background: rgba(0,0,0,0.8) url("images/shadow_top.png") top center no-repeat !important; }
+
+ 
+
+.panes_div > div:nth-of-type(1) a h4 { color:white !important;}
+
+.panes_div > div:nth-of-type(1) a, .panes_div a div p { font-size: 1em !important;}
+
+
+
+#taxonomypane, #datasetpane, #publisherpane {
+
+height:260px;
+
+overflow:hidden;
+
+}
+
+
+
+#taxonomypane:after, #datasetpane:after, #publisherpane:after, #geographypane:after {content:" "; background: url("images/shadow_top.png") no-repeat top center; position: relative; width: 100%; height: 15px; display: block;}
+
+
+
+#taxonomypane span, #datasetpane  span, #geographypane span, #publisherpane span{
+
+background-color: rgba(0,0,0,0.5);
+
+display:block;
+
+color:white;
+
+margin:165px 0 0 0 ;
+
+height:95px;
+
+-webkit-transition: all 0.5s ease-in-out;
+
+-moz-transition: all 0.5s ease-in-out;
+
+     -ms-transition: all 0.5s ease-in-out;
+
+     -o-transition: all 0.5s ease-in-out;
+
+transition: all 0.5s ease-in-out;
+
+}
+
+#taxonomypane:hover span, #datasetpane:hover span, #publisherpane:hover span {
+
+margin:-100px 0 0 0 ;
+
+}
+
+#panes small{
+	text-align: center;
+}
+#panes a:hover{
+
+filter: alpha(opacity=100);
+
+    -khtml-opacity:1; 
+
+    -moz-opacity: 1;
+
+    opacity: 1;
+
+}

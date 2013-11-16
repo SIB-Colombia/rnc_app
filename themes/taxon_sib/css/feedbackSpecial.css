@@ -1,0 +1,18 @@
+#twopartheader {
+	margin: 0px 0 10px 0;
+	padding:20px 20px 20px  110px;
+	min-height: 80px;
+	background:rgba(250,249,243, 1) url('images/ico_dataset.png') no-repeat 20px 20px ;
+	-webkit-border-radius: 20px;
+    border-radius: 20px;
+	position:relative;
+}
+#twopartheader h1 {
+	color: #81A647;
+	padding: 5px 0 0 0px;
+	margin: 0;
+	font-size: 2.6em;
+	font-weight: bold;
+	text-transform: uppercase;}
+input.feedback { width:400px; }
+textarea.feedback { width:400px; }

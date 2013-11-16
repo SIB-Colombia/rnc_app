@@ -1,0 +1,54 @@
+#twopartheader {
+	margin: 0px 0 10px 0;
+	padding:20px 20px 20px  100px;
+	min-height: 70px;
+	background:rgba(250,249,243, 1) url('../../images/icons/triad_icon.png') no-repeat 20px 20px ;
+	-webkit-border-radius: 20px;
+    border-radius: 20px;
+	position:relative;
+	z-index:1000;
+}
+#twopartheader h2 {
+	color: #34BCE0;
+	padding: 15px 0 0 5px;
+	margin: 0;
+	font-size: 2em;
+	font-weight: 300;
+	text-transform: uppercase;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+}
+#twopartheader h3 {
+	padding: 7px 0 0 76px;
+	margin: 0;
+	font-weight: 400;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+	color:black;
+line-height:1.3em;
+	font-size:1em;
+}
+#content {
+	padding:15px 30px !important;
+}
+#content h1 {
+	margin: 0;
+	padding: 4px 0 0 96px;
+	font-size: 1.1em;
+}
+#content h4 {
+	margin: 20px 0 5px 0;
+	padding: 0;
+	font-size: 1.9em;
+}
+#content h5 {
+	margin: 20px 0 5px 0;
+	padding: 0;
+	font-size: 1.0em;
+}
+form {
+	margin: -10px 0 0 96px;
+}
+/* Added by Tim */
+.feedback {
+	background: url('../../images/ico_settings.gif') no-repeat 0px 0px;
+	padding-left: 40px;
+}

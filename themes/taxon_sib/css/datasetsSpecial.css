@@ -1,0 +1,225 @@
+#twopartheader {
+	margin: 0 0 20px 0;
+	min-height: 80px;
+	padding:20px;
+	background:rgba(250,249,243, 1) url('images/conjuntos_ico.png') no-repeat 20px 20px ;
+	-webkit-border-radius: 20px;
+    border-radius: 20px;
+	position:relative;
+}
+/* Added by Dave */
+#twopartheader h2 {
+	color: #81A647;
+	padding: 0 150px 0 60px;
+	margin: 0;
+	font-size: 2em;
+	font-weight: 300;
+	text-transform: uppercase;
+	line-height: 1.6em;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+}
+#twopartheader h3 {
+	padding: 7px 0 0 60px;
+	margin: 0;
+	font-weight: 400;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+	color:#666;
+line-height:1.3em;
+	font-size:1em;
+}
+.subject {
+	font-weight: 300;
+	line-height:1em;
+	display:block !important;
+	font-family: 'Economica', Helvetica, Verdana, Arial, sans-serif;
+}
+img.logo {
+	position: relative;
+	float: right;
+	margin:-120px 40px 0 0;
+}
+/* End of Added by Dave */
+
+#content h1 {
+	margin: 0;
+	padding: 4px 0 0 96px;
+	font-size: 1.1em;
+	color: #81A647;
+}
+#content h4 {
+	margin: 20px 0 5px 30px;
+	padding: 0;
+	font-size: 1.9em;
+	color:#41372F;
+	text-transform:uppercase;
+	font-style:italic;
+}
+.lt, a.lt {
+	color: #BBB
+}
+#chosen {
+	color: #CFE09D;
+	background-color: #81A647;
+	font-weight: bold;
+}
+#selectedChar {
+	margin: 15px 0 5px 0px;
+	padding: 0;
+	font-size:3em;
+	background: none repeat scroll 0 0 rgba(164, 200, 125, 0.9);
+    border-radius: 5px 5px 5px 5px;
+    color: white;
+    display: inline-block;
+    font-weight: 700;
+    padding: 7px;
+    text-align: center;
+    width: 43px;
+}
+thead {
+	color: #81A647;
+}
+table.results th {
+	background-color:#bad691;
+}
+table.statistics {
+	margin-bottom: 20px;
+}
+/* table.statistics tr:hover {
+	background-color: #e6fbff;
+	font-weight: normal;
+	-webkit-border-radius: 15px;
+    border-radius: 15px;
+}
+table.statistics thead tr:hover {
+	background-color: #FDFDFD;
+	-webkit-border-radius: 15px;
+    border-radius: 15px;
+} */
+ul.flatlist {
+	margin: 8px 0 0 57px;
+	padding: 0;
+}
+ul.flatlist li{
+	-webkit-border-radius: 5px;
+    border-radius: 5px;
+	padding:7px;
+	min-width:15px;
+	text-align:center;
+	font-weight:700;
+	color:white;
+	background:rgba(164, 200, 125, 0.9);
+}
+ul.flatlist li a{
+	display:inline-block;
+	text-align:center;
+	font-weight:700;
+	color:white;
+	padding:2px;
+}
+ul.flatlist li a:hover{
+	background:rgba(164, 200, 125, 1);
+}
+ul.flatlist #chosen {
+	-webkit-border-radius: 5px;
+    border-radius: 5px;
+	padding:7px;
+	display:inline-block;
+	/* Comentado para permitir opción todas sea visible */ 
+	/* width:12px; */
+	text-align:center;
+	}
+#furtherActions {
+	margin: -40px 0 10px 0;
+	padding:20px 5px 5px 5px;
+	/*background-color: rgba( 204, 233, 242, 0.7);*/
+	-webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+#furtherActions td{
+	padding:6px;
+}
+#furtherActions h4 {
+	padding: 0px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+#initialActions td {
+	vertical-align: top;
+}
+.smallStatistics {
+	
+}
+.smallStatistics td {
+	padding-top: 5px;
+}
+/* Added by Tim */
+.feedback {
+	background: url('../../images/icons/mail.png')no-repeat 0px 0px;
+	padding-left: 30px;
+}
+#resources li {
+	list-style: none;
+	padding-left : 17px;
+	margin-bottom : 8px;
+	background: url('../../images/icons/bullet_arrow_right.png') no-repeat 0 50%;
+}
+.warning {
+	border: 1px solid #FFCC00;
+	color: #FF0000;
+}
+.subcontainer p {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+.extractionEvent {
+	background-color: #F6F6F6;
+}
+h5#noGeoreferencedPoints {
+	background-color: #FFF;
+	color: #FFFFFF;
+	margin: 0px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+	background-color: #000000;
+	width: 100%;
+	font-size: 1.1em;
+}
+table.statistics{
+	margin-top:0;
+}
+
+
+.results tr:nth-child(odd) td,
+.statistics .odd td,
+table.actionsList tr:nth-child(odd) td,
+table.actionsList tr:nth-child(odd) th {
+	background-color:rgba(197,223,157, 0.4);
+}
+table.statistics td,
+table.smallStatistics td,
+table.results td,
+table.actionsList td,
+table.actionsList th{
+	background-color:rgba(197,223,157, 0.4);
+}
+table.statistics .odd td,
+table.smallStatistics .odd td,
+table.results .odd td,
+table.actionsList tr:nth-child(2n) th,
+table.actionsList tr:nth-child(2n) td,
+table.smallStatistics tr:nth-child(2n) td{
+	background-color:rgba(197,223,157, 0.8);
+}
+table.statistics th,
+table.smallStatistics th{
+	background-color:#bad691;
+	height:50px;
+}
+input[type="submit"], button{
+	background-color:rgb(166,180,98);
+}
+.dataTables_wrapper{
+	margin-top: 0px;
+	position: relative;
+}

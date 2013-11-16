@@ -1,0 +1,257 @@
+#twopartheader {
+	min-height: 80px;
+	background:rgba(250,249,243, 1) url('images/explorador_ico.png') no-repeat 20px 20px ;
+	-webkit-border-radius: 20px;
+    border-radius: 20px;
+	position:relative;
+	margin: 0px 0 20px 0;
+	padding:20px 20px 20px 75px;
+}
+/* Added by Dave */
+
+#twopartheader h2 {
+	color: #9d4c05;
+	padding: 5px 0 0 10px;
+	margin: 0;
+	font-size: 2em;
+	font-weight: 300;
+	text-transform: uppercase;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+}
+#twopartheader h3 {
+	padding: 7px 0 0 76px;
+	margin: 0;
+	font-weight: 400;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+	color:#666;
+line-height:1.3em;
+	font-size:1em;
+}
+.subject {
+	font-weight: bold;
+}
+h2 .subject {
+	font-weight: normal !important;
+}
+/* End of Added by Dave */
+
+#content h1 {
+	margin: 0;
+	padding: 4px 0 0 96px;
+	font-size: 1.1em;
+	color: #9d4c05
+}
+#content h4 {
+}
+#content h5 {
+	margin: 15px 0 2px 0;
+	padding: 0;
+	font-size: 2em;
+	font-style:italic;
+}
+.lt, a.lt {
+	color: #BBB
+}
+#chosen {
+	color: #9d4c05;
+	background-color: #fff6e9;
+	font-weight: bold;
+}
+#selectedChar {
+	margin: 15px 0 5px 0px;
+	padding: 0;
+	font-size:3em;
+	background: none repeat scroll 0 0 rgba(104, 59, 16, 0.9);
+    border-radius: 5px 5px 5px 5px;
+    color: white;
+    display: inline-block;
+    font-weight: 700;
+    padding: 7px;
+    text-align: center;
+    width: 43px;
+}
+thead {
+	color: #9d4c05;
+}
+/*table.results th {
+	background-color: #FFF;
+}
+table.statistics tr:hover {
+	background-color: #fff6e9;
+	border-bottom: 2px dotted gray;
+	border-left: 1px solid red;
+	font-weight: normal;
+}
+table.statistics thead tr:hover {
+	background-color: #FDFDFD;
+}*/
+ul.flatlist {
+	margin: 8px 0 0 0;
+	padding: 0;
+}
+ul.flatlist li{
+	-webkit-border-radius: 5px;
+    border-radius: 5px;
+	padding:7px;
+	min-width:15px;
+	text-align:center;
+	font-weight:700;
+	color:white;
+	background:rgba(104, 59, 16, 0.8);
+}
+ul.flatlist li a{
+	display:inline-block;
+	text-align:center;
+	font-weight:700;
+	color:white;
+	padding:2px;
+}
+ul.flatlist li a:hover{
+	background:rgba(104, 59, 16, 1);
+}
+ul.flatlist #chosen {
+	-webkit-border-radius: 5px;
+    border-radius: 5px;
+	padding:7px;
+	display:inline-block;
+	/* Comentado para permitir opción todas sea visible */ 
+	/* width:12px; */
+	background:rgba(104, 59, 16, 0.2);
+	text-align:center;
+	color:background:rgb(104, 59, 16, 1);
+	}
+
+#furtherActions h4 {
+    font-size: 1.5em;
+    margin: 5px 10px;
+    padding: 0;
+}
+#filterEditorPane #furtherActions {
+	
+	background-color: #F8CEBC;
+	margin: 0px 0px 0px 0px;
+}
+#initialActions td {
+	vertical-align: top;
+}
+/* repatriation */
+table.repat {
+	border: 1px solid #CCCCCC;
+	border-collapse: collapse;
+	table-layout: fixed;
+	font-family: 'Open sans', Helvetica, Verdana, Arial, sans-serif;
+}
+table.repat td {
+	padding: 2px;
+	font-size: 10px;
+}
+.topLabels td {
+	text-align: center;
+	vertical-align: bottom;
+	padding-top: 2px;
+	border: 1px solid #CCCCCC;
+	cursor: pointer;
+}
+.bottomLabels td {
+	text-align: center;
+	vertical-align: top;
+	padding-botom: 2px;
+	border: 1px solid #CCCCCC;
+}
+.rightLabel {
+	white-space: nowrap;
+	overflow: hidden;
+	border: 1px solid #CCCCCC;
+}
+.leftLabel {
+	white-space: nowrap;
+	overflow: hidden;
+	border: 1px solid #CCCCCC;
+}
+.rowEntry td {
+	border: 1px solid #CCCCCC;
+	cursor: pointer;
+}
+.rowEntry img {
+	margin: 0 3px 0 3px;
+}
+.highlighted {
+	background-color: #fff6e9;
+}
+.highlightedCell {
+	background-color: #fcd296;
+}
+.selectedCell {
+	background-color: #9d4c05;
+	color: #FFF;
+}
+.topLabels td img {
+	clear: both;
+}
+.topLabels td p {
+	clear: both;
+	margin: 0;
+	padding: 0;
+}
+.bottomLabels td img {
+	clear: both;
+}
+.bottomLabels td p {
+	clear: both;
+	margin: 0;
+	padding: 0;
+}
+#repatChangeViewForm {
+	margin-bottom: 20px;
+}
+h2.printFriendly {
+	color: #9d4c05;
+	padding: 20px 0 20px 0px;
+	margin: 0;
+	font-size: 1.3em;
+	font-weight: normal;
+}
+.percent75 {
+	color: #cc0000;
+}
+.percent50 {
+	color: #ff3300;
+}
+.percent25 {
+	color: #ff6600;
+}
+.percent1 {
+	color: #ff9900;
+}
+.percent01 {
+	color: #cccccc;
+}
+#countryLinks {
+	margin-top: 20px;
+}
+
+.results tr:nth-child(odd) td,
+.statistics .odd td,
+table.actionsList tr:nth-child(odd) td,
+table.actionsList tr:nth-child(odd) th {
+	background-color:rgba(237, 191, 103, 0.3);
+}
+.results th,
+.results td,
+.actionsList th,
+.statistics th,
+.statistics td,
+.actionsList td,
+table.actionsList tr:nth-child(even) td,
+table.actionsList tr:nth-child(even) th{
+	background-color:rgba(237, 191, 103, 0.6);
+	padding:12px 14px;
+}
+input[type="submit"], button{
+	background-color:#6E331E;
+	color:white;
+}
+table.actionsList {
+	border-top:rgba(237, 191, 103, 0.3) 10px solid;
+}
+
