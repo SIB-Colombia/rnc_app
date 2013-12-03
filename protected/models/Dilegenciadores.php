@@ -43,6 +43,7 @@ class Dilegenciadores extends CActiveRecord
 				array('nombre,dependencia,cargo,telefono', 'length', 'max'=>150),
 				array('email','length', 'max'=>64),
 				array('email', 'email'),
+				array('telefono','numerical','integerOnly'=>true),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				array('nombre,dependencia,cargo,telefono,email', 'safe', 'on'=>'search'),

@@ -1,25 +1,33 @@
-<?php $this->widget('bootstrap.widgets.TbExtendedGridView', array(
+<?php 
+$this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	'type'=>'striped bordered condensed',
 	'id'=>'entidades_lista-grid',
 	//'fixedHeader' => true,
 	'dataProvider'=>$listRegistros,
 	//'responsiveTable' => true,
 	//'filter'=>$model,
-	'ajaxUrl'=>array('entidad/busqueda'),
+	'ajaxUrl'=>array('registros/busqueda'),
 	'columns'=>array(
-		//array('name' => 'tipo_titular','value' => '($data->tipo_titular == 1) ? "Persona Natural" : (($data->tipo_titular == 2) ? "Persona Jurídica" : "No Asignado")'),
-		//'nombre',
-		//array('name' => 'tipo_nit','value' => '($data->tipo_nit == 1) ? "Nit" : (($data->tipo_nit == 2) ? "Cédula de Ciudadanía" : "No Asignado")'),
-		//'nit',
-		//'representante_legal',
-		//array('name' => 'tipo_id_rep','value' => '($data->tipo_id_rep == 1) ? "Cédula de Ciudadanía" : (($data->tipo_id_rep == 2) ? "Cédula de Extranjería" : "No Asignado")'),
-		//'representante_id',
-		//array('name' => 'ciudad_id','value' => 'CHtml::encode(isset($data->county->county_name) ? $data->county->county_name : "No Asignado")'),
-		//array('name' => 'estado','value' => '($data->estado == 1) ? "En Espera" : (($data->estado == 2) ? "Aprobado" : "No Aprobado")'),
-		//array('name' => 'usuario_id','value' => 'isset($data->usuario->username) ? $data->usuario->username : "No Asignado"'),
+		array('name' => 'numero_registro','value' => '($data->numero_registro == 0) ? "Sin Definir" : CHtml::encode($data->numero_registro)'),
+		array('name' => 'acronimo','value' => 'CHtml::encode($data->registros_update[0]->acronimo)'),
+		array('name' => 'Ciudad','value' => 'CHtml::encode(isset($data->registros_update[0]->county->county_name) ? $data->registros_update[0]->county->county_name : "No Asignado")'),
+		array('name' => 'estado','value' => '($data->estado == 0) ? "Sin Aprobar" : "Aprobado"'),
+		'fecha_dil',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'template'=>'{val}',
+			'buttons'=>array
+			(
+				'val' => array
+				(
+					'label'=>'Ver',
+					'url'=>'Yii::app()->createUrl("registros/view", array("id"=>$data->id))',
+					'options'=>array(
+							'class'=>'btn btn-success btn-small',
+					),
+				)
+			),
 			'htmlOptions'=>array('style'=>'width: 50px'),
-		),
+		)
 	),
 )); ?>

@@ -5,10 +5,10 @@
  * The followings are the available columns in table 'archivos':
  * @property int 	$id
  * @property string $nombre
- * @property int	$tipo
+ * @property string	$tipo
  * @property string $ruta
- * @property string $tamaño
- * @property int	$contenido_id
+ * @property string $size
+ * @property int	$clase
  *
  * @property int 	$Registros_update_id
  *
@@ -42,6 +42,17 @@ class Archivos extends CActiveRecord
 		// will receive user inputs.
 		return array(
 				
+		);
+	}
+	
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
+	public function attributeLabels()
+	{
+		return array(
+				'nombre' => 'Nombre',
+				'clase'	=> 'Tipo'
 		);
 	}
 	

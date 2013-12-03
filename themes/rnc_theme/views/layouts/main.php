@@ -26,7 +26,6 @@
 	<!-- Stylesheet for jquery-fineuploader library -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jquery-fineuploader/fineuploader-3.6.3.css" />
 
-	<script type="text/javascript" async="" src="http://widget.uservoice.com/lBPZH9vrbtDdBpMQsEctag.js"></script>
 	<?php
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/core.js', CClientScript::POS_HEAD);
 		// the mousewheel plugin
@@ -44,21 +43,6 @@
 </head>
 
 <body>
-	<div id="uvTab" style="background-image: url(http://widget.uservoice.com/images/clients/widget2/tab-right-dark.png);
-		 border-top-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-style: solid none solid solid;
-		 border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); 
-		 border-left-color: rgb(255, 255, 255); border-top-left-radius: 4px; border-top-right-radius: 0px; 
-		 border-bottom-right-radius: 0px; border-bottom-left-radius: 4px; 
-		 -webkit-box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px; 
-		 box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px; 
-		 font-style: normal; font-variant: normal; font-weight: bold; font-size: 14px; line-height: 1em; 
-		 font-family: Arial, sans-serif; position: fixed; right: 0px; top: 50%; z-index: 9999; 
-		 background-color: rgb(165, 179, 97); margin-top: -103px; background-position: 50% 0px; 
-		 background-repeat: no-repeat no-repeat;" class="uv-tab uv-slide-right ">
-		 <a id="uvTabLabel" style="background-color: transparent; display:block;padding:39px 5px 10px 5px;
-		 	text-decoration:none;" href="javascript:return false;">
-		 	<img src="http://widget.uservoice.com/dcache/widget/feedback-tab.png?t=DANOS%20TU%20OPINI%C3%93N&amp;c=ffffff&amp;r=90" alt="DANOS TU OPINIÓN" style="border:0; background-color: transparent; padding:0; margin:0;"></a>
-	</div>
 		 	
 	<header class="sib">
 		<a class="logo" href= "http://localhost/rnc_app" title="Portal de datos SiB Colombia"><img  src="<?=Yii::app()->theme->baseUrl?>/css/images/logo_dataportal.png"></a>

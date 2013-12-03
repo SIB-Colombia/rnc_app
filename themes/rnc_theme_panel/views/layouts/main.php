@@ -26,7 +26,6 @@
 	<!-- Stylesheet for jquery-fineuploader library -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jquery-fineuploader/fineuploader-3.6.3.css" />
 
-	<script type="text/javascript" async="" src="http://widget.uservoice.com/lBPZH9vrbtDdBpMQsEctag.js"></script>
 	<?php
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/core.js', CClientScript::POS_HEAD);
 		// the mousewheel plugin
@@ -44,22 +43,7 @@
 </head>
 
 <body>
-	<div id="uvTab" style="background-image: url(http://widget.uservoice.com/images/clients/widget2/tab-right-dark.png);
-		 border-top-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-style: solid none solid solid;
-		 border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); 
-		 border-left-color: rgb(255, 255, 255); border-top-left-radius: 4px; border-top-right-radius: 0px; 
-		 border-bottom-right-radius: 0px; border-bottom-left-radius: 4px; 
-		 -webkit-box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px; 
-		 box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px; 
-		 font-style: normal; font-variant: normal; font-weight: bold; font-size: 14px; line-height: 1em; 
-		 font-family: Arial, sans-serif; position: fixed; right: 0px; top: 50%; z-index: 9999; 
-		 background-color: rgb(165, 179, 97); margin-top: -103px; background-position: 50% 0px; 
-		 background-repeat: no-repeat no-repeat;" class="uv-tab uv-slide-right ">
-		 <a id="uvTabLabel" style="background-color: transparent; display:block;padding:39px 5px 10px 5px;
-		 	text-decoration:none;" href="javascript:return false;">
-		 	<img src="http://widget.uservoice.com/dcache/widget/feedback-tab.png?t=DANOS%20TU%20OPINI%C3%93N&amp;c=ffffff&amp;r=90" alt="DANOS TU OPINIÓN" style="border:0; background-color: transparent; padding:0; margin:0;"></a>
-	</div>
-		 	
+
 	<header class="sib">
 		<a class="logo" href= "http://localhost/rnc_app" title="Portal de datos SiB Colombia"><img  src="<?=Yii::app()->theme->baseUrl?>/css/images/logo_dataportal.png"></a>
 		<nav>
@@ -92,20 +76,20 @@
 								$this->widget('bootstrap.widgets.TbMenu', array(
 									'type' => 'list',
 									'items' => array(
+										array('label'=>'Inicio', 'icon'=>'home', 'url' => array('admin/panel')),
+										array('label' => 'Cerrar Sesión', 'icon' => 'icon-th-list', 'url' => array('site/logout')),
 										array('label' => 'Usuarios'),
 										array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('usuario/create')),
 										array('label' => 'Administrar', 'icon' => 'icon-th-list', 'url' => array('usuario/index')),
-										array('label' => 'Cerrar Sesión', 'icon' => 'icon-th-list', 'url' => array('site/logout')),
 										array('label' => 'Entidades'),
 										array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('entidad/create')),
 										array('label' => 'Administrar', 'icon' => 'icon-th-list', 'url' => array('entidad/index')),
-										array('label' => 'Revisar'),
-										array('label' => 'Entidad', 'icon' => 'icon-plus', 'url' => array('admin/revisaEntidad')),
-										array('label' => 'Registros', 'icon' => 'icon-th-list', 'url' => array('admin/revisaRegistro')),
+										array('label' => 'Colecciones'),
+										//array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('registros/create')),
+										array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
 										array('label' => 'Contenido'),
 										array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('contenido/create')),
 										array('label' => 'Listar', 'icon' => 'icon-th-list', 'url' => array('contenido/index')),
-										array('label' => 'Consulta'),
 										array('label' => 'Visitas'),
 										array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('visita/create')),
 										array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('visita/index')),
@@ -122,16 +106,16 @@
 								$this->widget('bootstrap.widgets.TbMenu', array(
 									'type' => 'list',
 									'items' => array(
+											array('label'=>'Inicio', 'icon'=>'home', 'url' => array('admin/panel')),
+											array('label' => 'Cerrar Sesión', 'icon' => 'icon-th-list', 'url' => array('site/logout')),
 											array('label' => 'Usuario'),
 											array('label' => 'Editar', 'icon' => 'icon-plus', 'url' => array('usuario/update/'.Yii::app()->user->id)),
-											array('label' => 'Cerrar Sesión', 'icon' => 'icon-th-list', 'url' => array('site/logout')),
-											array('label' => 'Registros'),
+											array('label' => 'Colecciones'),
 											array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('registros/create')),
-											array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
-											array('label' => 'Descargas'),
+											array('label' => 'Actualizar', 'icon' => 'icon-th-list', 'url' => array('registros/indexActualizar')),
+											array('label' => 'Consultas'),
+											array('label' => 'Coleccion', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
 											array('label' => 'Bitácora Colección', 'icon' => 'icon-plus', 'url' => array('visita/create')),
-											array('label' => 'Consulta Colecciones', 'icon' => 'icon-th-list', 'url' => array('visita/index')),
-											array('label' => 'Consulta Registros', 'icon' => 'icon-th-list', 'url' => array('visita/index')),
 											array('label' => 'PQRS'),
 											array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('pqrs/create')),
 											array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('pqrs/index'))

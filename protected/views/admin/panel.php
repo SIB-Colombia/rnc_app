@@ -36,7 +36,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	    		'htmlOptions' => array('class'=>'bootstrap-widget-table'),
 	    ));
 	?>
-	
+	<?php echo $this->renderPartial('../registros/_registro_sol_lista', array('listRegistros' => $registro->listarSolicitudRegistro()));?>
 	<?php $this->endWidget();?>
 	
 	</div>
@@ -73,7 +73,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	    		'htmlOptions' => array('class'=>'bootstrap-widget-table'),
 	    ));
 	?>
-	
+	<?php echo $this->renderPartial('../registros/_registro_panel_lista', array('listRegistros' => $registro->listarPanelRegistro()));?>
 	<?php $this->endWidget();?>
 	</div>
 <?php }?>

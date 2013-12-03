@@ -47,7 +47,22 @@ class AdminController extends Controller{
 		{
 			$model = new Admin();
 			$entidad = new Entidad();
-			$this->render('panel',array('model'=>$model,'entidad' => $entidad));
+			$registro = new Registros();
+			
+			$userRole = Yii::app()->user->getState("roles");
+			if($userRole == "entidad"){
+				$usuario = Usuario::model()->findByPk(Yii::app()->user->getId());
+					
+				$criteriaEntidad = new CDbCriteria;
+				$criteriaEntidad->compare('usuario_id',$usuario->id);
+					
+				$entidad = Entidad::model()->find($criteriaEntidad);
+			
+				$registro->entidad = $entidad;
+				$registro->Entidad_id = $entidad->id;
+			}
+			
+			$this->render('panel',array('model'=>$model,'entidad' => $entidad,'registro' => $registro));
 		}else{
 			$this->redirect(array("admin/login"));
 		}

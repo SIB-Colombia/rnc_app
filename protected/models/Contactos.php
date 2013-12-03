@@ -44,6 +44,7 @@ class Contactos extends CActiveRecord
 				array('nombre,cargo,dependencia,direccion,ciudad_id,telefono,email','required'),
 				array('nombre,cargo,dependencia,direccion','length','max'=>150),
 				array('telefono,email','length','max' => 45),
+				array('telefono','numerical','integerOnly'=>true),
 				array('email','email')
 		);
 	}

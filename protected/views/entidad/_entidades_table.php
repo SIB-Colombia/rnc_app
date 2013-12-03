@@ -7,19 +7,31 @@
 	//'filter'=>$model,
 	'ajaxUrl'=>array('entidad/busqueda'),
 	'columns'=>array(
-		//array('name' => 'tipo_titular','value' => '($data->tipo_titular == 1) ? "Persona Natural" : (($data->tipo_titular == 2) ? "Persona Jurídica" : "No Asignado")'),
 		'titular',
-		//array('name' => 'tipo_nit','value' => '($data->tipo_nit == 1) ? "Nit" : (($data->tipo_nit == 2) ? "Cédula de Ciudadanía" : "No Asignado")'),
-		//'nit',
-		//'representante_legal',
-		//array('name' => 'tipo_id_rep','value' => '($data->tipo_id_rep == 1) ? "Cédula de Ciudadanía" : (($data->tipo_id_rep == 2) ? "Cédula de Extranjería" : "No Asignado")'),
-		//'representante_id',
 		array('name' => 'ciudad_id','value' => 'CHtml::encode(isset($data->county->county_name) ? $data->county->county_name : "No Asignado")'),
 		array('name' => 'estado','value' => '($data->estado == 1) ? "En Espera" : (($data->estado == 2) ? "Aprobado" : "No Aprobado")'),
 		array('name' => 'usuario_id','value' => 'isset($data->usuario->username) ? $data->usuario->username : "No Asignado"'),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
+			
 			'htmlOptions'=>array('style'=>'width: 50px'),
 		),
+		array(
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'template'=>'{val}',
+			'buttons'=>array
+			(
+				'val' => array
+				(
+					'label'=>'Validar',
+					'url'=>'Yii::app()->createUrl("entidad/validar", array("id"=>$data->id))',
+					'options'=>array(
+							'class'=>'btn btn-success btn-small',
+					),
+					'visible' => '($data->estado == 1) ? "1" : 0'
+				)
+			),
+			'htmlOptions'=>array('style'=>'width: 50px'),
+		)
 	),
 )); ?>

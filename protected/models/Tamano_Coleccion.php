@@ -8,7 +8,7 @@
  * @property string	$unidad_medida
  * @property int	$cantidad
  *
- *@property int	$Registros_Update_id
+ *@property int	$Registros_update_id
  *
  * The followings are the available model relations:
  *
@@ -28,7 +28,7 @@ class Tamano_Coleccion extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tamaño_coleccion';
+		return 'tamano_coleccion';
 	}
 	
 	/**
@@ -41,6 +41,7 @@ class Tamano_Coleccion extends CActiveRecord
 		return array(
 				array('tipo_preservacion,unidad_medida,cantidad','required'),
 				array('tipo_preservacion','length','max'=>150),
+				array('cantidad','numerical','integerOnly'=>true),
 				array('unidad_medida','length','max'=>45),
 				);
 	}

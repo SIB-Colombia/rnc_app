@@ -5,10 +5,11 @@
  * The followings are the available columns in table 'entidad':
  * @property int $id
  * @property int $entidad_id
- * @property int $registros_update_id
  * @property date $fecha_dil
+ * @property date $fecha_prox
  * @property int $numero_registro
  * @property int $estado
+ * @property int $terminos
  *
  * The followings are the available model relations:
  *
@@ -40,7 +41,8 @@ class Registros extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('numero_registro,fecha_dil','required')	
+			array('numero_registro,fecha_dil','required')	,
+			array('numero_registro','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
 		);
 	}
 	
@@ -53,7 +55,7 @@ class Registros extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 				'entidad' => array(self::BELONGS_TO, 'Entidad', 'Entidad_id'),
-				'registros_update' => array(self::BELONGS_TO, 'Registros_Update', 'Registros_update_id')
+				'registros_update' => array(self::HAS_MANY, 'Registros_Update', 'registros_id')
 		);
 	}
 	
@@ -64,8 +66,9 @@ class Registros extends CActiveRecord
 	{
 		return array(
 			'numero_registro' 	=> 'Registro No.',
-			'fecha_dil'			=> 'Fecha de diligenciamiento',
-			'estado' 			=> 'Estado del Registro'
+			'fecha_dil'			=> 'Última Actualización',
+			'fecha_prox'		=> 'Próxima Actualización',
+			'estado' 			=> 'Estado de la Colección',
 		);
 	}
 	
@@ -79,13 +82,74 @@ class Registros extends CActiveRecord
 		// should not be searched.
 	
 		$criteria=new CDbCriteria;
-	
-			
-		$criteria->with = array('entidad','registros_update');
+		$criteria->compare('numero_registro', $this->numero_registro);
+		$criteria->compare('fecha_dil', $this->fecha_dil);
+		$criteria->compare('t.estado', $this->estado);
+		if(isset($this->entidad)){
+			$criteria->compare('entidad.id',$this->entidad->id);
+		}
+		
+		$criteria->with = array('entidad');
+		
 	
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
+				'sort' => false,
+				'pagination'=>array(
+						'pageSize'=>20,
+				)
 		));
+	}
+	
+	public function listarPanelRegistro(){
+		
+		$criteria = new CDbCriteria;
+		
+		$criteria->compare('t.estado', 1);
+		//$criteria->compare('registros_update.estado', 2);
+		//$criteria->addCondition('Registros_Update.estado = 2');
+		$criteria->order = 'fecha_dil DESC';
+		if(isset($this->entidad)){
+			$criteria->compare('entidad.id',$this->entidad->id);
+		}
+		
+		$criteria->with = array('entidad');
+		
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort' => false,
+				'pagination'=>array(
+						'pageSize'=>20,
+				)
+		));
+	}
+	
+	public function listarSolicitudRegistro(){
+		$criteria = new CDbCriteria;
+		
+		$criteria->compare('t.estado', 1);
+		$criteria->order = 'fecha_act DESC';
+				
+		$criteria->with = array('registros.entidad','registros');
+		
+		$modelRegistroUpdate = Registros_Update::model();
+		
+		return new CActiveDataProvider($modelRegistroUpdate, array(
+				'criteria'=>$criteria,
+				'sort' => false,
+				'pagination'=>array(
+						'pageSize'=>10,
+				)
+		));
+		
+	}
+	
+	public function listarRegistrosDetalles(){
+		$criteria = new CDbCriteria;
+		
+		$criteria->with = array('entidad','registros_update');
+		$criteria->order = 'fecha_dil DESC';
+		
 	}
 	
 }

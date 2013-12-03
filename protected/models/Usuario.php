@@ -45,8 +45,8 @@ class Usuario extends CActiveRecord
 				array('username, password,role,email', 'required'),
 				array('username, role', 'length', 'max'=>32),
 				array('password, password2','length', 'max'=>64),
-				array('password', 'compare', 'compareAttribute'=>'password2', 'on'=>'insert'),
-				array('newpassword', 'compare', 'compareAttribute'=>'password2', 'on'=>'update'),
+				array('password2', 'compare', 'compareAttribute'=>'password', 'on'=>'insert'),
+				array('password2', 'compare', 'compareAttribute'=>'newpassword', 'on'=>'update'),
 					
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.

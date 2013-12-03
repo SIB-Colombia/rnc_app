@@ -174,3 +174,13 @@ table.actionsList {
 .form_legend{
 	font-size: 16px
 }
+
+.control-group{
+	float: left;
+	margin-top: 0 !important
+}
+
+.icon-info-sign{
+	float: left;
+	margin: 8px 20px 0 20px
+}

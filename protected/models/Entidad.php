@@ -67,6 +67,7 @@ class Entidad extends CActiveRecord
 				array('titular,telefono,direccion,representante_legal,email', 'length', 'max'=>150),
 				array('nit,representante_id','length', 'max'=>64),
 				array('email', 'email'),
+				array('telefono,nit','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				//array('titular,nit,representante_id,direccion,telefono,email,dependencia_d,cargo_d,telefono_d,', 'safe', 'on'=>'search'),
@@ -148,6 +149,10 @@ class Entidad extends CActiveRecord
 	
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
+				'sort' => false,
+				'pagination'=>array(
+						'pageSize'=>20,
+				)
 		));
 	}
 	
@@ -161,6 +166,10 @@ class Entidad extends CActiveRecord
 		
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
+				'sort' => false,
+				'pagination'=>array(
+						'pageSize'=>10,
+				)
 		));
 		
 	}

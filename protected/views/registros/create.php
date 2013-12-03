@@ -16,5 +16,5 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 <div id="header-front">Registro de colecciones biológicas</div>
 
 <div id="content-front">
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,'tamano_coleccion' => $tamano_coleccion, 'tipos_en_coleccion' => $tipos_en_coleccion, 'composicion_general' => $composicion_general)); ?>
 </div>

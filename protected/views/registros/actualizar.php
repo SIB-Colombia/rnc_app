@@ -7,18 +7,16 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speci
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
 
 $userRole  = Yii::app()->user->getState("roles");
-//print_r($model->registros_update->composicion_general[0]);
-//Yii::app()->end();
 ?>
 
-<div id="header-front">Modificar Registro: <?php echo $model->registros_update->nombre; ?></div>
+<div id="header-front">Actualizar Colección No. <?php echo $model->numero_registro; ?></div>
 
 <div id="content-front">
 <?php 
 	
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 			'buttons'=>array(
-					array('label'=>'Listar Registros', 'icon'=>'icon-list', 'url'=>array('index')),
+					array('label'=>'Listar Colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
 					array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel')),
 			),
 	));

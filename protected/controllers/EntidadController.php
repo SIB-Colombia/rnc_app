@@ -74,7 +74,7 @@ class EntidadController extends Controller{
 					{
 						$model->dilegenciadores->attributes = $_POST['Dilegenciadores'];
 						$model->dilegenciadores->validate();
-						$model->dilegenciadores->save(false);
+						$model->dilegenciadores->save();
 					}
 					
 									
@@ -82,7 +82,10 @@ class EntidadController extends Controller{
 					//$model->dilegenciadores 	= $dilegenciadores;
 					$model->estado				= 1;
 					$model->fecha_creacion		= Yii::app()->Date->now();
-					$model->save(false);
+					
+					if(!$model->save()){
+						$success_saving_all = false;
+					}
 					
 					$transaction->commit();
 					
@@ -95,18 +98,9 @@ class EntidadController extends Controller{
 				}
 				
 				if($success_saving_all){
-					$mensaje = new Mensaje();
-					$mensaje->setTitulo("Envío Exitoso");
-					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
-					
+										
 					$this->redirect(array('view','id'=>$model->id));
 					
-					Yii::app()->end();
-					
-				}else {
-					$this->render('create',array(
-							'model'=>$model,
-					));
 					Yii::app()->end();
 				}
 			}
@@ -148,7 +142,7 @@ class EntidadController extends Controller{
 					{
 						$model->dilegenciadores->attributes = $_POST['Dilegenciadores'];
 						$model->dilegenciadores->validate();
-						$model->dilegenciadores->save(false);
+						$model->dilegenciadores->save();
 					}
 						
 						
@@ -156,7 +150,10 @@ class EntidadController extends Controller{
 					//$model->dilegenciadores 	= $dilegenciadores;
 					$model->estado				= 1;
 					$model->fecha_creacion		= Yii::app()->Date->now();
-					$model->save(false);
+					
+					if(!$model->save()){
+						$success_saving_all = false;
+					}
 						
 					$transaction->commit();
 						
@@ -177,13 +174,7 @@ class EntidadController extends Controller{
 						
 					Yii::app()->end();
 						
-				}else {
-					$this->render('create',array(
-							'model'=>$model,
-					));
-					Yii::app()->end();
 				}
-				
 			}
 	
 			$this->render('update',array(
@@ -285,7 +276,7 @@ class EntidadController extends Controller{
 				{
 					$model->dilegenciadores->attributes = $_POST['Dilegenciadores'];
 					$model->dilegenciadores->validate();
-					$model->dilegenciadores->save(false);
+					$model->dilegenciadores->save();
 				}
 				
 								
@@ -293,7 +284,10 @@ class EntidadController extends Controller{
 				//$model->dilegenciadores 	= $dilegenciadores;
 				$model->estado				= 1;
 				$model->fecha_creacion		= Yii::app()->Date->now();
-				$model->save(false);
+				
+				if(!$model->save()){
+					$success_saving_all = false;
+				}
 				
 				$transaction->commit();
 				
@@ -316,8 +310,6 @@ class EntidadController extends Controller{
 				
 				Yii::app()->end();
 				
-			}else {
-				$this->redirect(array('entidad/solicitud'));
 			}
 		}
 				

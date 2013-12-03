@@ -272,3 +272,37 @@ table.actionsList {
 b{
 	font-weight: bold;
 }
+
+.noteTerm{
+	background-color: #e5e5e5;
+	padding: 10px;
+	border-radius: 3px;
+	border-color: 9f9f9f;
+	border-width: 2px;
+	color: #666 !important
+}
+
+.viewFileReg{
+	background-color: #468847;
+	border-radius: 3px;
+	padding: 2px 4px;
+	color: #fff;
+	float: right;
+	margin-right: 3px
+}
+
+.control-group{
+	float: left;
+	margin-top: 0 !important
+}
+
+.icon-info-sign{
+	float: left;
+	margin: 8px 20px 0 20px
+}
+
+.uploadify-queue-item{
+	margin-left: 220px;
+	float: left;
+	width: 350px
+}
