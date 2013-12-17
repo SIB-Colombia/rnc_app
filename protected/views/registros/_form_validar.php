@@ -258,7 +258,17 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 			</fieldset>
 			
 			<fieldset>
-				<legend class="form_legend">Tamaño de la colección</legend>
+				<legend class="form_legend">Cobertura</legend>
+				
+				<?php 
+					echo $form->textFieldRow($model->registros_update, 'cobertura_tax', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
+					echo $form->textFieldRow($model->registros_update, 'cobertura_geog', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
+					echo $form->textFieldRow($model->registros_update, 'cobertura_temp', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
+				?>
+			</fieldset>
+			
+			<fieldset>
+				<legend class="form_legend">Tipos de preservación</legend>
 				<div class="InlineFormDiv" id="tamCole">
 					
 					<?php 
@@ -266,7 +276,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							echo "<div>";
 							echo $form->textField($model->registros_update->tamano_coleccion, 'tipo_preservacion', array('name'=>'Tamano_Coleccion[0][tipo_preservacion]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tamano_coleccion->attributeLabels()['tipo_preservacion'],'disabled'=>true));
 							echo $form->textField($model->registros_update->tamano_coleccion, 'unidad_medida', array('name'=>'Tamano_Coleccion[0][unidad_medida]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tamano_coleccion->attributeLabels()['unidad_medida'],'disabled'=>true));
-							echo $form->textField($model->registros_update->tamano_coleccion, 'cantidad', array('onchange' => 'sumarTipo("cantSum","Registros_Update_tamano_coleccion_total")','name'=>'Tamano_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSum', 'placeholder' => $model->registros_update->tamano_coleccion->attributeLabels()['cantidad'],'disabled'=>true));
+							//echo $form->textField($model->registros_update->tamano_coleccion, 'cantidad', array('onchange' => 'sumarTipo("cantSum","Registros_Update_tamano_coleccion_total")','name'=>'Tamano_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSum', 'placeholder' => $model->registros_update->tamano_coleccion->attributeLabels()['cantidad'],'disabled'=>true));
 							
 							echo "</div>";
 						}else {
@@ -276,7 +286,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 								echo '<div id="tp_'.$cont.'">';
 								echo $form->textField($value, 'tipo_preservacion', array('value' => $value->tipo_preservacion, 'name'=>'Tamano_Coleccion['.$cont.'][tipo_preservacion]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tamano_coleccion->attributeLabels()['tipo_preservacion'],'disabled'=>true));
 								echo $form->textField($value, 'unidad_medida', array('value' => $value->unidad_medida, 'name'=>'Tamano_Coleccion['.$cont.'][unidad_medida]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tamano_coleccion->attributeLabels()['unidad_medida'],'disabled'=>true));
-								echo $form->textField($value, 'cantidad', array('value' => $value->cantidad, 'onchange' => 'sumarTipo("cantSum","Registros_Update_tamano_coleccion_total")','name'=>'Tamano_Coleccion['.$cont.'][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSum', 'placeholder' => $tamano_coleccion->attributeLabels()['cantidad'],'disabled'=>true));
+								//echo $form->textField($value, 'cantidad', array('value' => $value->cantidad, 'onchange' => 'sumarTipo("cantSum","Registros_Update_tamano_coleccion_total")','name'=>'Tamano_Coleccion['.$cont.'][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSum', 'placeholder' => $tamano_coleccion->attributeLabels()['cantidad'],'disabled'=>true));
 								echo $form->hiddenField($value, 'id',array('value' => $value->id,'name'=>'Tamano_Coleccion['.$cont.'][id]'));	
 								
 								
@@ -294,54 +304,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				</div>
 				
 				<?php 
-					echo $form->textFieldRow($model->registros_update, 'tamano_coleccion_total', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA totalRow','disabled'=>true));
-				?>
-			</fieldset>
-			
-			<fieldset>
-				<legend class="form_legend">Tipos en la colección</legend>
-				<div class="InlineFormDiv" id="tipoCole">
-				<?php 
-					if(!isset($model->registros_update->id)){
-						echo "<div>";
-						echo $form->textField($model->registros_update->tipos_en_coleccion, 'informacion_ejemplar', array('style' => 'width:220px !important','name'=>'Tipos_En_Coleccion[0][informacion_ejemplar]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['informacion_ejemplar'],'disabled'=>true));
-						echo $form->textField($model->registros_update->tipos_en_coleccion, 'cantidad', array('onchange' => 'sumarTipo("cantSumTipo","Registros_Update_tipo_coleccion_total")','name'=>'Tipos_En_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSumTipo', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['cantidad'],'disabled'=>true));
-					
-						echo "</div>";
-					}else {
-						$dataTipo	= $model->registros_update->tipos_en_coleccion;
-						$cont = 0;
-						
-						foreach ($dataTipo as $value){
-							echo '<div id="tc_'.$cont.'">';
-							echo $form->textField($value, 'informacion_ejemplar', array('value' => $value->informacion_ejemplar, 'style' => 'width:220px !important','name'=>'Tipos_En_Coleccion['.$cont.'][informacion_ejemplar]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->attributeLabels()['informacion_ejemplar'],'disabled'=>true));
-							echo $form->textField($value, 'cantidad', array('value' => $value->cantidad, 'onchange' => 'sumarTipo("cantSumTipo","Registros_Update_tipo_coleccion_total")','name'=>'Tipos_En_Coleccion['.$cont.'][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSumTipo', 'placeholder' => $tipos_en_coleccion->attributeLabels()['cantidad'],'disabled'=>true));
-							echo $form->hiddenField($value, 'id',array('value' => $value->id,'name'=>'Tipos_En_Coleccion['.$cont.'][id]'));
-						
-							$cont++;
-							echo "</div>";
-						}
-						
-						$cont = $cont - 1;
-						echo '<script type="text/javascript">
-								contTipoCol 	= '.$cont.';
-							</script>';
-					}
-				?>
-				</div>
-				
-				<?php 
-					echo $form->textFieldRow($model->registros_update, 'tipo_coleccion_total', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA totalRow2','disabled'=>true));
-				?>
-			</fieldset>
-			
-			<fieldset>
-				<legend class="form_legend">Cobertura</legend>
-				
-				<?php 
-					echo $form->textFieldRow($model->registros_update, 'cobertura_tax', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-					echo $form->textFieldRow($model->registros_update, 'cobertura_geog', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-					echo $form->textFieldRow($model->registros_update, 'cobertura_temp', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
+					//echo $form->textFieldRow($model->registros_update, 'tamano_coleccion_total', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA totalRow','disabled'=>true));
 				?>
 			</fieldset>
 			
@@ -368,6 +331,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						</div>
 						<div class="input-append">
 							<?= $form->textField($model->registros_update->composicion_general, 'numero_sistematizados', array('style' => 'width:30px !important','name'=>'Composicion_General[0][numero_sistematizados]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
+							<span class="add-on">%</span>
+						</div>
+						<div class="input-append">
+							<?= $form->textField($model->registros_update->composicion_general, 'numero_nivel_orden', array('style' => 'width:30px !important','name'=>'Composicion_General[0][orden]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
 							<span class="add-on">%</span>
 						</div>
 						<div class="input-append">
@@ -404,6 +371,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							<span class="add-on">%</span>
 						</div>
 						<div class="input-append">
+							<?= $form->textField($value, 'numero_nivel_orden', array('value' => $value->numero_nivel_orden,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_nivel_orden]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
+							<span class="add-on">%</span>
+						</div>
+						<div class="input-append">
 							<?= $form->textField($value, 'numero_nivel_familia', array('value' => $value->numero_nivel_familia,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_nivel_familia]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
 							<span class="add-on">%</span>
 						</div>
@@ -432,10 +403,52 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<div style="padding-top: 10px">
 					<label class="control-label required inlineLabel2" ><b>1.</b> <?=$composicion_general->attributeLabels()['numero_catalogados'];?></label>
 					<label class="control-label required inlineLabel2" ><b>2.</b> <?=$composicion_general->attributeLabels()['numero_sistematizados'];?></label>
-					<label class="control-label required inlineLabel2" ><b>3.</b> <?=$composicion_general->attributeLabels()['numero_nivel_familia'];?></label>
-					<label class="control-label required inlineLabel2" ><b>4.</b> <?=$composicion_general->attributeLabels()['numero_nivel_genero'];?></label>
-					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->attributeLabels()['numero_nivel_especie'];?></label>
+					<label class="control-label required inlineLabel2" ><b>3.</b> <?=$composicion_general->attributeLabels()['numero_nivel_orden'];?></label>
+					<label class="control-label required inlineLabel2" ><b>4.</b> <?=$composicion_general->attributeLabels()['numero_nivel_familia'];?></label>
+					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->attributeLabels()['numero_nivel_genero'];?></label>
+					<label class="control-label required inlineLabel2" ><b>6.</b> <?=$composicion_general->attributeLabels()['numero_nivel_especie'];?></label>
 				</div>
+			</fieldset>
+			
+			<fieldset>
+				<legend class="form_legend">Tipos en la colección</legend>
+				<div class="InlineFormDiv" id="tipoCole">
+				<?php 
+					if(!isset($model->registros_update->id)){
+						echo "<div>";
+						echo $form->textField($model->registros_update->tipos_en_coleccion, 'grupo', array('name'=>'Tipos_En_Coleccion[0][grupo]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['grupo'],'disabled'=>true));
+						echo $form->textField($model->registros_update->tipos_en_coleccion, 'informacion_ejemplar', array('name'=>'Tipos_En_Coleccion[0][informacion_ejemplar]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['informacion_ejemplar'],'disabled'=>true));
+						echo $form->textField($model->registros_update->tipos_en_coleccion, 'nombre_cientifico', array('name'=>'Tipos_En_Coleccion[0][nombre_cientifico]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['nombre_cientifico'],'disabled'=>true));
+						//echo $form->textField($model->registros_update->tipos_en_coleccion, 'cantidad', array('onchange' => 'sumarTipo("cantSumTipo","Registros_Update_tipo_coleccion_total")','name'=>'Tipos_En_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSumTipo', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['cantidad'],'disabled'=>true));
+					
+						echo "</div>";
+					}else {
+						$dataTipo	= $model->registros_update->tipos_en_coleccion;
+						$cont = 0;
+						
+						foreach ($dataTipo as $value){
+							echo '<div id="tc_'.$cont.'">';
+							echo $form->textField($value, 'informacion_ejemplar', array('value' => $value->grupo,'name'=>'Tipos_En_Coleccion['.$cont.'][grupo]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->attributeLabels()['grupo'],'disabled'=>true));
+							echo $form->textField($value, 'informacion_ejemplar', array('value' => $value->informacion_ejemplar, 'style' => 'width:220px !important','name'=>'Tipos_En_Coleccion['.$cont.'][informacion_ejemplar]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->attributeLabels()['informacion_ejemplar'],'disabled'=>true));
+							echo $form->textField($value, 'informacion_ejemplar', array('value' => $value->nombre_cientifico, 'name'=>'Tipos_En_Coleccion['.$cont.'][nombre_cientifico]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->attributeLabels()['nombre_cientifico'],'disabled'=>true));
+							//echo $form->textField($value, 'cantidad', array('value' => $value->cantidad, 'onchange' => 'sumarTipo("cantSumTipo","Registros_Update_tipo_coleccion_total")','name'=>'Tipos_En_Coleccion['.$cont.'][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSumTipo', 'placeholder' => $tipos_en_coleccion->attributeLabels()['cantidad'],'disabled'=>true));
+							echo $form->hiddenField($value, 'id',array('value' => $value->id,'name'=>'Tipos_En_Coleccion['.$cont.'][id]'));
+						
+							$cont++;
+							echo "</div>";
+						}
+						
+						$cont = $cont - 1;
+						echo '<script type="text/javascript">
+								contTipoCol 	= '.$cont.';
+							</script>';
+					}
+				?>
+				</div>
+				
+				<?php 
+					//echo $form->textFieldRow($model->registros_update, 'tipo_coleccion_total', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA totalRow2','disabled'=>true));
+				?>
 			</fieldset>
 			
 			<fieldset>
@@ -469,7 +482,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<?php 
 					echo $form->textAreaRow($model->registros_update, 'info_adicional', array('class'=>'span4', 'rows'=>4,'disabled'=>true));
 					echo $form->textFieldRow($model->registros_update, 'pagina_web', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','prepend'=>'http://','disabled'=>true));
-					echo $form->textAreaRow($model->registros_update, 'redes_social', array('class'=>'span4', 'rows'=>4,'disabled'=>true));
+					//echo $form->textAreaRow($model->registros_update, 'redes_social', array('class'=>'span4', 'rows'=>4,'disabled'=>true));
 					//echo $form->fileFieldRow($model->registros_update, 'archivoColeccion');
 				?>
 				<?php 

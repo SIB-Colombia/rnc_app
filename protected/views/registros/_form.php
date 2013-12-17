@@ -11,10 +11,38 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploa
 ?>
 
 <script type="text/javascript">
-
+<?php 
+	if(isset($model->id)){
+		echo 'urlAjax = "../deleteFileAjax";';	
+	}else{
+		echo 'urlAjax = "deleteFileAjax";';
+	}
+?>
 contTipo 		= 0;
 contTipoCol 	= 0;
 contNivelCat 	= 0;
+
+function deleteFileAjax(divId,id){
+	
+	$.post(urlAjax, {id: id},function(data){
+		if(data == 1){
+			$("#"+divId).remove();
+		}else{
+			alert("Error al eliminar el archivo.");
+		}
+	});
+}
+
+function deleteFileUpAjax(divId,name){
+	
+	$.post(urlAjax, {name: name},function(data){
+		if(data == 1){
+			$("#"+divId).remove();
+		}else{
+			alert("Error al eliminar el archivo.");
+		}
+	});
+}
 
 function enviarForm(){
 	$("#Registros_Update_estado").val("0");
@@ -47,7 +75,7 @@ function agregarTipoPres(){
 	htmlCode  = '<div id="tp_'+contTipo+'">';
 	htmlCode += '<input name="Tamano_Coleccion['+contTipo+'][tipo_preservacion]" size="32" maxlength="150" class="textareaA textInline" placeholder="<?=$tamano_coleccion->attributeLabels()['tipo_preservacion'];?>" id="Tamano_Coleccion_tipo_preservacion_'+contTipo+'" type="text">';
 	htmlCode += '<input name="Tamano_Coleccion['+contTipo+'][unidad_medida]" size="32" maxlength="150" class="textareaA textInline" placeholder="<?=$tamano_coleccion->attributeLabels()['unidad_medida'];?>" id="Tamano_Coleccion_unidad_medida_'+contTipo+'" type="text">';
-	htmlCode += '<input onchange="sumarTipo(\'cantSum\',\'Registros_Update_tamano_coleccion_total\')" name="Tamano_Coleccion['+contTipo+'][cantidad]" size="32" maxlength="150" class="textareaA textInline cantSum" placeholder="<?=$tamano_coleccion->attributeLabels()['cantidad'];?>" id="Tamano_Coleccion_cantidad_'+contTipo+'" type="text">';
+	//htmlCode += '<input onchange="sumarTipo(\'cantSum\',\'Registros_Update_tamano_coleccion_total\')" name="Tamano_Coleccion['+contTipo+'][cantidad]" size="32" maxlength="150" class="textareaA textInline cantSum" placeholder="<?=$tamano_coleccion->attributeLabels()['cantidad'];?>" id="Tamano_Coleccion_cantidad_'+contTipo+'" type="text">';
 	htmlCode += '<a class="addType btn btn-danger btn-small" onclick="eliminarTipoPres(\'tp_'+contTipo+'\',\'cantSum\',\'Registros_Update_tamano_coleccion_total\')" id="yw'+contTipo+'">-</a>';
 	htmlCode += '</div>';
 
@@ -58,8 +86,10 @@ function agregarTipoPres(){
 function agregarTipoCol(){
 	contTipoCol++;
 	htmlCode  = '<div id="tc_'+contTipoCol+'">';
-	htmlCode += '<input style="width:220px !important" name="Tipos_En_Coleccion['+contTipoCol+'][informacion_ejemplar]" size="32" maxlength="150" class="textareaA textInline" placeholder="<?=$tipos_en_coleccion->attributeLabels()['informacion_ejemplar'];?>" id="Tipos_En_Coleccion_informacion_ejemplar_'+contTipoCol+'" type="text">';
-	htmlCode += '<input onchange="sumarTipo(\'cantSumTipo\',\'Registros_Update_tipo_coleccion_total\')" name="Tipos_En_Coleccion['+contTipoCol+'][cantidad]" size="32" maxlength="150" class="textareaA textInline cantSumTipo" placeholder="<?=$tipos_en_coleccion->attributeLabels()['cantidad'];?>" id="Tipos_En_Coleccion_cantidad_'+contTipoCol+'" type="text">';
+	htmlCode += '<input name="Tipos_En_Coleccion['+contTipoCol+'][grupo]" size="32" maxlength="150" class="textareaA textInline" placeholder="<?=$tipos_en_coleccion->attributeLabels()['grupo'];?>" id="Tipos_En_Coleccion_grupo_'+contTipoCol+'" type="text">';
+	htmlCode += '<input name="Tipos_En_Coleccion['+contTipoCol+'][informacion_ejemplar]" size="32" maxlength="150" class="textareaA textInline" placeholder="<?=$tipos_en_coleccion->attributeLabels()['informacion_ejemplar'];?>" id="Tipos_En_Coleccion_informacion_ejemplar_'+contTipoCol+'" type="text">';
+	htmlCode += '<input name="Tipos_En_Coleccion['+contTipoCol+'][nombre_cientifico]" size="32" maxlength="150" class="textareaA textInline" placeholder="<?=$tipos_en_coleccion->attributeLabels()['nombre_cientifico'];?>" id="Tipos_En_Coleccion_nombre_cientifico_'+contTipoCol+'" type="text">';
+	//htmlCode += '<input onchange="sumarTipo(\'cantSumTipo\',\'Registros_Update_tipo_coleccion_total\')" name="Tipos_En_Coleccion['+contTipoCol+'][cantidad]" size="32" maxlength="150" class="textareaA textInline cantSumTipo" placeholder="<?=$tipos_en_coleccion->attributeLabels()['cantidad'];?>" id="Tipos_En_Coleccion_cantidad_'+contTipoCol+'" type="text">';
 	htmlCode += '<a class="addType btn btn-danger btn-small" onclick="eliminarTipoPres(\'tc_'+contTipoCol+'\',\'cantSumTipo\',\'Registros_Update_tipo_coleccion_total\')" id="yw'+contTipoCol+'">-</a>';
 	htmlCode += '</div>';
 
@@ -74,6 +104,7 @@ function agregarNivelCat(){
 	htmlCode	+= '<input style="width:80px !important" name="Composicion_General['+contNivelCat+'][numero_ejemplares]" size="32" maxlength="150" class="textareaA valNum" placeholder="0" id="Composicion_General_numero_ejemplares_'+contNivelCat+'" type="text" value="0">';
 	htmlCode	+= '<div class="input-append" style="margin-left:4px"><input style="width:30px !important" name="Composicion_General['+contNivelCat+'][numero_catalogados]" size="32" maxlength="150" class="textareaA valNumP" placeholder="0" id="Composicion_General_numero_catalogados_'+contNivelCat+'" type="text" value="0"><span class="add-on">%</span></div>';
 	htmlCode	+= '<div class="input-append" style="margin-left:4px"><input style="width:30px !important" name="Composicion_General['+contNivelCat+'][numero_sistematizados]" size="32" maxlength="150" class="textareaA valNumP" placeholder="0" id="Composicion_General_numero_sistematizados_'+contNivelCat+'" type="text" value="0"><span class="add-on">%</span></div>';
+	htmlCode	+= '<div class="input-append" style="margin-left:4px"><input style="width:30px !important" name="Composicion_General['+contNivelCat+'][numero_nivel_orden]" size="32" maxlength="150" class="textareaA valNumP" placeholder="0" id="Composicion_General_numero_nivel_orden_'+contNivelCat+'" type="text" value="0"><span class="add-on">%</span></div>';
 	htmlCode	+= '<div class="input-append" style="margin-left:4px"><input style="width:30px !important" name="Composicion_General['+contNivelCat+'][numero_nivel_familia]" size="32" maxlength="150" class="textareaA valNumP" placeholder="0" id="Composicion_General_numero_nivel_familia_'+contNivelCat+'" type="text" value="0"><span class="add-on">%</span></div>';
 	htmlCode	+= '<div class="input-append" style="margin-left:4px"><input style="width:30px !important" name="Composicion_General['+contNivelCat+'][numero_nivel_genero]" size="32" maxlength="150" class="textareaA valNumP" placeholder="0" id="Composicion_General_numero_nivel_genero_'+contNivelCat+'" type="text" value="0"><span class="add-on">%</span></div>';
 	htmlCode	+= '<div class="input-append" style="margin-left:4px"><input style="width:30px !important" name="Composicion_General['+contNivelCat+'][numero_nivel_especie]" size="32" maxlength="150" class="textareaA compGeneral valNumP" placeholder="0" id="Composicion_General_numero_nivel_especie_'+contNivelCat+'" type="text" value="0"><span class="add-on">%</span></div>';
@@ -152,9 +183,10 @@ function enviarData(){
 	$("#registro-form").submit();
 }
 
+contUp = 0;
 $(function() {
     $('#Registros_Update_archivoAnexo').uploadify({
-    	'auto'     		: false,
+    	'auto'     		: true,
     	'fileSizeLimit' : '20MB',
     	'buttonText'	: 'Seleccionar Archivo',
     	'width'         : 140,
@@ -174,12 +206,21 @@ $(function() {
 				val_aux	+= ','+dataFile;
 				$('#Registros_Update_archivosAnexos').val(val_aux);
 			}
-			
+
+			html = '<div id="flup_'+contUp+'" class="uploadify-queue-item" style="margin-left:220px">';
+			html += '<div class="cancel">';
+			html += '<a onclick = "deleteFileUpAjax(\'flup_'+contUp+'\',\''+file.name+'\')">X</a></div>';
+			html += '<span class="fileName">'+file.name+'</span><span class="data"></span>';
+			html += '</div>';
+			$("#adjFile").append(html);
+			contUp++;
 		}
     });
-
+    
+    contUp2 = 0;
+    
     $('#Registros_Update_archivoColeccion').uploadify({
-    	'auto'     		: false,
+    	'auto'     		: true,
     	'fileSizeLimit' : '40MB',
     	'buttonText'	: 'Seleccionar Archivo',
     	'width'         : 140,
@@ -199,6 +240,14 @@ $(function() {
 				val_aux	+= ','+dataFile;
 				$('#Registros_Update_archivosColecciones').val(val_aux);
 			}
+
+			html = '<div id="flcolup_'+contUp2+'" class="uploadify-queue-item" style="margin-left:220px">';
+			html += '<div class="cancel">';
+			html += '<a onclick = "deleteFileUpAjax(\'flcolup_'+contUp2+'\',\''+file.name+'\')">X</a></div>';
+			html += '<span class="fileName">'+file.name+'</span><span class="data"></span>';
+			html += '</div>';
+			$("#archColFile").append(html);
+			contUp2++;
 		}
     });
 
@@ -206,6 +255,13 @@ $(function() {
 
 
 </script>
+<style>
+<!--
+.area-contenido{
+	min-width: 770px
+}
+-->
+</style>
 <div class="form">
 
 <?php 
@@ -287,7 +343,17 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 			</fieldset>
 			
 			<fieldset>
-				<legend class="form_legend">Tamaño de la colección</legend>
+				<legend class="form_legend">Cobertura</legend>
+				
+				<?php 
+					echo $form->textFieldRow($model->registros_update, 'cobertura_tax', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					echo $form->textFieldRow($model->registros_update, 'cobertura_geog', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					echo $form->textFieldRow($model->registros_update, 'cobertura_temp', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+				?>
+			</fieldset>
+			
+			<fieldset>
+				<legend class="form_legend">Tipos de preservación</legend>
 				<div class="InlineFormDiv" id="tamCole">
 					
 					<?php 
@@ -295,7 +361,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							echo "<div>";
 							echo $form->textField($model->registros_update->tamano_coleccion, 'tipo_preservacion', array('name'=>'Tamano_Coleccion[0][tipo_preservacion]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tamano_coleccion->attributeLabels()['tipo_preservacion']));
 							echo $form->textField($model->registros_update->tamano_coleccion, 'unidad_medida', array('name'=>'Tamano_Coleccion[0][unidad_medida]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tamano_coleccion->attributeLabels()['unidad_medida']));
-							echo $form->textField($model->registros_update->tamano_coleccion, 'cantidad', array('onchange' => 'sumarTipo("cantSum","Registros_Update_tamano_coleccion_total")','name'=>'Tamano_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSum', 'placeholder' => $model->registros_update->tamano_coleccion->attributeLabels()['cantidad']));
+							//echo $form->textField($model->registros_update->tamano_coleccion, 'cantidad', array('onchange' => 'sumarTipo("cantSum","Registros_Update_tamano_coleccion_total")','name'=>'Tamano_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSum', 'placeholder' => $model->registros_update->tamano_coleccion->attributeLabels()['cantidad']));
 							
 							$this->widget('bootstrap.widgets.TbButton', array(
 									'label'=>'+',
@@ -311,7 +377,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 								echo '<div id="tp_'.$cont.'">';
 								echo $form->textField($value, 'tipo_preservacion', array('value' => $value->tipo_preservacion, 'name'=>'Tamano_Coleccion['.$cont.'][tipo_preservacion]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tamano_coleccion->attributeLabels()['tipo_preservacion']));
 								echo $form->textField($value, 'unidad_medida', array('value' => $value->unidad_medida, 'name'=>'Tamano_Coleccion['.$cont.'][unidad_medida]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tamano_coleccion->attributeLabels()['unidad_medida']));
-								echo $form->textField($value, 'cantidad', array('value' => $value->cantidad, 'onchange' => 'sumarTipo("cantSum","Registros_Update_tamano_coleccion_total")','name'=>'Tamano_Coleccion['.$cont.'][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSum', 'placeholder' => $tamano_coleccion->attributeLabels()['cantidad']));
+								//echo $form->textField($value, 'cantidad', array('value' => $value->cantidad, 'onchange' => 'sumarTipo("cantSum","Registros_Update_tamano_coleccion_total")','name'=>'Tamano_Coleccion['.$cont.'][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSum', 'placeholder' => $tamano_coleccion->attributeLabels()['cantidad']));
 								echo $form->hiddenField($value, 'id',array('value' => $value->id,'name'=>'Tamano_Coleccion['.$cont.'][id]'));	
 								
 								$this->widget('bootstrap.widgets.TbButton', array(
@@ -334,68 +400,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				</div>
 				
 				<?php 
-					echo $form->textFieldRow($model->registros_update, 'tamano_coleccion_total', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA totalRow'));
-				?>
-			</fieldset>
-			
-			<fieldset>
-				<legend class="form_legend">Tipos en la colección</legend>
-				<div class="InlineFormDiv" id="tipoCole">
-				<?php 
-					if(!isset($model->registros_update->id)){
-						echo "<div>";
-						echo $form->textField($model->registros_update->tipos_en_coleccion, 'informacion_ejemplar', array('style' => 'width:220px !important','name'=>'Tipos_En_Coleccion[0][informacion_ejemplar]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['informacion_ejemplar']));
-						echo $form->textField($model->registros_update->tipos_en_coleccion, 'cantidad', array('onchange' => 'sumarTipo("cantSumTipo","Registros_Update_tipo_coleccion_total")','name'=>'Tipos_En_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSumTipo', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['cantidad']));
-					
-						$this->widget('bootstrap.widgets.TbButton', array(
-								'label'=>'+',
-								'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-								'size'=>'small', // null, 'large', 'small' or 'mini'
-								'htmlOptions'=>array('class'=>'addType','onclick' => 'agregarTipoCol()')
-						));
-
-						echo "</div>";
-					}else {
-						
-						$dataTipo	= $model->registros_update->tipos_en_coleccion;
-						$cont = 0;
-						
-						foreach ($dataTipo as $value){
-							echo '<div id="tc_'.$cont.'">';
-							echo $form->textField($value, 'informacion_ejemplar', array('value' => $value->informacion_ejemplar, 'style' => 'width:220px !important','name'=>'Tipos_En_Coleccion['.$cont.'][informacion_ejemplar]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->attributeLabels()['informacion_ejemplar']));
-							echo $form->textField($value, 'cantidad', array('value' => $value->cantidad, 'onchange' => 'sumarTipo("cantSumTipo","Registros_Update_tipo_coleccion_total")','name'=>'Tipos_En_Coleccion['.$cont.'][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSumTipo', 'placeholder' => $tipos_en_coleccion->attributeLabels()['cantidad']));
-							echo $form->hiddenField($value, 'id',array('value' => $value->id,'name'=>'Tipos_En_Coleccion['.$cont.'][id]'));
-							
-							$this->widget('bootstrap.widgets.TbButton', array(
-									'label'=>($cont == 0) ? "+" : "-",
-									'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-									'size'=>'small', // null, 'large', 'small' or 'mini'
-									'htmlOptions'=>array('class'=>($cont == 0) ? "addType" : "addType btn-danger",'onclick' => ($cont == 0) ? "agregarTipoCol()" : "eliminarTipoPres('tc_".$cont."','cantSumTipo','Registros_Update_tipo_coleccion_total')")
-							));
-							$cont++;
-							echo "</div>";
-						}
-						
-						$cont = $cont - 1;
-						echo '<script type="text/javascript">
-								contTipoCol 	= '.$cont.';
-							</script>';
-					}
-				?>
-				</div>
-				
-				<?php 
-					echo $form->textFieldRow($model->registros_update, 'tipo_coleccion_total', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA totalRow2'));
-				?>
-			</fieldset>
-			
-			<fieldset>
-				<legend class="form_legend">Cobertura</legend>
-				
-				<?php 
-					echo $form->textFieldRow($model->registros_update, 'cobertura_tax', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
-					echo $form->textFieldRow($model->registros_update, 'cobertura_geog', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
-					echo $form->textFieldRow($model->registros_update, 'cobertura_temp', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					//echo $form->textFieldRow($model->registros_update, 'tamano_coleccion_total', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA totalRow'));
 				?>
 			</fieldset>
 			
@@ -408,6 +413,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					<label class="control-label required inlineLabel" style="width:63px !important">3.</label>
 					<label class="control-label required inlineLabel" style="width:63px !important">4.</label>
 					<label class="control-label required inlineLabel" style="width:63px !important">5.</label>
+					<label class="control-label required inlineLabel" style="width:63px !important">6.</label>
 				</div>
 				<div style="clear: both;" id="nivelCat">
 					<div>
@@ -422,6 +428,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						</div>
 						<div class="input-append">
 							<?= $form->textField($model->registros_update->composicion_general, 'numero_sistematizados', array('style' => 'width:30px !important','name'=>'Composicion_General[0][numero_sistematizados]','size'=>32,'maxlength'=>150, 'class'=>'textareaA valNumP', 'placeholder' => 0));?>
+							<span class="add-on">%</span>
+						</div>
+						<div class="input-append">
+							<?= $form->textField($model->registros_update->composicion_general, 'numero_nivel_orden', array('style' => 'width:30px !important','name'=>'Composicion_General[0][numero_nivel_orden]','size'=>32,'maxlength'=>150, 'class'=>'textareaA valNumP', 'placeholder' => 0));?>
 							<span class="add-on">%</span>
 						</div>
 						<div class="input-append">
@@ -466,6 +476,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							<span class="add-on">%</span>
 						</div>
 						<div class="input-append">
+							<?= $form->textField($value, 'numero_nivel_orden', array('value' => $value->numero_nivel_orden,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_nivel_orden]','size'=>32,'maxlength'=>150, 'class'=>'textareaA valNumP', 'placeholder' => 0));?>
+							<span class="add-on">%</span>
+						</div>
+						<div class="input-append">
 							<?= $form->textField($value, 'numero_nivel_familia', array('value' => $value->numero_nivel_familia,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_nivel_familia]','size'=>32,'maxlength'=>150, 'class'=>'textareaA valNumP', 'placeholder' => 0));?>
 							<span class="add-on">%</span>
 						</div>
@@ -501,10 +515,67 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<div style="padding-top: 10px">
 					<label class="control-label required inlineLabel2" ><b>1.</b> <?=$composicion_general->attributeLabels()['numero_catalogados'];?></label>
 					<label class="control-label required inlineLabel2" ><b>2.</b> <?=$composicion_general->attributeLabels()['numero_sistematizados'];?></label>
-					<label class="control-label required inlineLabel2" ><b>3.</b> <?=$composicion_general->attributeLabels()['numero_nivel_familia'];?></label>
-					<label class="control-label required inlineLabel2" ><b>4.</b> <?=$composicion_general->attributeLabels()['numero_nivel_genero'];?></label>
-					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->attributeLabels()['numero_nivel_especie'];?></label>
+					<label class="control-label required inlineLabel2" ><b>3.</b> <?=$composicion_general->attributeLabels()['numero_nivel_orden'];?></label>
+					<label class="control-label required inlineLabel2" ><b>4.</b> <?=$composicion_general->attributeLabels()['numero_nivel_familia'];?></label>
+					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->attributeLabels()['numero_nivel_genero'];?></label>
+					<label class="control-label required inlineLabel2" ><b>6.</b> <?=$composicion_general->attributeLabels()['numero_nivel_especie'];?></label>
 				</div>
+				<?php echo $form->textAreaRow($model->registros_update, 'sistematizacion', array('class'=>'span4', 'rows'=>4)); ?>
+			</fieldset>
+			
+			<fieldset>
+				<legend class="form_legend">Tipos en la colección</legend>
+				<div class="InlineFormDiv" id="tipoCole">
+				<?php 
+					if(!isset($model->registros_update->id)){
+						echo "<div>";
+						echo $form->textField($model->registros_update->tipos_en_coleccion, 'grupo', array('name'=>'Tipos_En_Coleccion[0][grupo]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['grupo']));
+						echo $form->textField($model->registros_update->tipos_en_coleccion, 'informacion_ejemplar', array('name'=>'Tipos_En_Coleccion[0][informacion_ejemplar]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['informacion_ejemplar']));
+						echo $form->textField($model->registros_update->tipos_en_coleccion, 'nombre_cientifico', array('name'=>'Tipos_En_Coleccion[0][nombre_cientifico]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['nombre_cientifico']));
+						//echo $form->textField($model->registros_update->tipos_en_coleccion, 'cantidad', array('onchange' => 'sumarTipo("cantSumTipo","Registros_Update_tipo_coleccion_total")','name'=>'Tipos_En_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSumTipo', 'placeholder' => $model->registros_update->tipos_en_coleccion->attributeLabels()['cantidad']));
+						
+						$this->widget('bootstrap.widgets.TbButton', array(
+								'label'=>'+',
+								'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+								'size'=>'small', // null, 'large', 'small' or 'mini'
+								'htmlOptions'=>array('class'=>'addType','onclick' => 'agregarTipoCol()')
+						));
+
+						echo "</div>";
+					}else {
+						
+						$dataTipo	= $model->registros_update->tipos_en_coleccion;
+						$cont = 0;
+						
+						foreach ($dataTipo as $value){
+							echo '<div id="tc_'.$cont.'">';
+							echo $form->textField($value, 'grupo', array('value' => $value->grupo,'name'=>'Tipos_En_Coleccion['.$cont.'][grupo]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->attributeLabels()['grupo']));
+							echo $form->textField($value, 'informacion_ejemplar', array('value' => $value->informacion_ejemplar,'name'=>'Tipos_En_Coleccion['.$cont.'][informacion_ejemplar]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->attributeLabels()['informacion_ejemplar']));
+							echo $form->textField($value, 'nombre_cientifico', array('value' => $value->nombre_cientifico,'name'=>'Tipos_En_Coleccion['.$cont.'][nombre_cientifico]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->attributeLabels()['nombre_cientifico']));
+							//echo $form->textField($value, 'cantidad', array('value' => $value->cantidad, 'onchange' => 'sumarTipo("cantSumTipo","Registros_Update_tipo_coleccion_total")','name'=>'Tipos_En_Coleccion['.$cont.'][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline cantSumTipo', 'placeholder' => $tipos_en_coleccion->attributeLabels()['cantidad']));
+							echo $form->hiddenField($value, 'id',array('value' => $value->id,'name'=>'Tipos_En_Coleccion['.$cont.'][id]'));
+							
+							$this->widget('bootstrap.widgets.TbButton', array(
+									'label'=>($cont == 0) ? "+" : "-",
+									'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+									'size'=>'small', // null, 'large', 'small' or 'mini'
+									'htmlOptions'=>array('class'=>($cont == 0) ? "addType" : "addType btn-danger",'onclick' => ($cont == 0) ? "agregarTipoCol()" : "eliminarTipoPres('tc_".$cont."','cantSumTipo','Registros_Update_tipo_coleccion_total')")
+							));
+							$cont++;
+							echo "</div>";
+						}
+						
+						$cont = $cont - 1;
+						echo '<script type="text/javascript">
+								contTipoCol 	= '.$cont.';
+							</script>';
+					}
+				?>
+				</div>
+				
+				<?php 
+					//echo $form->textFieldRow($model->registros_update, 'tipo_coleccion_total', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA totalRow2'));
+				?>
 			</fieldset>
 			
 			<fieldset>
@@ -514,6 +585,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					echo $form->fileFieldRow($model->registros_update, 'archivoAnexo');
 					echo $form->hiddenField($model->registros_update, 'archivosAnexos');
 				?>
+				<div id = "adjFile">
 				<?php 
 					if(isset($model->registros_update->id) && $model->registros_update->estado != 2){
 						$criteria = new CDbCriteria;
@@ -533,13 +605,15 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							echo '</div>';
 				?>
                 <?php }}?>
+                </div>
 				<?php 
+				/*
 					$this->widget('bootstrap.widgets.TbButton', array(
 							'label'=>"Subir",
 							'type'=> "info", // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 							'size'=>'small', // null, 'large', 'small' or 'mini'
 							'htmlOptions'=>array('style' => 'margin:5px 0 20px 220px','class'=>'','onclick' => "$('#Registros_Update_archivoAnexo').uploadify('upload')")
-					));
+					));*/
 				?>
 			</fieldset>
 			
@@ -550,6 +624,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					echo $form->textFieldRow($model->registros_update, 'pagina_web', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','prepend'=>'http://'));
 					echo $form->fileFieldRow($model->registros_update, 'archivoColeccion');
 				?>
+				<div id = "archColFile">
 				<?php 
 					if(isset($model->registros_update->id) && $model->registros_update->estado != 2){
 						$criteria = new CDbCriteria;
@@ -562,7 +637,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							echo '<div id="flc_'.$cont.'" class="uploadify-queue-item" style="margin-left:220px">';
 							if($model->registros_update->estado == 0){
 								echo '<div class="cancel">';
-								echo '<a >X</a></div>';
+								echo '<a onclick = "deleteFileAjax(\'flc_'.$cont.'\','.$value->id.')">X</a></div>';
 							}
 							$url = Yii::app()->createUrl('..'.DIRECTORY_SEPARATOR.$value->ruta.DIRECTORY_SEPARATOR.$value->nombre);
 							echo '<span class="fileName">'.$value->nombre.'</span><span class="data"><a class="viewFileReg" target="_blank" href="'.$url.'">Ver</a></span>';
@@ -571,13 +646,14 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							}
 					}
 				?>
-                <?php 
+				</div>
+                <?php /*
 					$this->widget('bootstrap.widgets.TbButton', array(
 							'label'=>"Subir",
 							'type'=> "info", // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 							'size'=>'small', // null, 'large', 'small' or 'mini'
 							'htmlOptions'=>array('style' => 'margin:5px 0 20px 220px','class'=>'','onclick' => "$('#Registros_Update_archivoColeccion').uploadify('upload')")
-					));
+					));*/
 
 					echo $form->hiddenField($model->registros_update, 'archivosColecciones');
 				?>

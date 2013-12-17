@@ -11,6 +11,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 		'numero_ejemplares',
 		'numero_catalogados',
 		'numero_sistematizados',
+		'numero_nivel_orden',
 		'numero_nivel_familia',
 		'numero_nivel_genero',
 		'numero_nivel_especie'

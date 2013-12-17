@@ -8,7 +8,6 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	//'filter'=>$model,
 	'columns'=>array(
 		'tipo_preservacion',
-		'unidad_medida',
-		'cantidad'
+		'unidad_medida'
 	),
 )); ?>

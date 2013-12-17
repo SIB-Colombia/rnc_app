@@ -61,7 +61,26 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		echo $form->radioButtonListInlineRow($model, 'aprobado', array('Si','No'));
 		echo $form->textAreaRow($model, 'comentario', array('class'=>'span4', 'rows'=>5));
 		echo $form->dropDownListRow($model, 'usuario_id', $model->ListarUsuarios("entidad"),array('prompt' => 'Seleccionar...'));
+		
+		$this->widget('bootstrap.widgets.TbButton', array(
+				'label'=>'Crear Usuario',
+				'type'=>'primary',
+				'htmlOptions'=>array(
+						'data-toggle'=>'modal',
+						'data-target'=>'#modalUser',
+						'style'	=> 'float:left;margin-left: 10px'
+				),
+		)); 
+		
 	?>
+	
+	<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'modalUser','htmlOptions' => array('style'=>'width:620px;padding:20px'))); ?>
+	<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    	<h3>Crear Usuario</h3>
+	</div>
+	<?php echo $this->renderPartial('../usuario/_form', array('model'=>$model->usuario)); ?>
+	<?php $this->endWidget(); ?>
 </fieldset>
 
 <div id="catalogouser-botones-internos" class="form-actions pull-right">

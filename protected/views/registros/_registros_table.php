@@ -10,6 +10,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	'columns'=>array(
 		array('name' => 'numero_registro','value' => '($data->numero_registro == 0) ? "Sin Definir" : CHtml::encode($data->numero_registro)'),
 		array('name' => 'acronimo','value' => 'CHtml::encode($data->registros_update[0]->acronimo)'),
+		array('name' => 'entidad','value' => 'CHtml::encode($data->entidad->titular)'),
 		array('name' => 'Ciudad','value' => 'CHtml::encode(isset($data->registros_update[0]->county->county_name) ? $data->registros_update[0]->county->county_name : "No Asignado")'),
 		array('name' => 'estado','value' => '($data->estado == 0) ? "Sin Aprobar" : "Aprobado"'),
 		'fecha_dil',

@@ -56,8 +56,10 @@ class LoginForm extends CFormModel
 		if(!$this->hasErrors())
 		{
 			$record = Usuario::model()->findByAttributes(array('username' => $this->username));
-			$this->password = crypt($this->password, $record->password);
-			$this->id = $record->id;
+			if($record){
+				$this->password = crypt($this->password, $record->password);
+				$this->id = $record->id;
+			}
 			$this->_identity=new UserIdentity($this->username,$this->password);
 			if(!$this->_identity->authenticate())
 				$this->addError('password','Nombre de usuario y contraseña incorrectos.');

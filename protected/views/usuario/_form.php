@@ -26,7 +26,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'id'=>'usuario-form',
 		'type'=>'horizontal',
 		'enableClientValidation'=>true,
-		'enableAjaxValidation'=>false,
+		'enableAjaxValidation'=>true,
 ));
 ?>
 

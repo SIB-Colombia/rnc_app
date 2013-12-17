@@ -279,9 +279,13 @@ class EntidadController extends Controller{
 					$model->dilegenciadores->save();
 				}
 				
+				if($model->tipo_titular == 1){
+					$model->representante_legal = "-";
+					$model->tipo_id_rep = 0;
+					$model->representante_id = 0;
+				}
 								
 				$model->dilegenciadores_id	= $model->dilegenciadores->id;
-				//$model->dilegenciadores 	= $dilegenciadores;
 				$model->estado				= 1;
 				$model->fecha_creacion		= Yii::app()->Date->now();
 				
@@ -347,7 +351,7 @@ class EntidadController extends Controller{
 		if(Yii::app()->user->getId() !== null)
 		{
 			$model=$this->loadModel($id);
-			
+			$model->usuario = Usuario::model();
 			if(isset($_REQUEST['Entidad']['aprobado']))
 			{
 				$model->estado = ($_REQUEST['Entidad']['aprobado'] == 0) ? 2 : (($_REQUEST['Entidad']['aprobado'] == 1) ? 3 : 1);

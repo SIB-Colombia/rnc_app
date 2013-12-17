@@ -39,9 +39,9 @@ class Tamano_Coleccion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('tipo_preservacion,unidad_medida,cantidad','required'),
+				array('tipo_preservacion,unidad_medida','required'),
 				array('tipo_preservacion','length','max'=>150),
-				array('cantidad','numerical','integerOnly'=>true),
+				//array('cantidad','numerical','integerOnly'=>true),
 				array('unidad_medida','length','max'=>45),
 				);
 	}

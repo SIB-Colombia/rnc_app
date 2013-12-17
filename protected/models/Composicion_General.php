@@ -8,6 +8,7 @@
  * @property int 	$numero_ejemplares
  * @property float 	$numero_catalogados
  * @property float 	$numero_sistematizados
+ * @property float	$numero_nivel_orden
  * @property float 	$numero_nivel_familia
  * @property float 	$numero_nivel_genero
  * @property float 	$numero_nivel_especie
@@ -68,6 +69,7 @@ class Composicion_General extends CActiveRecord
 				'numero_ejemplares' 	=> 'No. Ejemplares',
 				'numero_catalogados' 	=> 'Ejemplares catalogados',
 				'numero_sistematizados'	=> 'Ejemplares sistematizados',
+				'numero_nivel_orden'	=> 'Ejemplares identificados al nivel de orden',
 				'numero_nivel_familia'	=> 'Ejemplares identificados al nivel de familia',
 				'numero_nivel_genero'	=> 'Ejemplares identificados al nivel de genero',
 				'numero_nivel_especie'	=> 'Ejemplares identificados al nivel de especie'

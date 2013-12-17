@@ -4,7 +4,9 @@
  *
  * The followings are the available columns in table 'tipos_en_coleccion':
  * @property int 	$id
+ * @property string $grupo
  * @property string $informacion_ejemplar
+ * @property string $nombre_cientifico
  * @property int	$cantidad
  *
  *@property int	$Registros_Update_id
@@ -38,7 +40,7 @@ class Tipos_En_Coleccion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('informacion_ejemplar,cantidad','required'),
+				array('informacion_ejemplar,grupo,nombre_cientifico','required'),
 				array('informacion_ejemplar','length','max'=>150),
 		);
 	}
@@ -61,8 +63,10 @@ class Tipos_En_Coleccion extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-				'informacion_ejemplar' 	=> 'Información sobre el ejemplar tipo',
-				'cantidad'				=> 'Cantidad de ejemplares'
+				'informacion_ejemplar' 	=> 'Ejemplar tipo',
+				'cantidad'				=> 'Cantidad de ejemplares',
+				'grupo'					=> 'Grupo',
+				'nombre_cientifico'		=> 'Nombre Científico'
 		);
 	}
 	

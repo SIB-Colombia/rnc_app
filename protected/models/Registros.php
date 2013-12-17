@@ -65,7 +65,7 @@ class Registros extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'numero_registro' 	=> 'Registro No.',
+			'numero_registro' 	=> 'Colección No.',
 			'fecha_dil'			=> 'Última Actualización',
 			'fecha_prox'		=> 'Próxima Actualización',
 			'estado' 			=> 'Estado de la Colección',

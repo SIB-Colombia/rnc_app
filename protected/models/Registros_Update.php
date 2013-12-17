@@ -27,6 +27,7 @@
  * @property int	$tamano_coleccion_total
  * @property int	$tipo_coleccion_total
  * @property int	$terminos
+ * @property string $sistematizacion
  * 
  * @property int $contactos_id
  * @property int $dilegenciadores_id
@@ -76,11 +77,11 @@ class Registros_Update extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('nombre,acronimo,fecha_fund,descripcion,direccion,ciudad_id,telefono,email,cobertura_tax,cobertura_geog,cobertura_temp,listado_anexos,terminos','required'),
+				array('nombre,acronimo,fecha_fund,descripcion,direccion,ciudad_id,telefono,email,cobertura_tax,cobertura_geog,cobertura_temp,listado_anexos,terminos,sistematizacion','required'),
 				array('nombre,direccion,telefono,pagina_web','length','max'=>150),
 				array('acronimo,email','length','max'=>45),
-				array('tamano_coleccion_total,tipo_coleccion_total,telefono','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
-				array('cobertura_tax,cobertura_geog,cobertura_temp,redes_social,info_adicional,comentario','length','max'=>200),
+				array('telefono','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
+				array('cobertura_tax,cobertura_geog,cobertura_temp,redes_social,info_adicional,comentario,sistematizacion','length','max'=>200),
 				array('email', 'email'),
 				
 				/*array('archivoAnexo','file','maxSize' => 20000,'types' => 'pdf,zip'),
@@ -137,9 +138,10 @@ class Registros_Update extends CActiveRecord
 				'tamano_coleccion_total' 	=> 'Total',
 				'tipo_coleccion_total' 		=> 'Total',
 				'archivoAnexo'				=> 'Anexos',
-				'archivoColeccion'			=> 'Fotos y videos de la colección',
+				'archivoColeccion'			=> 'Material divulgativo',
 				'archivoDivulgativo'		=> 'Material divulgativo',
-				'terminos'					=> 'Acepto los términos y condiciones.'
+				'terminos'					=> 'Acepto los términos y condiciones.',
+				'sistematizacion'			=> 'Sistematización y Publicación'
 		);
 	}
 	
@@ -215,6 +217,11 @@ class Registros_Update extends CActiveRecord
 		$criteria = new CDbCriteria;
 		
 		$criteria->compare('t.registros_id', $id);
+		
+		if(Yii::app()->user->getState("roles") == "admin"){
+			$criteria->addCondition('t.estado != 0');
+		}
+		
 		$criteria->order = 'fecha_act DESC';
 		
 		$criteria->with = array('county');

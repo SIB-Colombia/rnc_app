@@ -67,7 +67,7 @@ class Entidad extends CActiveRecord
 				array('titular,telefono,direccion,representante_legal,email', 'length', 'max'=>150),
 				array('nit,representante_id','length', 'max'=>64),
 				array('email', 'email'),
-				array('telefono,nit','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
+				array('telefono,nit,representante_id','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				//array('titular,nit,representante_id,direccion,telefono,email,dependencia_d,cargo_d,telefono_d,', 'safe', 'on'=>'search'),
@@ -181,7 +181,7 @@ class Entidad extends CActiveRecord
 	
 	public function ListarCiudades()
 	{
-		return CHtml::listData(County::model()->findAll(County::model()->listCounty()), 'id','county_name');
+		return CHtml::listData(County::model()->findAll(County::model()->listCounty()), 'iso_county_code','county_name');
 	}
 	public function ListarUsuarios($tipo = "")
 	{

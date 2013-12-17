@@ -220,7 +220,7 @@ class RegistrosController extends Controller{
 								
 								$model->registros_update->tamano_coleccion->tipo_preservacion 	= $valor_col['tipo_preservacion'];
 								$model->registros_update->tamano_coleccion->unidad_medida		= $valor_col['unidad_medida'];
-								$model->registros_update->tamano_coleccion->cantidad			= $valor_col['cantidad'];
+								//$model->registros_update->tamano_coleccion->cantidad			= $valor_col['cantidad'];
 								$model->registros_update->tamano_coleccion->Registros_update_id = $model->registros_update->id;
 									
 								$model->registros_update->tamano_coleccion->save();
@@ -231,8 +231,10 @@ class RegistrosController extends Controller{
 							foreach ($_POST['Tipos_En_Coleccion'] as $valor_tipo){
 								$model->registros_update->tipos_en_coleccion	= new Tipos_En_Coleccion();
 									
+								$model->registros_update->tipos_en_coleccion->grupo					= $valor_tipo['grupo'];
 								$model->registros_update->tipos_en_coleccion->informacion_ejemplar	= $valor_tipo['informacion_ejemplar'];
-								$model->registros_update->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
+								$model->registros_update->tipos_en_coleccion->nombre_cientifico		= $valor_tipo['nombre_cientifico'];
+								//$model->registros_update->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
 								$model->registros_update->tipos_en_coleccion->Registros_update_id	= $model->registros_update->id;
 									
 								$model->registros_update->tipos_en_coleccion->save();
@@ -247,6 +249,7 @@ class RegistrosController extends Controller{
 								$model->registros_update->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
 								$model->registros_update->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
 								$model->registros_update->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+								$model->registros_update->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
 								$model->registros_update->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
 								$model->registros_update->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
 								$model->registros_update->composicion_general->numero_nivel_especie		= $valor_comp['numero_nivel_especie'];
@@ -337,16 +340,19 @@ class RegistrosController extends Controller{
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 					
 					if($model->estado == 1){
+						$this->redirect(array('view','id'=>$model->id));
+						/*
 						$this->render('mensaje',array(
 								'model'=>$mensaje,
 								'registro' => $model
 						));
-						Yii::app()->end();
+						Yii::app()->end();*/
 					}else{
-						$this->render('index',array(
+						$this->redirect(array('view','id'=>$model->id));
+						/*$this->render('index',array(
 								'model'=>$model
 						));
-						Yii::app()->end();
+						Yii::app()->end();*/
 						//$this->redirect(array('view','id'=>$model->id));
 					}
 					
@@ -594,17 +600,19 @@ class RegistrosController extends Controller{
 				$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 					
 				if($model->registros_update->estado == 1){
-					$this->render('mensaje',array(
+					/*$this->render('mensaje',array(
 							'model'=>$mensaje,
 							'registro' => $model
 					));
-					Yii::app()->end();
+					Yii::app()->end();*/
+					$this->redirect(array('view','id'=>$model->id));
 				}else{
+					/*
 					$this->render('index',array(
 							'model'=>$model
 					));
-					Yii::app()->end();
-					//$this->redirect(array('view','id'=>$model->id));
+					Yii::app()->end();*/
+					$this->redirect(array('view','id'=>$model->id));
 				}
 					
 			}
@@ -645,7 +653,8 @@ class RegistrosController extends Controller{
 					
 					$criteria2 = new CDbCriteria;
 					$criteria2->compare("estado", 2);
-					$registros_update_ant = Registros_Update::model()->find($criteria);
+					$criteria2->compare("registros_id",$model->id);
+					$registros_update_ant = Registros_Update::model()->find($criteria2);
 					
 					$model->numero_registro	= $_POST['Registros']['numero_registro'];
 					$model->registros_update->comentario = $_POST['Registros_Update']['comentario'];
@@ -653,7 +662,7 @@ class RegistrosController extends Controller{
 					if($_POST['Registros_Update']['aprobado'] == 0){
 						if(isset($registros_update_ant->id)){
 							$registros_update_ant->estado = 4;
-							$model->registros_update->save();
+							$registros_update_ant->save();
 						}
 						$model->registros_update->estado = 2;
 						$model->estado = 1;
@@ -687,11 +696,12 @@ class RegistrosController extends Controller{
 					$mensaje->setTitulo("Envío Exitoso");
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 						
-					$this->render('mensaje',array(
+					/*$this->render('mensaje',array(
 							'model'=>$mensaje,
 							'registro' => $model
 					));
-					Yii::app()->end();
+					Yii::app()->end();*/
+					$this->redirect(array('view','id'=>$model->id));
 				
 				}
 			}
@@ -895,17 +905,18 @@ class RegistrosController extends Controller{
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 						
 					if($model->estado == 1){
-						$this->render('mensaje',array(
+						/*$this->render('mensaje',array(
 								'model'=>$mensaje,
 								'registro' => $model
 						));
-						Yii::app()->end();
+						Yii::app()->end();*/
+						$this->redirect(array('view','id'=>$model->id));
 					}else{
-						$this->render('index',array(
+						/*$this->render('index',array(
 								'model'=>$model
 						));
-						Yii::app()->end();
-						//$this->redirect(array('view','id'=>$model->id));
+						Yii::app()->end();*/
+						$this->redirect(array('view','id'=>$model->id));
 					}
 						
 				}
@@ -966,6 +977,31 @@ class RegistrosController extends Controller{
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 		}else{
 			$this->redirect(array("admin/login"));
+		}
+	}
+	
+	public function actionDeleteFileAjax(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_POST['id'])){
+				
+				$modelArchivo = Archivos::model()->findByPk($_POST['id']);
+				if(unlink($modelArchivo->ruta.DIRECTORY_SEPARATOR.$modelArchivo->nombre)){
+					if($modelArchivo->delete()){
+						echo 1;
+					}else{
+						echo 0;
+					}
+				}else {
+					echo 0;
+				}
+			}else if(isset($_POST['name'])){
+				if(unlink("tmp".DIRECTORY_SEPARATOR.$_POST['name'])){
+					echo 1;
+				}else {
+					echo 0;
+				}
+			}
 		}
 	}
 }

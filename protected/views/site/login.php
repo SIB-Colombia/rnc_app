@@ -52,7 +52,7 @@ $(document).ready(function() {
 			Digite la letras que se muestran en el código de verificación.
 			<br/>Puede escribirlas en mayúscula o minúscula.
 			</div>
-			<?php //echo $form->error($model,'codigoVerificacion'); ?>
+			<?php echo $form->error($model,'codigoVerificacion'); ?>
 	</div>
 	<?php endif; ?>
     

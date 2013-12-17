@@ -3,8 +3,9 @@
  * This is the model class for table "county".
  *
  * The followings are the available columns in table 'entidad':
- * @property int $id
- * @property int $department_id
+ * @property int 	$id
+ * @property string $iso_county_code
+ * @property int 	$department_id
  * @property string $county_name
  *
  *

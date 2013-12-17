@@ -7,7 +7,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	'columns'=>array(
 		'acronimo',
 		array('name' => 'Ciudad','value' => 'CHtml::encode(isset($data->county->county_name) ? $data->county->county_name : "No Asignado")'),
-		array('name' => 'estado','value' => '($data->estado == 0) ? "Sin Enviar" : (($data->estado == 1) ? "En Revisión" : (($data->estado == 2) ? "Aprobado" : "No Aprobado"))'),
+		array('name' => 'estado','value' => '($data->estado == 0) ? "Sin Enviar" : (($data->estado == 1) ? "En Revisión" : (($data->estado == 2) ? "Aprobado" : (($data->estado == 3) ? "No Aprobado" : "Aprobado")))'),
 		'fecha_act',
 		'fecha_rev',
 		array(

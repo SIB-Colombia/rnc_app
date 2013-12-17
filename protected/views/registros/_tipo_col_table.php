@@ -7,7 +7,8 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	//'responsiveTable' => true,
 	//'filter'=>$model,
 	'columns'=>array(
+		'grupo',
 		'informacion_ejemplar',
-		'cantidad',
+		'nombre_cientifico',
 	),
 )); ?>

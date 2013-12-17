@@ -33,6 +33,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 					'data'=>$model,
 					'attributes'=>array(
 						'nombre',
+						'registros.numero_registro',
 						'acronimo',
 						'fecha_fund',
 						'descripcion',

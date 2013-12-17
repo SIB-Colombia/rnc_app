@@ -35,13 +35,21 @@ $this->widget('zii.widgets.CDetailView', array(
 		),
 		'titular',
 		'nit',
-		'representante_legal',
+		array(
+			'name' => 'representante_legal',
+			'type'	=> 'raw',
+			'value' => CHtml::encode(($model->representante_legal == "-") ? "No Asignado" : $model->representante_legal)
+		),
 		array(
 			'name' => 'tipo_id_rep',
 			'type'	=> 'raw',
 			'value' => CHtml::encode(($model->tipo_id_rep == 1) ? "Cédula de Ciudadanía" : (($model->tipo_id_rep == 2) ? "Cédula de Extranjería" : "No Asignado"))
 		),
-		'representante_id',
+		array(
+			'name' => 'representante_id',
+			'type'	=> 'raw',
+			'value' => CHtml::encode(($model->representante_id == 0) ? "No Asignado" : $model->representante_id)
+		),
 		array(
 			'name' => 'ciudad_id',
 			'type'	=> 'raw',
