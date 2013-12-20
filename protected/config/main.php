@@ -5,6 +5,7 @@
 
 // Define a path alias for the Bootstrap extension as it's used internally.
 // In this example we assume that you unzipped the extension under protected/extensions.
+
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 
 // This is the main Web application configuration. Any writable
@@ -27,6 +28,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'ext.yii-mail.YiiMailMessage'
 	),
 
 	'modules'=>array(
@@ -44,6 +46,18 @@ return array(
 
 	// application components
 	'components'=>array(
+		'mail' => array(
+			'class' => 'ext.yii-mail.YiiMail',
+			'transportType' => 'smtp',
+			'transportOptions' => array(
+				'host' => 'smtp.gmail.com',
+				'username'=>'andresciceri@gmail.com',
+				'password'=>'Andr35321',
+				'port'=>'465',
+				'encryption' => 'ssl'
+			),
+			'viewPath' => 'application.views.mail',
+		),
 		'Date' => array(
 				'class'=>'application.components.Date',
 				//And integer that holds the offset of hours from GMT e.g. 4 for GMT +4
@@ -107,10 +121,10 @@ return array(
 				),*/
 				// uncomment the following to show log messages on web pages
 				
-				/*array(
+				array(
 					'class'=>'CWebLogRoute',
 					'levels'=>'error, warning, trace, profile, info',
-				),*/
+				),
 			),
 		),
 		/*'bootstrap'=>array(

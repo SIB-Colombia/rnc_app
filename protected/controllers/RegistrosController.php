@@ -695,7 +695,18 @@ class RegistrosController extends Controller{
 					$mensaje = new Mensaje();
 					$mensaje->setTitulo("Envío Exitoso");
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
-						
+					
+					if($model->registros_update->estado != 1){
+						$message 			= new YiiMailMessage;
+						$message->view 		= "aprobarRegistro";
+						$params				= array('data' => $model);
+						$message->subject	= 'Aprobación de Registro de Colección '.$model->numero_registro.'- Sistema RNC';
+						$message->from		= 'hescobar@humboldt.org';
+						$message->setBody($params,'text/html');
+						$message->addto($model->entidad->email);
+						Yii::app()->mail->send($message);
+					}
+					
 					/*$this->render('mensaje',array(
 							'model'=>$mensaje,
 							'registro' => $model

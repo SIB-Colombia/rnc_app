@@ -21,9 +21,11 @@ class Reporte extends CFormModel
 	public $informacionPagina;
 	public $tamanoTipo;
 	public $tamanoUnidad;
-	public $tamanoCantidad;
+	//public $tamanoCantidad;
+	public $tipoGrupo;
 	public $tipoEjemplar;
-	public $tipoCantidad;
+	public $tipoNombreCientifico;
+	//public $tipoCantidad;
 	public $nivelGrupo;
 	public $nivelEjemplares;
 	public $nivelCatalogados;
@@ -31,6 +33,7 @@ class Reporte extends CFormModel
 	public $nivelFamilia;
 	public $nivelGenero;
 	public $nivelEspecie;
+	public $sistematizacion;
 	public $contactoNombre;
 	public $contactoCargo;
 	public $contactoDependencia;
@@ -83,7 +86,9 @@ class Reporte extends CFormModel
 				'tamanoTipo'				=> 'Tipo de preservación',
 				'tamanoUnidad'				=> 'Unidad de medida',
 				'tamanoCantidad'			=> 'Cantidad de ejemplares',
+				'tipoGrupo'					=> 'Grupo',
 				'tipoEjemplar'				=> 'Información sobre el ejemplar tipo',
+				'tipoNombreCientifico'		=> 'Nombre Científico',
 				'tipoCantidad'				=> 'Cantidad de ejemplares',
 				'nivelGrupo'				=> 'Grupo taxonómico o biológico',
 				'nivelEjemplares'			=> 'No. Ejemplares',
@@ -92,6 +97,7 @@ class Reporte extends CFormModel
 				'nivelFamilia'				=> 'Ejemplares identificados al nivel de familia',
 				'nivelGenero'				=> 'Ejemplares identificados al nivel de genero',
 				'nivelEspecie'				=> 'Ejemplares identificados al nivel de especie',
+				'sistematizacion'			=> 'Sistematización y Publicación',
 				'contactoNombre'			=> 'Persona de contacto',
 				'contactoCargo'				=> 'Cargo',
 				'contactoDependencia'		=> 'Dependencia',

@@ -74,13 +74,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		
 	?>
 	
-	<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'modalUser','htmlOptions' => array('style'=>'width:620px;padding:20px'))); ?>
-	<div class="modal-header">
-    <a class="close" data-dismiss="modal">&times;</a>
-    	<h3>Crear Usuario</h3>
-	</div>
-	<?php echo $this->renderPartial('../usuario/_form', array('model'=>$model->usuario)); ?>
-	<?php $this->endWidget(); ?>
 </fieldset>
 
 <div id="catalogouser-botones-internos" class="form-actions pull-right">
@@ -89,3 +82,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 </div>
 <?php $this->endWidget(); ?>
 </div>
+
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'modalUser','htmlOptions' => array('style'=>'width:620px;padding:20px'))); ?>
+	<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    	<h3>Crear Usuario</h3>
+	</div>
+<?php echo $this->renderPartial('../usuario/_form', array('model'=>$model->usuario,'ajaxMode' => true)); ?>
+<?php $this->endWidget(); ?>

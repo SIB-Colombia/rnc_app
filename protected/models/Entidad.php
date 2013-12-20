@@ -174,6 +174,14 @@ class Entidad extends CActiveRecord
 		
 	}
 	
+	public function listarEntidades(){
+		$criteria=new CDbCriteria;
+		
+		$criteria->compare('estado',2);
+		
+		return CHtml::listData($this->findAll($criteria), 'id','titular');
+	}
+	
 	public function ListarEstado()
 	{
 		return CHtml::listData([['id' => 1, 'nombre' => 'En Espera'],['id' => 2, 'nombre' => 'Aprobado'],['id' => 3, 'nombre' => ' No Aprobado']], 'id','nombre');

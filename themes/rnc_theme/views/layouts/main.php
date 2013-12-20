@@ -76,7 +76,8 @@
 								'items' => array(
 									array('label' => 'Admin', 'icon' => '', 'url' => array('admin/index')),
 									array('label' => 'Colecciones', 'icon' => '', 'url' => array('coleccion/index')),
-									array('label' => 'Solicitar Usuario', 'icon' => '', 'url' => array('entidad/solicitud'))
+									array('label' => 'Solicitar Usuario', 'icon' => '', 'url' => array('entidad/solicitud')),
+									array('label' => 'Contacto', 'icon' => '', 'url' => array('pqrs/create'))
 								)
 							));
 							?>

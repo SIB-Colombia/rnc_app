@@ -18,7 +18,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	    		'headerIcon' => 'icon-th-list',
 	    		// when displaying a table, if we include bootstra-widget-table class
 	    		// the table will be 0-padding to the box
-	    		'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+	    		'htmlOptions' => array('class'=>'bootstrap-widget-table panelInicio'),
 	    ));
 	?>
 	<?php echo $this->renderPartial('../entidad/_entidad_sol_lista', array('listEntidades' => $entidad->ListarSolicitudEntidad()));?>
@@ -33,7 +33,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	    		'headerIcon' => 'icon-th-list',
 	    		// when displaying a table, if we include bootstra-widget-table class
 	    		// the table will be 0-padding to the box
-	    		'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+	    		'htmlOptions' => array('class'=>'bootstrap-widget-table panelInicio'),
 	    ));
 	?>
 	<?php echo $this->renderPartial('../registros/_registro_sol_lista', array('listRegistros' => $registro->listarSolicitudRegistro()));?>
@@ -44,11 +44,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	<div class="table-panel">
 	<?php 
 		$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-				'title' => 'PQRS',
+				'title' => 'Contactos',
 	    		'headerIcon' => 'icon-th-list',
 	    		// when displaying a table, if we include bootstra-widget-table class
 	    		// the table will be 0-padding to the box
-	    		'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+	    		'htmlOptions' => array('class'=>'bootstrap-widget-table panelInicio'),
 	    ));
 	?>
 	
@@ -70,7 +70,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	    		'headerIcon' => 'icon-th-list',
 	    		// when displaying a table, if we include bootstra-widget-table class
 	    		// the table will be 0-padding to the box
-	    		'htmlOptions' => array('class'=>'bootstrap-widget-table'),
+	    		'htmlOptions' => array('class'=>'bootstrap-widget-table panelInicio'),
 	    ));
 	?>
 	<?php echo $this->renderPartial('../registros/_registro_panel_lista', array('listRegistros' => $registro->listarPanelRegistro()));?>

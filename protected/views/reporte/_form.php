@@ -70,8 +70,10 @@ function seleccionaTodo(){
 	<fieldset>
 		<legend class="form_legend">Tipos de preservación</legend>
 		<?php 
+			echo $form->checkBoxRow($model, 'tipoGrupo');
 			echo $form->checkBoxRow($model, 'tipoEjemplar');
-			echo $form->checkBoxRow($model, 'tipoCantidad');
+			echo $form->checkBoxRow($model, 'tipoNombreCientifico');
+			//echo $form->checkBoxRow($model, 'tipoCantidad');
 		?>
 	</fieldset>
 	
@@ -85,6 +87,7 @@ function seleccionaTodo(){
 			echo $form->checkBoxRow($model, 'nivelFamilia');
 			echo $form->checkBoxRow($model, 'nivelGenero');
 			echo $form->checkBoxRow($model, 'nivelEspecie');
+			echo $form->checkBoxRow($model, 'sistematizacion');
 		?>
 	</fieldset>
 	
@@ -93,7 +96,7 @@ function seleccionaTodo(){
 		<?php 
 			echo $form->checkBoxRow($model, 'tamanoTipo');
 			echo $form->checkBoxRow($model, 'tamanoUnidad');
-			echo $form->checkBoxRow($model, 'tamanoCantidad');
+			//echo $form->checkBoxRow($model, 'tamanoCantidad');
 		?>
 	</fieldset>
 	

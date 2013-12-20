@@ -308,6 +308,16 @@ class EntidadController extends Controller{
 				$mensaje->setTitulo("Envío Exitoso");
 				$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 				
+				$message 			= new YiiMailMessage;
+				$message->view 		= "solicitudEntidad";
+				//$data 			= "Mensaje prueba";
+				$params				= array('data' => $model);
+				$message->subject	= 'Certificado de Solicitud de Usuario Sistema RNC';
+				$message->from		= 'hescobar@humboldt.org';
+				$message->setBody($params,'text/html');
+				$message->addto('andresciceri@hotmail.com');
+				Yii::app()->mail->send($message);
+				
 				$this->render('mensaje',array(
 						'model'=>$mensaje,
 				));
@@ -377,7 +387,29 @@ class EntidadController extends Controller{
 				}
 				
 				if($success_saving_all){
-								
+					if($model->estado != 1){
+						$user = "";
+						$password = "";
+						if($model->estado == 2){
+							$usuario 			= Usuario::model()->findByPk($model->usuario_id);
+							$user				= $usuario->username;
+							$password 			= $usuario->password;
+							$usuario->password	= md5($usuario->password);
+							$usuario->password	= crypt($usuario->password, self::blowfishSalt());
+							
+							$usuario->save();
+						}
+						
+						$message 			= new YiiMailMessage;
+						$message->view 		= "aprobarEntidad";
+						$params				= array('data' => $model,'user' => $user,'pass' => $password);
+						$message->subject	= 'Aprobación de Solicitud Sistema RNC';
+						$message->from		= 'hescobar@humboldt.org';
+						$message->setBody($params,'text/html');
+						$message->addto($model->email);
+						Yii::app()->mail->send($message);
+					}
+					
 					$this->redirect(array('index'));
 				
 					Yii::app()->end();
@@ -397,6 +429,30 @@ class EntidadController extends Controller{
 		}else{
 			$this->redirect(array("admin/login"));
 		}
+	}
+	
+	/**
+	 * Generate a random salt in the crypt(3) standard Blowfish format.
+	 *
+	 * @param int $cost Cost parameter from 4 to 31.
+	 *
+	 * @throws Exception on invalid cost parameter.
+	 * @return string A Blowfish hash salt for use in PHP's crypt()
+	 */
+	function blowfishSalt($cost = 13){
+		if(!is_numeric($cost) || $cost < 4 || $cost > 13){
+			throw new Exception("El costo debe estar entre 4 y 31");
+		}
+	
+		$rand = array();
+		for ($i = 0; $i < 8; $i++) {
+			$rand[] = pack('S', mt_rand(0, 0xffff));
+		}
+		$rand[] = substr(microtime(), 2, 6);
+		$rand 	= sha1(implode('', $rand), true);
+		$salt	= '$2a$'.sprintf('%02d',$cost).'$';
+		$salt	.= strtr(substr(base64_encode($rand), 0, 22), array('+' => '.'));
+		return  $salt;
 	}
 	
 }

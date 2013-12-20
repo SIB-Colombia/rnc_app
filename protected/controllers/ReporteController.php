@@ -65,16 +65,20 @@ class ReporteController extends Controller{
 				$dataReporte[0]['coberturaTemporal'] 		= 'Cobertura temporal';
 				$dataReporte[0]['tamanoTipo']		 		= 'Tipo de preservación';
 				$dataReporte[0]['tamanoUnidad']		 		= 'Unidad de medida';
-				$dataReporte[0]['tamanoCantidad']	 		= 'Cantidad de ejemplares';
+				//$dataReporte[0]['tamanoCantidad']	 		= 'Cantidad de ejemplares';
 				$dataReporte[0]['nivelGrupo']		 		= 'Grupo taxonómico o biológico';
 				$dataReporte[0]['nivelEjemplares']	 		= 'No. Ejemplares';
 				$dataReporte[0]['nivelCatalogados']	 		= 'Ejemplares catalogados';
 				$dataReporte[0]['nivelSistematizados'] 		= 'Ejemplares sistematizados';
+				$dataReporte[0]['nivelOrden']		 		= 'Ejemplares identificados al nivel de orden';
 				$dataReporte[0]['nivelFamilia']		 		= 'Ejemplares identificados al nivel de familia';
 				$dataReporte[0]['nivelGenero']		 		= 'Ejemplares identificados al nivel de genero';
 				$dataReporte[0]['nivelEspecie']		 		= 'Ejemplares identificados al nivel de especie';
+				$dataReporte[0]['sistematizacion']	 		= 'Sistematización y Publicación';
+				$dataReporte[0]['tipoGrupo']		 		= 'Grupo';
 				$dataReporte[0]['tipoEjemplar']		 		= 'Información sobre el ejemplar tipo';
-				$dataReporte[0]['tipoCantidad']		 		= 'Cantidad de ejemplares';
+				$dataReporte[0]['tipoNombreCientifico']		= 'Nombre Científico';
+				//$dataReporte[0]['tipoCantidad']		 		= 'Cantidad de ejemplares';
 				$dataReporte[0]['documentoAnexos']	 		= 'Listado de anexos';
 				$dataReporte[0]['informacionAdicional']	 	= 'Información adicional';
 				$dataReporte[0]['informacionPagina']	 	= 'Página web de la colección';
@@ -122,11 +126,11 @@ class ReporteController extends Controller{
 						if(isset($data->tamano_coleccion[$k])){
 							$dataReporte[$cont]['tamanoTipo'] 			= $data->tamano_coleccion[$k]->tipo_preservacion;
 							$dataReporte[$cont]['tamanoUnidad'] 		= $data->tamano_coleccion[$k]->unidad_medida;
-							$dataReporte[$cont]['tamanoCantidad']		= $data->tamano_coleccion[$k]->cantidad;
+							//$dataReporte[$cont]['tamanoCantidad']		= $data->tamano_coleccion[$k]->cantidad;
 						}else {
 							$dataReporte[$cont]['tamanoTipo'] 			= "-";
 							$dataReporte[$cont]['tamanoUnidad'] 		= "-";
-							$dataReporte[$cont]['tamanoCantidad']		= "-";
+							//$dataReporte[$cont]['tamanoCantidad']		= "-";
 						}
 						
 						if(isset($data->composicion_general[$k])){
@@ -134,9 +138,11 @@ class ReporteController extends Controller{
 							$dataReporte[$cont]['nivelEjemplares']		= $data->composicion_general[$k]->numero_ejemplares;
 							$dataReporte[$cont]['nivelCatalogados']		= $data->composicion_general[$k]->numero_catalogados;
 							$dataReporte[$cont]['nivelSistematizados']	= $data->composicion_general[$k]->numero_sistematizados;
+							$dataReporte[$cont]['nivelOrden']			= $data->composicion_general[$k]->numero_nivel_orden;
 							$dataReporte[$cont]['nivelFamilia']			= $data->composicion_general[$k]->numero_nivel_familia;
 							$dataReporte[$cont]['nivelGenero']			= $data->composicion_general[$k]->numero_nivel_genero;
 							$dataReporte[$cont]['nivelEspecie']			= $data->composicion_general[$k]->numero_nivel_especie;
+							$dataReporte[$cont]['sistematizacion']		= $data->sistematizacion;
 						}else {
 							$dataReporte[$cont]['nivelGrupo']			= "-";
 							$dataReporte[$cont]['nivelEjemplares']		= "-";
@@ -148,11 +154,13 @@ class ReporteController extends Controller{
 						}
 							
 						if(isset($data->tipos_en_coleccion[$k])){
+							$dataReporte[$cont]['tipoGrupo']			= $data->tipos_en_coleccion[$k]->grupo;
 							$dataReporte[$cont]['tipoEjemplar']			= $data->tipos_en_coleccion[$k]->informacion_ejemplar;
-							$dataReporte[$cont]['tipoCantidad']			= $data->tipos_en_coleccion[$k]->cantidad;
+							$dataReporte[$cont]['tipoNombreCientifico']	= $data->tipos_en_coleccion[$k]->nombre_cientifico;
+							//$dataReporte[$cont]['tipoCantidad']			= $data->tipos_en_coleccion[$k]->cantidad;
 						}else {
 							$dataReporte[$cont]['tipoEjemplar']			= "-";
-							$dataReporte[$cont]['tipoCantidad']			= "-";
+							//$dataReporte[$cont]['tipoCantidad']			= "-";
 						}
 						
 						$dataReporte[$cont]['documentoAnexos']			= $data->listado_anexos;

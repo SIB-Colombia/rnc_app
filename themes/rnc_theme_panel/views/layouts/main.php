@@ -93,7 +93,7 @@
 										array('label' => 'Visitas'),
 										array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('visitas/create')),
 										array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('visitas/index')),
-										array('label' => 'PQRS'),
+										array('label' => 'CONTACTOS'),
 										array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('pqrs/create')),
 										array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('pqrs/index')),
 										array('label' => 'Reportes'),
@@ -116,7 +116,7 @@
 											array('label' => 'Consultas'),
 											array('label' => 'Coleccion', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
 											array('label' => 'Bitácora Colección', 'icon' => 'icon-plus', 'url' => array('visita/create')),
-											array('label' => 'PQRS'),
+											array('label' => 'CONTACTOS'),
 											array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('pqrs/create')),
 											array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('pqrs/index'))
 									)

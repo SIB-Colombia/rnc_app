@@ -79,14 +79,38 @@ class UsuarioController extends Controller{
 			if(isset($_POST['Usuario']))
 			{
 				$model->attributes=$_POST['Usuario'];
-				if($model->password === $model->password2){
-					$model->password	= md5($model->password);
-					$model->password	= crypt($model->password, self::blowfishSalt());
-					$model->password2	= $model->password;
+				//$this->performAjaxValidation($model);
+				if($model->password != "" && $model->password2 != ""){
+					
+					if($model->password === $model->password2){
+						if($model->role == "admin"){
+							$model->password	= md5($model->password);
+							$model->password	= crypt($model->password, self::blowfishSalt());
+							$model->password2	= $model->password;
+						}
+					}
 				}
 					
-				if($model->save())
-					$this->redirect(array('view','id'=>$model->id));
+				if($model->save()){
+					if (Yii::app()->request->isAjaxRequest){
+						echo CJSON::encode(array(
+								'status'=>'success',
+								'idUser'=> $model->id
+						));
+						exit;
+					}else{
+						$this->redirect(array('view','id'=>$model->id));
+					}
+				}else{
+					if (Yii::app()->request->isAjaxRequest)
+					{
+						echo CJSON::encode(array(
+								'status'=>'failure',
+								'div'=>$this->renderPartial('_form', array('model'=>$model), true)));
+						exit;
+					}
+				}
+					
 			}
 		
 			$this->render('create',array(
@@ -114,15 +138,30 @@ class UsuarioController extends Controller{
 			if(isset($_POST['Usuario']))
 			{
 				$model->attributes=$_POST['Usuario'];
+				
+				$model->newpassword = $_POST['Usuario']['newpassword'];
 				$model->password = $model->newpassword;
+				$password = "";
 				if($model->password === $model->password2){
+					$password			= $model->password;
+					
 					$model->password	= md5($model->password);
 					$model->password	= crypt($model->password, self::blowfishSalt());
 					$model->newpassword = $model->password;
 					$model->password2	= $model->password;
 				}
-				if($model->save())
+				if($model->save()){
+					$message 			= new YiiMailMessage;
+					$message->view 		= "actualizaUsuario";
+					$params				= array('data' => $model,'user' => $model->username,'pass' => $password);
+					$message->subject	= 'Actualizar Usuario Sistema RNC';
+					$message->from		= 'hescobar@humboldt.org';
+					$message->setBody($params,'text/html');
+					$message->addto($model->email);
+					Yii::app()->mail->send($message);
+					
 					$this->redirect(array('view','id'=>$model->id));
+				}
 			}
 		
 			$this->render('update',array(

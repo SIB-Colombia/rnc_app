@@ -177,7 +177,8 @@ table.actionsList {
 
 .control-group{
 	float: left;
-	margin-top: 0 !important
+	margin-top: 0 !important;
+	clear: left
 }
 
 .icon-info-sign{

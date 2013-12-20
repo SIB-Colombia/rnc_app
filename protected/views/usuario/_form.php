@@ -18,6 +18,18 @@ function resetForm(id) {
 	});
 }
 
+function enviarFormAjax(){
+
+	$.post("../../usuario/create", $("#usuario-form").serialize(),function(data){
+		if(data.status == 'failure'){
+			$("#usuario-form").remove();
+			$("#modalUser").append(data.div);
+		}else{
+			window.location.href ="<?=Yii::app()->request->requestUri;?>";
+		}
+	},"json");
+}
+
 </script>
 <div class="form">
 
@@ -50,12 +62,17 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				$disable = false;
 			}
 			echo $form->dropDownListRow($model, 'role', array('admin' => 'Admin', 'entidad' => 'Entidad'),array('prompt'=>'Seleccione','disabled'=>$disable));
-
 			
-			?>
+		?>
 				
 		<div id="catalogouser-botones-internos" class="form-actions pull-right">
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
+		<?php 
+			if(isset($ajaxMode)){
+				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Crear' : 'Crear', 'htmlOptions' => array('onclick' => 'enviarFormAjax()'))); 
+			}else{
+				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()')));
+			}
+		?>
     	<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
     	</div>
 
