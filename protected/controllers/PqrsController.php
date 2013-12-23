@@ -58,6 +58,46 @@ class PqrsController extends Controller{
 	{
 		if(Yii::app()->user->getId() !== null)
 		{
+			if(isset($_POST['Pqrs'])){
+				$model = $this->loadModel($id);
+				
+				$model->estado = ($_REQUEST['Pqrs']['aprobado'] == 0) ? 1 : 0;
+				$model->respuesta = $_REQUEST['Pqrs']['respuesta'];
+				
+				$success_saving_all = false;
+				
+				$transaction = Yii::app()->db->beginTransaction();
+				
+				try {
+				
+					if($model->save()){
+						$success_saving_all = true;
+					}
+				
+					$transaction->commit();
+				
+				} catch (Exception $e) {
+					$transaction->rollback();
+					print_r($e->getMessage());
+					Yii::log("Ocurrió un error al enviar solicitud  " . $e->getMessage(), 'error');
+					$success_saving_all = false;
+					Yii::app()->end();
+				}
+				
+				if($success_saving_all){
+								
+					$message 			= new YiiMailMessage;
+					$message->view 		= "responderContacto";
+					//$data 			= "Mensaje prueba";
+					$params				= array('data' => $model);
+					$message->subject	= 'Sistema RNC - Respuesta de Solicitud';
+					$message->from		= 'hescobar@humboldt.org';
+					$message->setBody($params,'text/html');
+					$message->setTo($model->email);
+					Yii::app()->mail->send($message);
+				
+				}
+			}
 			$this->render('view',array(
 					'model'=>$this->loadModel($id),
 			));
@@ -162,24 +202,27 @@ class PqrsController extends Controller{
 			}
 			
 			if($success_saving_all){
-			
+				
+				$emailAdmin			= Usuario::model()->obtenerMailAdmin();
+				$emails				= $model->email.$emailAdmin;
+				$emails				= explode(',', $emails);
+				
+				$message 			= new YiiMailMessage;
+				$message->view 		= "enviarContacto";
+				//$data 			= "Mensaje prueba";
+				$params				= array('data' => $model);
+				$message->subject	= 'Sistema RNC - Envío de Solicitud';
+				$message->from		= 'hescobar@humboldt.org';
+				$message->setBody($params,'text/html');
+				$message->setTo($emails);
+				Yii::app()->mail->send($message);
+				
 				if(Yii::app()->user->getId() !== null){
 					$this->redirect(array('view','id'=>$model->id));
 				}else{
 					$mensaje = new Mensaje();
 					$mensaje->setTitulo("Envío Exitoso");
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará la información y dará respuesta a la misma.");
-					
-					/*
-					$message 			= new YiiMailMessage;
-					$message->view 		= "solicitudEntidad";
-					//$data 			= "Mensaje prueba";
-					$params				= array('data' => $model);
-					$message->subject	= 'Certificado de Solicitud de Usuario Sistema RNC';
-					$message->from		= 'hescobar@humboldt.org';
-					$message->setBody($params,'text/html');
-					$message->addto('andresciceri@hotmail.com');
-					Yii::app()->mail->send($message);*/
 					
 					$this->render('mensaje',array(
 							'model'=>$mensaje,

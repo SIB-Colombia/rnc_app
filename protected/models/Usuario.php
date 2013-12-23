@@ -101,5 +101,20 @@ class Usuario extends CActiveRecord
 				'criteria'=>$criteria,
 		));
 	}
+	
+	public function obtenerMailAdmin(){
+		
+		$criteria=new CDbCriteria;
+		
+		$criteria->compare('role','admin');
+		
+		$users = $this->findAll($criteria);
+		$emails = '';
+		foreach ($users as $user){
+			$emails .= ','.$user->email;
+		}
+		
+		return $emails;
+	}
 }
 ?>

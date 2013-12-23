@@ -1,6 +1,6 @@
 <?php $this->widget('bootstrap.widgets.TbExtendedGridView', array(
     'type'=>'striped bordered condensed',
-    'id'=>'entidad-sol-grid',
+    'id'=>'registros-sol-grid',
     'dataProvider'=>$listRegistros,
     'ajaxUrl'=>'',
 	'columns'=>array(

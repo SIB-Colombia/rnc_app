@@ -4,8 +4,20 @@
 Yii::app()->theme = 'rnc_theme_panel';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
-
+$userRole  = Yii::app()->user->getState("roles");
 ?>
+
+<script type="text/javascript">
+function enviarForm(){
+	$("#pqrs-form").submit();
+}
+
+function resetForm(id) {
+	$('#'+id).each(function(){
+	        this.reset();
+	});
+}
+</script>
 
 <div id="header-front">Detalle de la Solicitud: <?php echo $model->id; ?></div>
 
@@ -25,11 +37,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 			'id',
 			'nombre',
 			'registros.numero_registro',
-			array(
-				'name' => 'titular',
-				'type'	=> 'raw',
-				'value' => CHtml::encode($model->entidad->titular)
-			),
+			'entidad.titular',
 			'email',
 			array(
 				'name' => 'tipo_solicitud',
@@ -52,5 +60,27 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 	<legend class="form_legend">Archivos</legend>
        	<?php echo $this->renderPartial('_archivos_pqrs', array('listArchivos'=>$model->dataArchivosList($model->id))); ?>
 </fieldset>
+
+<?php 
+if($model->estado == 0 && $userRole == 'admin'){
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'pqrs-form',
+		'type'=>'horizontal',
+		'enableClientValidation'=>true,
+		'enableAjaxValidation'=>false,
+));
+?>
+<fieldset>
+	<legend class="form_legend">Responder Solicitud</legend>
+<?php 
+	echo $form->radioButtonListInlineRow($model, 'aprobado', array('Si','No'));
+	echo $form->textAreaRow($model, 'respuesta', array('class'=>'span4', 'rows'=>4));
+?>
+	<div id="catalogouser-botones-internos" class="form-actions pull-right">
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>'Responder', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
+	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
+  	</div>
+</fieldset>
+<?php $this->endWidget(); }?>
 </div>
 </div>

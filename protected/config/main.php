@@ -51,8 +51,8 @@ return array(
 			'transportType' => 'smtp',
 			'transportOptions' => array(
 				'host' => 'smtp.gmail.com',
-				'username'=>'andresciceri@gmail.com',
-				'password'=>'Andr35321',
+				'username'=>'xxxx',
+				'password'=>'xxxxx',
 				'port'=>'465',
 				'encryption' => 'ssl'
 			),
@@ -121,10 +121,10 @@ return array(
 				),*/
 				// uncomment the following to show log messages on web pages
 				
-				array(
+				/*array(
 					'class'=>'CWebLogRoute',
 					'levels'=>'error, warning, trace, profile, info',
-				),
+				),*/
 			),
 		),
 		/*'bootstrap'=>array(

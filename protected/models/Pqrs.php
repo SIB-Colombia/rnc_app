@@ -87,7 +87,7 @@ class Pqrs extends CActiveRecord
 				'archivo' 			=> 'Archivo Anexo',
 				'respuesta'			=> 'Respuesta',
 				'estado' 			=> 'Estado',
-				'aprobado' 			=> 'Aprobado',
+				'aprobado' 			=> 'Cerrado',
 				'numero_registro' 	=> 'Colección No.',
 				'entidad'			=> 'Entidad'
 			);
@@ -114,6 +114,7 @@ class Pqrs extends CActiveRecord
 		}
 		
 		$criteria->with = array('registros');
+		$criteria->order = 'fecha DESC';
 	
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
@@ -143,6 +144,24 @@ class Pqrs extends CActiveRecord
 						'pageSize'=>5,
 				)
 		));
+	}
+	
+	public function ListarSolicitudPqrs()
+	{
+		$criteria = new CDbCriteria;
+	
+		$criteria->compare('t.estado', 0);
+		$criteria->order = 'fecha DESC';
+		$criteria->with = array('registros','entidad');
+		
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort' => false,
+				'pagination'=>array(
+						'pageSize'=>10,
+				)
+		));
+	
 	}
 	
 }

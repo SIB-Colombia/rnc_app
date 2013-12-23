@@ -48,6 +48,7 @@ class AdminController extends Controller{
 			$model = new Admin();
 			$entidad = new Entidad();
 			$registro = new Registros();
+			$pqrs = Pqrs::model();
 			
 			$userRole = Yii::app()->user->getState("roles");
 			if($userRole == "entidad"){
@@ -60,9 +61,10 @@ class AdminController extends Controller{
 			
 				$registro->entidad = $entidad;
 				$registro->Entidad_id = $entidad->id;
+				
 			}
 			
-			$this->render('panel',array('model'=>$model,'entidad' => $entidad,'registro' => $registro));
+			$this->render('panel',array('model'=>$model,'entidad' => $entidad,'registro' => $registro,'pqrs' => $pqrs));
 		}else{
 			$this->redirect(array("admin/login"));
 		}

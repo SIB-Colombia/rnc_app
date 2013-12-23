@@ -51,7 +51,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	    		'htmlOptions' => array('class'=>'bootstrap-widget-table panelInicio'),
 	    ));
 	?>
-	
+	<?php echo $this->renderPartial('../pqrs/_pqrs_sol_lista', array('listPqrs' => $pqrs->listarSolicitudPqrs()));?>
 	<?php $this->endWidget();?>
 	
 	</div>
