@@ -13,14 +13,42 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploa
 <script type="text/javascript">
 <?php 
 	if(isset($model->id)){
-		echo 'urlAjax = "../deleteFileAjax";';	
+		echo 'urlAjax 			= "../deleteFileAjax";';
+		echo 'urlAjaxValidar 	= "../validarColeccionAjax";';
+		echo 'urlAjaxValidarAcr	= "../validarAcronimoAjax";';
 	}else{
-		echo 'urlAjax = "deleteFileAjax";';
+		echo 'urlAjax 			= "deleteFileAjax";';
+		echo 'urlAjaxValidar 	= "validarColeccionAjax";';
+		echo 'urlAjaxValidarAcr	= "validarAcronimoAjax";';
 	}
 ?>
 contTipo 		= 0;
 contTipoCol 	= 0;
 contNivelCat 	= 0;
+
+function validarNumeroColeccion(obj,numero){
+	$.post(urlAjaxValidar,{coleccion: numero},function(data){
+			if(data == 1){
+				$(obj).addClass("error");
+				$(obj).focus();
+				alert("La Colección "+numero+" ya existe en el sistema, diríjase a Actualizar para hacer uso de ella.");
+			}else{
+				$(obj).removeClass("error");
+			}
+		});
+}
+
+function validarAcronimo(obj,acronimo){
+	$.post(urlAjaxValidarAcr,{dato: acronimo},function(data){
+			if(data == 1){
+				$(obj).addClass("error");
+				$(obj).focus();
+				alert("El Acrónimo "+acronimo+" ya existe en el sistema.");
+			}else{
+				$(obj).removeClass("error");
+			}
+		});
+}
 
 function deleteFileAjax(divId,id){
 	
@@ -184,6 +212,7 @@ function enviarData(){
 }
 
 contUp = 0;
+randWord = Math.floor((Math.random()*1000)+1);
 $(function() {
     $('#Registros_Update_archivoAnexo').uploadify({
     	'auto'     		: true,
@@ -192,12 +221,14 @@ $(function() {
     	'width'         : 140,
     	'fileTypeExts'  : '*.pdf;*.zip',
     	'multi'			: true,
+    	'formData'		: {'randWord' : randWord},
     	'swf'      		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.swf',
         'uploader' 		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.php',
         'checkExisting' : '<?=Yii::app()->theme->baseUrl;?>/scripts/check-exists.php',
+        
 		'onUploadComplete' : function(file){
 			
-			dataFile = file.name+'/'+file.type+'/'+file.size;
+			dataFile = randWord+'_'+file.name+'/'+file.type+'/'+file.size;
 			val_aux	 = $('#Registros_Update_archivosAnexos').val();
 
 			if(val_aux.trim() == ''){
@@ -226,12 +257,13 @@ $(function() {
     	'width'         : 140,
     	'fileTypeExts'  : '*.jpg;*.gif;*.jpeg;*.avi;*.mp4;*.mp3;*.pdf;*.jpg;*.gif;*.jpeg',
     	'multi'			: true,
+    	'formData'		: {'randWord' : randWord},
     	'swf'      		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.swf',
         'uploader' 		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.php',
         'checkExisting' : '<?=Yii::app()->theme->baseUrl;?>/scripts/check-exists.php',
 		'onUploadComplete' : function(file){
 
-			dataFile = file.name+'/'+file.type+'/'+file.size;
+			dataFile = randWord+'_'+file.name+'/'+file.type+'/'+file.size;
 			val_aux	 = $('#Registros_Update_archivosColecciones').val();
 
 			if(val_aux.trim() == ''){
@@ -299,7 +331,12 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<?php 
 					echo $form->textFieldRow($model, 'fecha_dil', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
 					echo $form->hiddenField($model->registros_update, 'estado');
-					echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					if(isset($act)){
+						echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'disabled'=>true));
+					}else{
+						echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'onchange' => 'validarNumeroColeccion(this,this.value);'));
+						echo '<i class="icon-info-sign" rel="tooltip" title = "Ingrese el número de Colección asignado, de lo contrario ingrese 0."></i>';
+					}
 				?>
 			</fieldset>
 			<fieldset>
@@ -325,7 +362,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<?php 
 					echo $form->textFieldRow($model->registros_update, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Nombre con el que se conoce la colección."></i>';
-					echo $form->textFieldRow($model->registros_update, 'acronimo', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA'));
+					echo $form->textFieldRow($model->registros_update, 'acronimo', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA', 'onchange' => 'validarAcronimo(this,this.value);'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = " Es la sigla que identifica la colección ante el mundo, por lo tanto debe ser única."></i>';
 					echo $form->dropDownListRow($model->registros_update, 'fecha_fund', $model->registros_update->listYearFund(),array('prompt' => 'Seleccionar...'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Año de la fundación de la colección, de acuerdo con los documentos que acreditan la creación de la colección, según el artículo 175 del Decreto 1608 de 1978."></i>';
@@ -365,7 +402,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							
 							$this->widget('bootstrap.widgets.TbButton', array(
 									'label'=>'+',
-									'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+									'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 									'size'=>'small', // null, 'large', 'small' or 'mini'
 									'htmlOptions'=>array('class'=>'addType','onclick' => 'agregarTipoPres()')
 							));
@@ -382,7 +419,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 								
 								$this->widget('bootstrap.widgets.TbButton', array(
 										'label'=>($cont == 0) ? "+" : "-",
-										'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+										'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 										'size'=>'small', // null, 'large', 'small' or 'mini'
 										'htmlOptions'=>array('class'=>($cont == 0) ? "addType" : "addType btn-danger",'onclick' => ($cont == 0) ? "agregarTipoPres()" : "eliminarTipoPres('tp_".$cont."','cantSum','Registros_Update_tamano_coleccion_total')")
 								));
@@ -449,7 +486,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						<?php 
 						$this->widget('bootstrap.widgets.TbButton', array(
 								'label'=>'+',
-								'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+								'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 								'size'=>'small', // null, 'large', 'small' or 'mini'
 								'htmlOptions'=>array('class'=>'','onclick' => 'agregarNivelCat()')
 						));
@@ -494,7 +531,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						<?php 
 						$this->widget('bootstrap.widgets.TbButton', array(
 								'label'=>($cont == 0) ? "+" : "-",
-								'type'=> ($cont == 0) ? "primary" : "danger", // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+								'type'=> ($cont == 0) ? "success" : "danger", // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 								'size'=>'small', // null, 'large', 'small' or 'mini'
 								'htmlOptions'=>array('class'=>'','onclick' => ($cont == 0) ? "agregarNivelCat()" : "eliminarTipoPres('nc_".$cont."','compGeneral','')")
 						));
@@ -520,7 +557,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->attributeLabels()['numero_nivel_genero'];?></label>
 					<label class="control-label required inlineLabel2" ><b>6.</b> <?=$composicion_general->attributeLabels()['numero_nivel_especie'];?></label>
 				</div>
-				<?php echo $form->textAreaRow($model->registros_update, 'sistematizacion', array('class'=>'span4', 'rows'=>4)); ?>
+				<?php 
+					echo $form->textFieldRow($model->registros_update, 'deorreferenciados', array('class'=>'span4', 'rows'=>4)); 
+					echo $form->textAreaRow($model->registros_update, 'sistematizacion', array('class'=>'span4', 'rows'=>4)); 
+				?>
 			</fieldset>
 			
 			<fieldset>
@@ -536,7 +576,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						
 						$this->widget('bootstrap.widgets.TbButton', array(
 								'label'=>'+',
-								'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+								'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 								'size'=>'small', // null, 'large', 'small' or 'mini'
 								'htmlOptions'=>array('class'=>'addType','onclick' => 'agregarTipoCol()')
 						));
@@ -557,7 +597,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							
 							$this->widget('bootstrap.widgets.TbButton', array(
 									'label'=>($cont == 0) ? "+" : "-",
-									'type'=>'primary', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+									'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 									'size'=>'small', // null, 'large', 'small' or 'mini'
 									'htmlOptions'=>array('class'=>($cont == 0) ? "addType" : "addType btn-danger",'onclick' => ($cont == 0) ? "agregarTipoCol()" : "eliminarTipoPres('tc_".$cont."','cantSumTipo','Registros_Update_tipo_coleccion_total')")
 							));
@@ -696,8 +736,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		</div>
 	</div>			
 	<div id="catalogouser-botones-internos" class="form-actions pull-right">
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>'Guardar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-enviar', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Enviar' : 'Actualizar','htmlOptions' => array('onclick'=>'{enviarData()}'))); ?>
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>'Guardar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-enviar', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Enviar' : 'Actualizar','htmlOptions' => array('onclick'=>'{enviarData()}'))); ?>
 	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
     </div>
 

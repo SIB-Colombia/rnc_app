@@ -307,7 +307,7 @@ class EntidadController extends Controller{
 				$mensaje = new Mensaje();
 				$mensaje->setTitulo("Envío Exitoso");
 				$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
-				
+				$mails = array(0 => $model->email,1 => 'ksoacha@humboldt.org.co');
 				$message 			= new YiiMailMessage;
 				$message->view 		= "solicitudEntidad";
 				//$data 			= "Mensaje prueba";
@@ -315,7 +315,7 @@ class EntidadController extends Controller{
 				$message->subject	= 'Certificado de Solicitud de Usuario Sistema RNC';
 				$message->from		= 'hescobar@humboldt.org';
 				$message->setBody($params,'text/html');
-				$message->addto('andresciceri@hotmail.com');
+				$message->setTo($mails);
 				Yii::app()->mail->send($message);
 				
 				$this->render('mensaje',array(
@@ -400,13 +400,14 @@ class EntidadController extends Controller{
 							$usuario->save();
 						}
 						
+						$mails = array(0 => $model->email,1 => 'ksoacha@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "aprobarEntidad";
 						$params				= array('data' => $model,'user' => $user,'pass' => $password);
 						$message->subject	= 'Aprobación de Solicitud Sistema RNC';
 						$message->from		= 'hescobar@humboldt.org';
 						$message->setBody($params,'text/html');
-						$message->addto($model->email);
+						$message->setTo($mails);
 						Yii::app()->mail->send($message);
 					}
 					

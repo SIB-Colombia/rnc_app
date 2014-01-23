@@ -65,7 +65,7 @@ class Tamano_Coleccion extends CActiveRecord
 	{
 		return array(
 				'tipo_preservacion' => 'Tipo de preservación',
-				'unidad_medida'		=> 'Unidad de medida',
+				'unidad_medida'		=> 'Descripción',
 				'cantidad'			=> 'Cantidad de ejemplares'
 		);
 	}

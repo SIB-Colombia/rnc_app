@@ -19,6 +19,10 @@
 
 class Registros extends CActiveRecord
 {
+	public $acronimo_search;
+	public $ciudad_search;
+	public $titular_search;
+	public $estado_search;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -43,6 +47,7 @@ class Registros extends CActiveRecord
 		return array(
 			array('numero_registro,fecha_dil','required')	,
 			array('numero_registro','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
+			array('acronimo_search,ciudad_search,titular_search,numero_registro,estado_search,fecha_dil', 'safe', 'on'=>'search'),
 		);
 	}
 	
@@ -55,7 +60,7 @@ class Registros extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 				'entidad' => array(self::BELONGS_TO, 'Entidad', 'Entidad_id'),
-				'registros_update' => array(self::HAS_MANY, 'Registros_Update', 'registros_id')
+				'registros_update' => array(self::HAS_MANY, 'registros_update', 'registros_id')
 		);
 	}
 	
@@ -69,6 +74,10 @@ class Registros extends CActiveRecord
 			'fecha_dil'			=> 'Última Actualización',
 			'fecha_prox'		=> 'Próxima Actualización',
 			'estado' 			=> 'Estado de la Colección',
+			'acronimo_search'	=> 'Acrónimo',
+			'ciudad_search'		=> 'Municipio',
+			'titular_search'	=> 'Titular',
+			'estado_search'		=> 'Estado de la Colección'
 		);
 	}
 	
@@ -83,14 +92,43 @@ class Registros extends CActiveRecord
 	
 		$criteria=new CDbCriteria;
 		$criteria->compare('numero_registro', $this->numero_registro);
-		$criteria->compare('fecha_dil', $this->fecha_dil);
-		$criteria->compare('t.estado', $this->estado);
+		$criteria->compare('fecha_dil', $this->fecha_dil,true);
+		
+		if($this->estado_search != ''){
+			if(strtolower($this->estado_search) == "aprobado"){
+				$this->estado = 1;
+			}else{
+				$this->estado = 0;
+			}
+			$criteria->compare('t.estado', $this->estado);
+		}
 		if(isset($this->entidad)){
 			$criteria->compare('entidad.id',$this->entidad->id);
 		}
 		
-		$criteria->with = array('entidad');
+		if($this->titular_search != ''){
+			$criteria->compare('entidad.titular',$this->titular_search);
+		}
 		
+		$criteria->with = array('entidad','registros_update');
+		$criteria->order = 'numero_registro ASC, fecha_dil DESC';
+		
+		$sql='';
+		if($this->acronimo_search != '' || $this->ciudad_search != '') {
+			$sql = "SELECT registros_update.registros_id "
+					."FROM registros_update ";
+			if($this->acronimo_search != '' && $this->ciudad_search == ''){
+				$where = "WHERE LOWER(registros_update.acronimo) LIKE '".strtolower($this->acronimo_search)."'";
+			}else if($this->acronimo_search == '' && $this->ciudad_search != ''){
+				$sql .= "INNER JOIN county ON registros_update.ciudad_id = county.iso_county_code ";
+				$where = "WHERE LOWER(county.county_name) LIKE '".strtolower($this->ciudad_search)."'";
+			}else if($this->acronimo_search != '' && $this->ciudad_search != ''){
+				$sql .= "INNER JOIN county ON registros_update.ciudad_id = county.iso_county_code ";
+				$where = "WHERE LOWER(registros_update.acronimo) LIKE '".strtolower($this->acronimo_search)."' AND LOWER(county.county_name) LIKE '".strtolower($this->ciudad_search)."'";
+			}
+			$sql .= " ".$where;
+			$criteria->addCondition('t.id IN ('.$sql.')');
+		}
 	
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
@@ -150,6 +188,48 @@ class Registros extends CActiveRecord
 		$criteria->with = array('entidad','registros_update');
 		$criteria->order = 'fecha_dil DESC';
 		
+	}
+	
+	public function colRegistradas(){
+		$criteria = new CDbCriteria;
+		
+		$criteria->compare('t.estado', 1);
+		
+		return Registros::model()->count($criteria);
+	}
+	
+	public function colNuevas(){
+		$criteria = new CDbCriteria;
+	
+		$criteria->compare('t.estado', 0);
+	
+		return Registros::model()->count($criteria);
+	}
+	
+	public function listarFolderHistoricos($folder = ""){
+		$datos = array();
+		$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas";
+		$dir = "";
+		if($folder != ""){
+			$dirPath = $dirPath.DIRECTORY_SEPARATOR.$folder;
+			$dir = $folder.DIRECTORY_SEPARATOR;
+			
+		}
+		$directorio = opendir($dirPath);
+		$cont = 1;
+		while ($archivo = readdir($directorio)){
+			$isDir = 1;
+			if($archivo != "." && $archivo != ".."){
+				if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
+					$isDir = 0;
+				}
+				$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+				$cont++;
+			}
+		}
+		
+		$gridDataProvider = new CArrayDataProvider($datos);
+		return $gridDataProvider;
 	}
 	
 }

@@ -39,11 +39,14 @@ class VisitasController extends Controller{
 		if(Yii::app()->user->getId() !== null)
 		{
 			$model = $this->loadModel($id);
-			$criteria = new CDbCriteria;
-			$criteria->compare('registros_id',$model->registros->id);
-			$criteria->compare('estado',2);
-			$modelRegistros_update = Registros_Update::model()->find($criteria);
-			$model->registros->registros_update = $modelRegistros_update;
+			
+			if(isset($model->registros->id)){
+				$criteria = new CDbCriteria;
+				$criteria->compare('registros_id',$model->registros->id);
+				$criteria->compare('estado',2);
+				$modelRegistros_update = Registros_Update::model()->find($criteria);
+				$model->registros->registros_update = $modelRegistros_update;
+			}
 			$this->render('view',array(
 					'model'=>$model,
 			));
@@ -74,7 +77,7 @@ class VisitasController extends Controller{
 					$transaction = Yii::app()->db->beginTransaction();
 					
 					try{
-						if($_POST['Registros']['numero_registro'] != ''){
+						if($_POST['Registros']['numero_registro'] != '' && $_POST['Registros']['numero_registro'] != 0){
 							
 							$criteria = new CDbCriteria;
 							$criteria->compare("numero_registro", $_POST['Registros']['numero_registro']);
@@ -85,11 +88,15 @@ class VisitasController extends Controller{
 								$model->registros_id = $registros->id;
 							}
 						
+						}else{
+							$model->registros_id = 0;
 						}
 						
 						if(isset($_POST['Dilegenciadores']))
 						{
 							$model->dilegenciadores->attributes = $_POST['Dilegenciadores'];
+							$model->dilegenciadores->telefono 	= 0;
+							$model->dilegenciadores->email		= "n@n.n";
 							$model->dilegenciadores->save();
 							
 							$model->dilegenciadores_id = $model->dilegenciadores->id;
@@ -97,6 +104,32 @@ class VisitasController extends Controller{
 						
 						if(!$model->save()){
 							$success_saving_all = false;
+						}else {
+							if(isset($_POST['Visitas']['nombreArchivo']) && $_POST['Visitas']['nombreArchivo'] != ''){
+								$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR."visitas".DIRECTORY_SEPARATOR.$model->id;
+								if(!file_exists($pathDir)){
+									mkdir($pathDir);
+								}
+									
+								$dataFiles_ar = explode(",", $_POST['Visitas']['nombreArchivo']);
+								foreach ($dataFiles_ar as $value){
+									$dataFiles = explode("/", $value);
+									if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
+										if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
+												
+											$archivoModel = new Archivos_Pqrs();
+											$archivoModel->nombre	= $dataFiles[0];
+											$archivoModel->ruta		= $pathDir;
+											$archivoModel->visitas_id	= $model->id;
+											$archivoModel->pqrs_id		= 0;
+											$archivoModel->save();
+										}
+									}
+								}
+									
+							}
+							$model->save();
+							$success_saving_all = true;
 						}
 							
 						$transaction->commit();
@@ -153,7 +186,14 @@ class VisitasController extends Controller{
 	 */
 	public function loadModel($id)
 	{
-		$model=Visitas::model()->findByPk($id);
+		$criteria=new CDbCriteria;
+		
+		$criteria->with = array('registros','dilegenciadores','county');
+		
+		$model=Visitas::model()->findByPk($id,$criteria);
+		if(!isset($model->registros)){
+			$model->registros = Registros::model();
+		}
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -203,7 +243,34 @@ class VisitasController extends Controller{
 			
 					if(!$model->save()){
 						$success_saving_all = false;
-					}
+					}else {
+							if(isset($_POST['Visitas']['nombreArchivo']) && $_POST['Visitas']['nombreArchivo'] != ''){
+								$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR."visitas".DIRECTORY_SEPARATOR.$model->id;
+								if(!file_exists($pathDir)){
+									mkdir($pathDir);
+								}
+									
+								$dataFiles_ar = explode(",", $_POST['Visitas']['nombreArchivo']);
+								foreach ($dataFiles_ar as $value){
+									$dataFiles = explode("/", $value);
+									if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
+										if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
+												
+											$archivoModel = new Archivos_Pqrs();
+											$archivoModel->nombre	= $dataFiles[0];
+											$archivoModel->ruta		= $pathDir;
+											$archivoModel->visitas_id	= $model->id;
+											$archivoModel->pqrs_id		= 0;
+												
+											$archivoModel->save();
+										}
+									}
+								}
+									
+							}
+							$model->save();
+							$success_saving_all = true;
+						}
 						
 					$transaction->commit();
 			
@@ -243,6 +310,9 @@ class VisitasController extends Controller{
 		{
 			$model = $this->loadModel($id);
 			$dilegenciadores = $model->dilegenciadores;
+			foreach ($model->archivos as $value){
+				$value->delete();
+			}
 			$model->delete();
 			$dilegenciadores->delete();
 	
@@ -251,6 +321,45 @@ class VisitasController extends Controller{
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 		}else{
 			$this->redirect(array("admin/login"));
+		}
+	}
+	
+	public function actionBusqueda(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			$model = new Visitas('search');
+			$model->unsetAttributes();
+			
+			if(isset($_REQUEST['Visitas'])){
+				$model->attributes = $_GET['Visitas'];
+				$arr = $_GET;
+				$this->renderPartial('_visitas_table', array('listVisitas'=>$model->search(),'model' => $model));
+			}
+		}
+	}
+	
+	public function actionDeleteFileAjax(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_POST['id'])){
+	
+				$modelArchivo = Archivos_Pqrs::model()->findByPk($_POST['id']);
+				if(unlink($modelArchivo->ruta.DIRECTORY_SEPARATOR.$modelArchivo->nombre)){
+					if($modelArchivo->delete()){
+						echo 1;
+					}else{
+						echo 0;
+					}
+				}else {
+					echo 0;
+				}
+			}else if(isset($_POST['name'])){
+				if(unlink("tmp".DIRECTORY_SEPARATOR.$_POST['name'])){
+					echo 1;
+				}else {
+					echo 0;
+				}
+			}
 		}
 	}
 }

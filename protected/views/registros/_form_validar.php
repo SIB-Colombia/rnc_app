@@ -408,7 +408,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->attributeLabels()['numero_nivel_genero'];?></label>
 					<label class="control-label required inlineLabel2" ><b>6.</b> <?=$composicion_general->attributeLabels()['numero_nivel_especie'];?></label>
 				</div>
-				<?php echo $form->textAreaRow($model->registros_update, 'sistematizacion', array('class'=>'span4', 'rows'=>4,'disabled'=>true)); ?>
+				<?php 
+				echo $form->textFieldRow($model->registros_update, 'deorreferenciados', array('class'=>'span4', 'rows'=>4,'disabled'=>true));
+					echo $form->textAreaRow($model->registros_update, 'sistematizacion', array('class'=>'span4', 'rows'=>4,'disabled'=>true)); 
+				?>
 			</fieldset>
 			
 			<fieldset>

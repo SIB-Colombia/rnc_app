@@ -262,5 +262,23 @@ class UsuarioController extends Controller{
 		$salt	.= strtr(substr(base64_encode($rand), 0, 22), array('+' => '.'));
 		return  $salt;
 	}
+	
+	public function actionValidarUsuarioAjax(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_POST['usuario'])){
+				$criteria = new CDbCriteria;
+				$criteria->compare("username", $_POST['usuario']);
+			
+				$modelUsuario = Usuario::model()->find($criteria);
+			
+				if($modelUsuario){
+					echo 1;
+				}else {
+					echo 0;
+				}
+			}
+		}
+	} 
 }
 ?>

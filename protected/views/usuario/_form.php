@@ -30,6 +30,29 @@ function enviarFormAjax(){
 	},"json");
 }
 
+<?php 
+	if(isset($ajaxMode)){
+		echo 'urlAjax 			= "../../usuario/validarUsuarioAjax";';
+	}else if(isset($model->id)){
+		echo 'urlAjax 			= "../validarUsuarioAjax";';
+	}else{
+		echo 'urlAjax 			= "validarUsuarioAjax";';
+	}
+?>
+	
+function validarUsuario(obj,user){
+	$.post(urlAjax,{usuario: user},function(data){
+			if(data == 1){
+				$(obj).addClass("error");
+				$(obj).focus();
+				alert("El Usuario "+user+" ya existe en el sistema.");
+			}else{
+				$(obj).removeClass("error");
+			}
+		});
+}
+
+
 </script>
 <div class="form">
 
@@ -50,7 +73,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		
 		<?php 
 			$action = $this->action->id;
-			echo $form->textFieldRow($model, 'username', array('size'=>32,'maxlength'=>32, 'class'=>'textareaA')); 
+			echo $form->textFieldRow($model, 'username', array('size'=>32,'maxlength'=>32, 'class'=>'textareaA', 'onchange' => 'validarUsuario(this,this.value);')); 
 			echo $form->passwordFieldRow($model, 'password', array('size'=>64,'maxlength'=>64, 'class'=>'textareaA'));
 			if($action == "update"){
 				echo $form->passwordFieldRow($model, 'newpassword', array('size'=>64,'maxlength'=>64, 'class'=>'textareaA'));
@@ -68,9 +91,9 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		<div id="catalogouser-botones-internos" class="form-actions pull-right">
 		<?php 
 			if(isset($ajaxMode)){
-				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Crear' : 'Crear', 'htmlOptions' => array('onclick' => 'enviarFormAjax()'))); 
+				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Crear' : 'Crear', 'htmlOptions' => array('onclick' => 'enviarFormAjax()'))); 
 			}else{
-				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()')));
+				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()')));
 			}
 		?>
     	<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>

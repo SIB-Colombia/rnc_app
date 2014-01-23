@@ -15,8 +15,8 @@
     margin: 0px auto;
 }
 #registro-formulario h1 {
-    background: none repeat scroll 0 0 #2b7fbc;
-    border-bottom: 1px solid #2b7fbc;
+    background: none repeat scroll 0 0 rgba(17, 131, 85, 0.75);
+    border-bottom: 1px solid rgba(17, 131, 85, 0.75);
     color: #FFFFFF;
     font-size: 16px;
     margin: 0 0 1em;

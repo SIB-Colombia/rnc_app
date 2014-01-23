@@ -12,6 +12,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploa
 ?>
 
 <script type="text/javascript">
+
+<?php 
+	if(isset($model->id)){
+		echo 'urlAjax 			= "../deleteFileAjax";';
+	}else{
+		echo 'urlAjax 			= "deleteFileAjax";';
+	}
+?>
+
 function enviarForm(){
 	$("#pqrs-form").submit();
 }
@@ -22,6 +31,19 @@ function resetForm(id) {
 	});
 }
 
+function deleteFileUpAjax(divId,name){
+	
+	$.post(urlAjax, {name: name},function(data){
+		if(data == 1){
+			$("#"+divId).remove();
+		}else{
+			alert("Error al eliminar el archivo.");
+		}
+	});
+}
+
+randWord = Math.floor((Math.random()*1000)+1);
+contUp = 0;
 $(function() {
     $('#Pqrs_archivo').uploadify({
     	'auto'     		: true,
@@ -30,12 +52,13 @@ $(function() {
     	'width'         : 140,
     	'fileTypeExts'  : '*.pdf;*.doc;*.docx;jpg',
     	'multi'			: true,
+    	'formData'		: {'randWord' : randWord},
     	'swf'      		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.swf',
         'uploader' 		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.php',
         'checkExisting' : '<?=Yii::app()->theme->baseUrl;?>/scripts/check-exists.php',
 		'onUploadComplete' : function(file){
 			
-			dataFile = file.name+'/'+file.type+'/'+file.size;
+			dataFile = randWord+'_'+file.name+'/'+file.type+'/'+file.size;
 			val_aux	 = $('#Pqrs_nombreArchivo').val();
 
 			if(val_aux.trim() == ''){
@@ -44,6 +67,14 @@ $(function() {
 				val_aux	+= ','+dataFile;
 				$('#Pqrs_nombreArchivo').val(val_aux);
 			}
+
+			html = '<div id="flup_'+contUp+'" class="uploadify-queue-item" style="margin-left:220px">';
+			html += '<div class="cancel">';
+			html += '<a onclick = "deleteFileUpAjax(\'flup_'+contUp+'\',\''+randWord+'_'+file.name+'\')">X</a></div>';
+			html += '<span class="fileName">'+file.name+'</span><span class="data"></span>';
+			html += '</div>';
+			$("#adjFile").append(html);
+			contUp++;
 			
 		}
 	});
@@ -78,21 +109,29 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		<?php 
 			echo $form->textFieldRow($model, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
 			echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA'));
-			echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
 			
 			if(Yii::app()->user->getId() === null){
 				echo $form->dropDownListRow($model, 'entidad', Entidad::model()->listarEntidades(),array('prompt' => 'Seleccionar...','onchange' => ''));
 			}
+			
+			if(Yii::app()->user->getId() === null || $userRole == "admin"){
+				echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+			}else{
+				echo $form->dropDownListRow($model, 'numero_registro', $model->listarColeccion(),array('prompt' => 'Seleccionar...','onchange' => ''));
+			}
+			
 			
 			echo $form->dropDownListRow($model, 'tipo_solicitud', $model->listarTipoSolicitud(),array('prompt' => 'Seleccionar...'));
 			echo $form->textAreaRow($model, 'descripcion', array('class'=>'span4', 'rows'=>4));
 			echo $form->fileFieldRow($model, 'archivo');
 			echo $form->hiddenField($model, 'nombreArchivo');
 		?>
+		<div id = "adjFile">
+		</div>
 	</fieldset>
 	
 	<div id="catalogouser-botones-internos" class="form-actions pull-right">
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Enviar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
 	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
     </div>
 

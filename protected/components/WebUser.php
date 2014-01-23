@@ -1,6 +1,7 @@
 <?php 
 class WebUser extends CWebUser
 {
+	private $_idEntidad;
     /**
      * Overrides a Yii method that is used for roles in controllers (accessRules).
      *
@@ -20,5 +21,14 @@ class WebUser extends CWebUser
         }
         // allow access if the operation request is the current user's role
         return ($operation === $role);
+    }
+    
+    public function getIdEntidad()
+    {
+    	$criteria = new CDbCriteria;
+    	$criteria->compare('usuario_id',$this->id);
+    	$entidad = Entidad::model()->find($criteria);
+    	
+    	return $entidad->id;
     }
 }

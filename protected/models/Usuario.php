@@ -9,6 +9,8 @@
  * @property string $password
  * @property string $email
  * @property string $role
+ * 
+ * @property Entidad $entidad
  */
 
 class Usuario extends CActiveRecord

@@ -78,6 +78,8 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 				$this->widget('zii.widgets.CDetailView', array(
 					'data'=>$model,
 					'attributes'=>array(
+						'deorreferenciados',
+						'sistematizacion',
 						'info_adicional',
 						'pagina_web'
 					)

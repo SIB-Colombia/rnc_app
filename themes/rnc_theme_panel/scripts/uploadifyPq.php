@@ -13,7 +13,7 @@ if (!empty($_FILES)) {
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
 	
 	$aux_name	= rand(10, 999);
-	$targetFile = rtrim($targetPath,'/') . '/' . $_POST['randWord'].'_'.$_FILES['Filedata']['name'];
+	$targetFile = rtrim($targetPath,'/') . '/' . $_FILES['Filedata']['name'];
 	
 	// Validate the file type
 	$fileTypes = array('txt','xls','csv', 'xlsx'); // File extensions

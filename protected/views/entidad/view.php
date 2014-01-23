@@ -4,7 +4,7 @@
 Yii::app()->theme = 'rnc_theme_panel';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
-
+$userRole  = Yii::app()->user->getState("roles");
 $this->breadcrumbs=array(
 	'Catalogo Users'=>array('index'),
 	$model->titular,
@@ -16,11 +16,19 @@ $this->breadcrumbs=array(
 
 <div id="content-front">
 <?php
-$this->widget('bootstrap.widgets.TbButtonGroup', array(
+if($userRole == "admin"){
+	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 		'buttons'=>array(
 				array('label'=>'Listar Entidades', 'icon'=>'icon-list', 'url'=>array('index')),
 		),
-));
+	));
+}else{
+	$this->widget('bootstrap.widgets.TbButtonGroup', array(
+		'buttons'=>array(
+				array('label'=>'Editar Entidad', 'icon'=>'icon-list', 'url'=>array('entidad/update/'.$model->id)),
+		),
+	));
+}
 ?>
 <div style="margin-top: 20px">
 <?php 

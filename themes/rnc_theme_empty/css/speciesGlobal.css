@@ -203,11 +203,12 @@ img.standalone {
 	padding:0px;
 	max-width:1200px;
 	min-width:1024px;
+	min-height: 740px;
 	margin:0 auto;
 }
 /* ---- Top Header ---- */
 
-header.sib { background:#2b7fbc; height:53px; color:white; text-transform:uppercase; min-width: 1050px; position: fixed; width: 100%; z-index: 10000; top: 0px}
+header.sib { background: rgba(17, 131, 85, 0.75); height:53px; color:white; text-transform:uppercase; min-width: 1050px; position: fixed; width: 100%; z-index: 10000; top: 0px}
 header.sib a{ color:white; padding:0px; display:inline-block; vertical-align:top; margin:0 10px; padding-right: 4%; }
 header.sib  nav {vertical-align:top; text-align:center; line-height:1em; width: 100%; max-width: 1400px; min-width: 1100px; position: relative; right: 0px; height: 50px; padding-right: 20px; margin: 0 auto;}
 header.sib  nav a{ max-width:130px; padding:12px; margin:0px; height: 53px;}
@@ -222,6 +223,7 @@ header.sib .logo{
 		float: left;
 		position: absolute;
 		z-index:15000;
+		margin-left: 100px
 		}
 		header.sib .logo:hover{
 			filter: alpha(opacity=100);
@@ -243,6 +245,12 @@ header.sib .logo{
 			max-width: 1500px;
 			margin: 0 auto;
 		}
+		
+		header.sib .logo img{
+			width: 135px;
+			height: 150px
+		}
+		
 .share_icons { float: right; display: inline-block; position: absolute; right: 12px; width: 320px; top: 0px;}
 .share_icons a{ vertical-align:middle !important; margin: 0; padding: 12px 7px;}
 .share_icons span{
@@ -932,4 +940,37 @@ h2 .twitter-share-button{
 	#quickSearch{
 		margin: 9px 180px 0 0;
 	}
+}
+
+footer section div {
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+	color: #868686
+}
+
+.ribbon-wrapper-green{
+	width: 100px;
+	height: 56px;
+	overflow: hidden;
+	position: absolute;
+	top: -3px;
+	left: 0
+}
+
+.ribbon-green{
+	font: 700 15px sans-serif;
+	text-align: center;
+	text-shadow: rgba(255,255,255,.5) 0 1px 0;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	position: relative;
+	padding: 7px 0;
+	left: -31px;
+	top: 15px;
+	width: 120px;
+	background-color: #bfdc7a;
+	background-image: -webkit-linear-gradient(top,#bfdc7a,#8ebf45)
 }

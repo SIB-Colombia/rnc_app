@@ -8,11 +8,13 @@
  * @property string $ruta
  *
  * @property int 	$pqrs_id
- *
+ * @property int	$visitas_id
+ * 
  * The followings are the available model relations:
  *
  *
  * @property Pqrs $pqrs
+ * @property Visitas $visitas
  */
 
 class Archivos_Pqrs extends CActiveRecord
@@ -60,7 +62,8 @@ class Archivos_Pqrs extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				'pqrs' => array(self::BELONGS_TO, 'Pqrs', 'pqrs_id')
+				'pqrs' => array(self::BELONGS_TO, 'Pqrs', 'pqrs_id'),
+				'visitas' => array(self::BELONGS_TO, 'Visitas', 'visitas_id')
 		);
 	}
 }

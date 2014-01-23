@@ -44,7 +44,7 @@ $('.search-form form').submit(function(){
 	?>
 		
 	  <div class="tab-content">
-	       <?php echo $this->renderPartial('_visitas_table', array('listVisitas'=>$model->search())); ?>
+	       <?php echo $this->renderPartial('_visitas_table', array('listVisitas'=>$model->search(),'model' => $model)); ?>
 	  </div>
 	</div>
 

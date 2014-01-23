@@ -29,7 +29,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 <div id="content-front">
 			
 	  <div class="tab-content">
-	       <?php echo $this->renderPartial('_pqrs_table', array('listPqrs'=>$model->search())); ?>
+	       <?php echo $this->renderPartial('_pqrs_table', array('listPqrs'=>$model->search(),'model'=>$model)); ?>
 	  </div>
 	</div>
 

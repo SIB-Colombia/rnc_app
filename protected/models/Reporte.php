@@ -30,6 +30,7 @@ class Reporte extends CFormModel
 	public $nivelEjemplares;
 	public $nivelCatalogados;
 	public $nivelSistematizados;
+	public $nivelOrden;
 	public $nivelFamilia;
 	public $nivelGenero;
 	public $nivelEspecie;
@@ -46,6 +47,8 @@ class Reporte extends CFormModel
 	public $dilegenciadorCargo;
 	public $dilegenciadorTelefono;
 	public $dilegenciadorEmail;
+	
+	public $checkAll;
 	
 		
 	/**
@@ -94,6 +97,7 @@ class Reporte extends CFormModel
 				'nivelEjemplares'			=> 'No. Ejemplares',
 				'nivelCatalogados'			=> 'Ejemplares catalogados',
 				'nivelSistematizados'		=> 'Ejemplares sistematizados',
+				'nivelOrden'				=> 'Ejemplares identificados al nivel de orden',
 				'nivelFamilia'				=> 'Ejemplares identificados al nivel de familia',
 				'nivelGenero'				=> 'Ejemplares identificados al nivel de genero',
 				'nivelEspecie'				=> 'Ejemplares identificados al nivel de especie',
@@ -109,7 +113,8 @@ class Reporte extends CFormModel
 				'dilegenciadorDependencia'	=> 'Dependencia',
 				'dilegenciadorCargo'		=> 'Cargo',
 				'dilegenciadorTelefono'		=> 'Telefono',
-				'dilegenciadorEmail'		=> 'Correo Electrónico'
+				'dilegenciadorEmail'		=> 'Correo Electrónico',
+				'checkAll'					=> 'Seleccionar'
 		);
 	}
 }

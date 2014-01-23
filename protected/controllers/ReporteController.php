@@ -116,7 +116,7 @@ class ReporteController extends Controller{
 						$dataReporte[$cont]['reporteFundacion'] 	= $data->fecha_fund;
 						$dataReporte[$cont]['reporteDescripcion'] 	= $data->descripcion;
 						$dataReporte[$cont]['reporteDireccion'] 	= $data->direccion;
-						$dataReporte[$cont]['reporteCiudad'] 		= $data->county->county_name;
+						$dataReporte[$cont]['reporteCiudad'] 		= isset($data->county->county_name) ? $data->county->county_name : "";
 						$dataReporte[$cont]['reporteTelefono'] 		= $data->telefono;
 						$dataReporte[$cont]['reporteEmail'] 		= $data->email;
 						$dataReporte[$cont]['coberturaTaxonomica'] 	= $data->cobertura_tax;
@@ -138,7 +138,7 @@ class ReporteController extends Controller{
 							$dataReporte[$cont]['nivelEjemplares']		= $data->composicion_general[$k]->numero_ejemplares;
 							$dataReporte[$cont]['nivelCatalogados']		= $data->composicion_general[$k]->numero_catalogados;
 							$dataReporte[$cont]['nivelSistematizados']	= $data->composicion_general[$k]->numero_sistematizados;
-							$dataReporte[$cont]['nivelOrden']			= $data->composicion_general[$k]->numero_nivel_orden;
+							$dataReporte[$cont]['nivelOrden']			= isset($data->composicion_general[$k]->numero_nivel_orden) ? $data->composicion_general[$k]->numero_nivel_orden : "";
 							$dataReporte[$cont]['nivelFamilia']			= $data->composicion_general[$k]->numero_nivel_familia;
 							$dataReporte[$cont]['nivelGenero']			= $data->composicion_general[$k]->numero_nivel_genero;
 							$dataReporte[$cont]['nivelEspecie']			= $data->composicion_general[$k]->numero_nivel_especie;

@@ -10,7 +10,7 @@ $userRole  = Yii::app()->user->getState("roles");
 
 ?>
 
-<div id="header-front">Modificar Visita: <?php echo $model->registros->numero_registro; ?></div>
+<div id="header-front">Modificar Visita: <?php echo $model->entidad; ?></div>
 
 <div id="content-front">
 <?php 

@@ -51,8 +51,8 @@ return array(
 			'transportType' => 'smtp',
 			'transportOptions' => array(
 				'host' => 'smtp.gmail.com',
-				'username'=>'xxxx',
-				'password'=>'xxxxx',
+				'username'=>'xxx@gmail.com',
+				'password'=>'xxx',
 				'port'=>'465',
 				'encryption' => 'ssl'
 			),
@@ -96,8 +96,8 @@ return array(
 			//'username' => 'lgrajales',
 			//'password' => 'Lg2013-',
 			//'emulatePrepare' => true,
-			'username' => 'rnc', //actualizar usuario
-			'password' => '12345', //actualizar password
+			'username' => 'xxx', //actualizar usuario
+			'password' => 'xxx', //actualizar password
 			'charset' => 'utf8',
 			'emulatePrepare' => false,
 			'enableProfiling'=>true,

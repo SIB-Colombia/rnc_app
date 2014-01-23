@@ -64,7 +64,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		
 		$this->widget('bootstrap.widgets.TbButton', array(
 				'label'=>'Crear Usuario',
-				'type'=>'primary',
+				'type'=>'success',
 				'htmlOptions'=>array(
 						'data-toggle'=>'modal',
 						'data-target'=>'#modalUser',
@@ -77,7 +77,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 </fieldset>
 
 <div id="catalogouser-botones-internos" class="form-actions pull-right">
-	<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar')); ?>
+	<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar')); ?>
     <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
 </div>
 <?php $this->endWidget(); ?>

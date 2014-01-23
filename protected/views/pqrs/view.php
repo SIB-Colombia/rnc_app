@@ -5,6 +5,9 @@ Yii::app()->theme = 'rnc_theme_panel';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
 $userRole  = Yii::app()->user->getState("roles");
+
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/jquery.uploadify.js', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploadify.css');
 ?>
 
 <script type="text/javascript">
@@ -17,6 +20,37 @@ function resetForm(id) {
 	        this.reset();
 	});
 }
+
+randWord = Math.floor((Math.random()*1000)+1);
+
+$(function() {
+    $('#Pqrs_archivo').uploadify({
+    	'auto'     		: true,
+    	'fileSizeLimit' : '20MB',
+    	'buttonText'	: 'Seleccionar Archivo',
+    	'width'         : 140,
+    	'fileTypeExts'  : '*.pdf;*.doc;*.docx;jpg',
+    	'multi'			: true,
+    	'formData'		: {'randWord' : randWord},
+    	'swf'      		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.swf',
+        'uploader' 		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.php',
+        'checkExisting' : '<?=Yii::app()->theme->baseUrl;?>/scripts/check-exists.php',
+		'onUploadComplete' : function(file){
+			
+			dataFile = randWord+'_'+file.name+'/'+file.type+'/'+file.size;
+			val_aux	 = $('#Pqrs_nombreArchivo').val();
+
+			if(val_aux.trim() == ''){
+				$('#Pqrs_nombreArchivo').val(dataFile);
+			}else{
+				val_aux	+= ','+dataFile;
+				$('#Pqrs_nombreArchivo').val(val_aux);
+			}
+			
+		}
+	});
+});
+
 </script>
 
 <div id="header-front">Detalle de la Solicitud: <?php echo $model->id; ?></div>
@@ -75,9 +109,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <?php 
 	echo $form->radioButtonListInlineRow($model, 'aprobado', array('Si','No'));
 	echo $form->textAreaRow($model, 'respuesta', array('class'=>'span4', 'rows'=>4));
+	echo $form->fileFieldRow($model, 'archivo');
+	echo $form->hiddenField($model, 'nombreArchivo');
 ?>
 	<div id="catalogouser-botones-internos" class="form-actions pull-right">
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'primary', 'label'=>'Responder', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>'Responder', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
 	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
   	</div>
 </fieldset>

@@ -56,6 +56,9 @@ class RegistrosController extends Controller{
 		if(Yii::app()->user->getId() !== null)
 		{
 			$model=new Registros();
+			$model->entidad = Entidad::model();
+			$model->registros_update = Registros_Update::model();
+			
 			$model->unsetAttributes();  // clear any default values
 			$userRole = Yii::app()->user->getState("roles");
 			if($userRole == "entidad"){
@@ -339,14 +342,21 @@ class RegistrosController extends Controller{
 					$mensaje->setTitulo("Envío Exitoso");
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 					
-					if($model->estado == 1){
+					if($model->registros_update->estado == 1){
+						
+						$mails = array(0 => $model->entidad->email,1 => 'ksoacha@humboldt.org.co');
+						$message 			= new YiiMailMessage;
+						$message->view 		= "crearRegistro";
+						$params				= array('data' => $model);
+						$message->subject	= 'Envío de Registro de Colección '.$model->registros_update->nombre.'- Sistema RNC';
+						$message->from		= 'hescobar@humboldt.org';
+						$message->setBody($params,'text/html');
+						$message->setTo($mails);
+						Yii::app()->mail->send($message);
+						
+						
 						$this->redirect(array('view','id'=>$model->id));
-						/*
-						$this->render('mensaje',array(
-								'model'=>$mensaje,
-								'registro' => $model
-						));
-						Yii::app()->end();*/
+						
 					}else{
 						$this->redirect(array('view','id'=>$model->id));
 						/*$this->render('index',array(
@@ -446,7 +456,7 @@ class RegistrosController extends Controller{
 									$model->registros_update->tamano_coleccion = $dataTamano;
 									$model->registros_update->tamano_coleccion->tipo_preservacion 	= $valor_col['tipo_preservacion'];
 									$model->registros_update->tamano_coleccion->unidad_medida		= $valor_col['unidad_medida'];
-									$model->registros_update->tamano_coleccion->cantidad			= $valor_col['cantidad'];
+									//$model->registros_update->tamano_coleccion->cantidad			= $valor_col['cantidad'];
 									
 									$model->registros_update->tamano_coleccion->save();
 								}else{
@@ -454,7 +464,7 @@ class RegistrosController extends Controller{
 									
 									$model->registros_update->tamano_coleccion->tipo_preservacion 	= $valor_col['tipo_preservacion'];
 									$model->registros_update->tamano_coleccion->unidad_medida		= $valor_col['unidad_medida'];
-									$model->registros_update->tamano_coleccion->cantidad			= $valor_col['cantidad'];
+									//$model->registros_update->tamano_coleccion->cantidad			= $valor_col['cantidad'];
 									$model->registros_update->tamano_coleccion->Registros_update_id = $model->registros_update->id;
 									
 									$model->registros_update->tamano_coleccion->save();
@@ -469,14 +479,14 @@ class RegistrosController extends Controller{
 									$dataTamano	= Tipos_En_Coleccion::model()->findByPk($valor_tipo['id']);
 									$model->registros_update->tipos_en_coleccion = $dataTamano;
 									$model->registros_update->tipos_en_coleccion->informacion_ejemplar	= $valor_tipo['informacion_ejemplar'];
-									$model->registros_update->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
+									//$model->registros_update->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
 								
 									$model->registros_update->tipos_en_coleccion->save();
 								}else{
 									$model->registros_update->tipos_en_coleccion	= new Tipos_En_Coleccion();
 									
 									$model->registros_update->tipos_en_coleccion->informacion_ejemplar	= $valor_tipo['informacion_ejemplar'];
-									$model->registros_update->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
+									//$model->registros_update->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
 									$model->registros_update->tipos_en_coleccion->Registros_update_id	= $model->registros_update->id;
 									
 									$model->registros_update->tipos_en_coleccion->save();
@@ -488,12 +498,13 @@ class RegistrosController extends Controller{
 							foreach ($_POST['Composicion_General'] as $valor_comp){
 								
 								if(isset($valor_comp['id'])){
-									$dataTamano	= Composicion_General::model()->findByPk($valor_tipo['id']);
+									$dataTamano	= Composicion_General::model()->findByPk($valor_comp['id']);
 									$model->registros_update->composicion_general = $dataTamano;
 									$model->registros_update->composicion_general->grupo_taxonomico			= $valor_comp['grupo_taxonomico'];
 									$model->registros_update->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
 									$model->registros_update->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
 									$model->registros_update->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+									$model->registros_update->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
 									$model->registros_update->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
 									$model->registros_update->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
 									$model->registros_update->composicion_general->numero_nivel_especie		= $valor_comp['numero_nivel_especie'];
@@ -506,6 +517,7 @@ class RegistrosController extends Controller{
 									$model->registros_update->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
 									$model->registros_update->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
 									$model->registros_update->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+									$model->registros_update->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
 									$model->registros_update->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
 									$model->registros_update->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
 									$model->registros_update->composicion_general->numero_nivel_especie		= $valor_comp['numero_nivel_especie'];
@@ -600,11 +612,17 @@ class RegistrosController extends Controller{
 				$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 					
 				if($model->registros_update->estado == 1){
-					/*$this->render('mensaje',array(
-							'model'=>$mensaje,
-							'registro' => $model
-					));
-					Yii::app()->end();*/
+					
+					$mails = array(0 => $model->entidad->email,1 => 'ksoacha@humboldt.org.co');
+					$message 			= new YiiMailMessage;
+					$message->view 		= "crearRegistro";
+					$params				= array('data' => $model);
+					$message->subject	= 'Envío de Registro de Colección '.$model->registros_update->nombre.'- Sistema RNC';
+					$message->from		= 'hescobar@humboldt.org';
+					$message->setBody($params,'text/html');
+					$message->setTo($mails);
+					Yii::app()->mail->send($message);
+					
 					$this->redirect(array('view','id'=>$model->id));
 				}else{
 					/*
@@ -697,13 +715,14 @@ class RegistrosController extends Controller{
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 					
 					if($model->registros_update->estado != 1){
+						$mails = array(0 => $model->entidad->email,1 => 'ksoacha@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "aprobarRegistro";
 						$params				= array('data' => $model);
 						$message->subject	= 'Aprobación de Registro de Colección '.$model->numero_registro.'- Sistema RNC';
 						$message->from		= 'hescobar@humboldt.org';
 						$message->setBody($params,'text/html');
-						$message->addto($model->entidad->email);
+						$message->setTo($mails);
 						Yii::app()->mail->send($message);
 					}
 					
@@ -799,7 +818,7 @@ class RegistrosController extends Controller{
 				
 								$modelRegistroUpdate->tamano_coleccion->tipo_preservacion 	= $valor_col['tipo_preservacion'];
 								$modelRegistroUpdate->tamano_coleccion->unidad_medida		= $valor_col['unidad_medida'];
-								$modelRegistroUpdate->tamano_coleccion->cantidad			= $valor_col['cantidad'];
+								//$modelRegistroUpdate->tamano_coleccion->cantidad			= $valor_col['cantidad'];
 								$modelRegistroUpdate->tamano_coleccion->Registros_update_id = $modelRegistroUpdate->id;
 									
 								$modelRegistroUpdate->tamano_coleccion->save();
@@ -811,7 +830,7 @@ class RegistrosController extends Controller{
 								$modelRegistroUpdate->tipos_en_coleccion	= new Tipos_En_Coleccion();
 									
 								$modelRegistroUpdate->tipos_en_coleccion->informacion_ejemplar	= $valor_tipo['informacion_ejemplar'];
-								$modelRegistroUpdate->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
+								//$modelRegistroUpdate->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
 								$modelRegistroUpdate->tipos_en_coleccion->Registros_update_id	= $modelRegistroUpdate->id;
 									
 								$modelRegistroUpdate->tipos_en_coleccion->save();
@@ -826,6 +845,7 @@ class RegistrosController extends Controller{
 								$modelRegistroUpdate->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
 								$modelRegistroUpdate->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
 								$modelRegistroUpdate->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+								$modelRegistroUpdate->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
 								$modelRegistroUpdate->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
 								$modelRegistroUpdate->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
 								$modelRegistroUpdate->composicion_general->numero_nivel_especie		= $valor_comp['numero_nivel_especie'];
@@ -915,12 +935,18 @@ class RegistrosController extends Controller{
 					$mensaje->setTitulo("Envío Exitoso");
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 						
-					if($model->estado == 1){
-						/*$this->render('mensaje',array(
-								'model'=>$mensaje,
-								'registro' => $model
-						));
-						Yii::app()->end();*/
+					if($model->registros_update->estado == 1){
+						
+						$mails = array(0 => $model->entidad->email,1 => 'ksoacha@humboldt.org.co');
+						$message 			= new YiiMailMessage;
+						$message->view 		= "crearRegistro";
+						$params				= array('data' => $model);
+						$message->subject	= 'Envío de Registro de Colección '.$model->registros_update->nombre.'- Sistema RNC';
+						$message->from		= 'hescobar@humboldt.org';
+						$message->setBody($params,'text/html');
+						$message->setTo($mails);
+						Yii::app()->mail->send($message);
+						
 						$this->redirect(array('view','id'=>$model->id));
 					}else{
 						/*$this->render('index',array(
@@ -966,8 +992,7 @@ class RegistrosController extends Controller{
 			$criteria = new CDbCriteria;
 			$criteria->with = array('registros','county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos');
 			$modelRegistros_update = Registros_Update::model()->findByPk($id,$criteria);
-			$modelRegistros_update->dilegenciadores->delete();
-			$modelRegistros_update->contactos->delete();
+			
 			foreach ($modelRegistros_update->composicion_general as $value){
 				$value->delete();
 			}
@@ -982,6 +1007,8 @@ class RegistrosController extends Controller{
 			}
 				
 			$modelRegistros_update->delete();
+			$modelRegistros_update->dilegenciadores->delete();
+			$modelRegistros_update->contactos->delete();
 					
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -1013,6 +1040,126 @@ class RegistrosController extends Controller{
 					echo 0;
 				}
 			}
+		}
+	}
+	
+	public function actionValidarColeccionAjax(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_POST['coleccion'])){
+				$criteria = new CDbCriteria;
+				$criteria->compare("numero_registro", $_POST['coleccion']);
+				
+				$modelRegistro = Registros::model()->find($criteria);
+				
+				if($modelRegistro){
+					echo 1;
+				}else {
+					echo 0;
+				}
+			}
+		}
+	}
+	
+	public function actionValidarAcronimoAjax(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_POST['dato'])){
+				$criteria = new CDbCriteria;
+				$criteria->compare("acronimo", $_POST['dato']);
+				$criteria->compare("estado", 2);
+	
+				$modelRegistro = Registros_Update::model()->find($criteria);
+	
+				if($modelRegistro){
+					echo 1;
+				}else {
+					echo 0;
+				}
+			}
+		}
+	}
+	
+	public function actionBusqueda(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			$model = new Registros('search');
+			$model->unsetAttributes();
+			
+			$model->entidad = Entidad::model();
+			$model->registros_update = Registros_Update::model();
+				
+			$userRole = Yii::app()->user->getState("roles");
+			if($userRole == "entidad"){
+				$usuario = Usuario::model()->findByPk(Yii::app()->user->getId());
+					
+				$criteriaEntidad = new CDbCriteria;
+				$criteriaEntidad->compare('usuario_id',$usuario->id);
+					
+				$entidad = Entidad::model()->find($criteriaEntidad);
+			
+				$model->entidad = $entidad;
+				$model->Entidad_id = $entidad->id;
+			}
+			
+			if(isset($_REQUEST['Registros'])){
+				$model->attributes = $_GET['Registros'];
+				$arr = $_GET;
+				$this->renderPartial('_registros_table', array('listRegistros'=>$model->search(),'model' => $model));
+			}
+		}
+	}
+	
+	public function actionListarValidar(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			$model=new Registros();
+			$model->entidad = Entidad::model();
+			$model->registros_update = Registros_Update::model();
+				
+			$this->render('listarValidar',array(
+					'model'=>$model,
+			));
+		}else{
+			$this->redirect(array("admin/login"));
+		}
+	}
+	
+	public function actionListarHistoricosFolder(){
+		if(Yii::app()->user->getId() !== null && Yii::app()->user->getState("roles") == "admin")
+		{
+			if(isset($_GET['name'])){
+				$name = $_GET['name'];
+			}else {
+				$name = "";
+			}
+			$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas".DIRECTORY_SEPARATOR.$name;
+			
+			if(is_dir($dirPath)){
+				$model = Registros::model();
+				$this->render('listarHistoricosFolder',array(
+						'model' => $model,
+						'folder' => $name,
+				));
+			}else{
+				$this->redirect(Yii::app()->createUrl("..".DIRECTORY_SEPARATOR.$dirPath));
+			}
+			
+		}else{
+			$this->redirect(array("admin/login"));
+		}
+	}
+	
+	public function actionListarHistoricosFiles($name = ""){
+		if(Yii::app()->user->getId() !== null && Yii::app()->user->getState("roles") == "admin")
+		{
+			$model = Registros::model();
+			$this->render('listarHistoricosFiles',array(
+					'model' => $model,
+					'name'	=> $name
+			));
+		}else{
+			$this->redirect(array("admin/login"));
 		}
 	}
 }

@@ -28,6 +28,9 @@ class Pqrs extends CActiveRecord
 	public $archivo;
 	public $aprobado;
 	public $nombreArchivo;
+	public $numero_registro_search;
+	public $estado_search;
+	public $tipoSol_search;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -56,7 +59,7 @@ class Pqrs extends CActiveRecord
 				array('numero_registro','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
-				//array('titular,nit,representante_id,direccion,telefono,email,dependencia_d,cargo_d,telefono_d,', 'safe', 'on'=>'search'),
+				array('numero_registro_search,estado_search,tipoSol_search,fecha', 'safe', 'on'=>'search'),
 		);
 	}
 	
@@ -89,7 +92,10 @@ class Pqrs extends CActiveRecord
 				'estado' 			=> 'Estado',
 				'aprobado' 			=> 'Cerrado',
 				'numero_registro' 	=> 'Colección No.',
-				'entidad'			=> 'Entidad'
+				'entidad'			=> 'Entidad',
+				'numero_registro_search' => 'Colección No.',
+				'estado_search' 	=> 'Estado',
+				'tipoSol_search'	=> 'Tipo de Solicitud'
 			);
 	}
 	
@@ -107,10 +113,36 @@ class Pqrs extends CActiveRecord
 		$criteria->compare('nombre', $this->nombre);
 		$criteria->compare('email',$this->email);
 		$criteria->compare('fecha', $this->fecha,true);
-		$criteria->compare('tipo_solicitud',$this->tipo_solicitud);
 		
 		if(isset($this->entidad)){
 			$criteria->compare('t.entidad_id',$this->entidad->id);
+		}
+		
+		if($this->numero_registro_search != ''){
+			$criteria->compare('registros.numero_registro',$this->numero_registro_search);
+		}
+		
+		if($this->tipoSol_search != ''){
+			if(strtolower($this->tipoSol_search) == "peticion" || strtolower($this->tipoSol_search) == "petición"){
+				$this->tipo_solicitud = 1;
+			}else if(strtolower($this->tipoSol_search) == "queja"){
+				$this->tipo_solicitud = 2;
+			}else if(strtolower($this->tipoSol_search) == "felicitacion" || strtolower($this->tipoSol_search) == "felicitación"){
+				$this->tipo_solicitud = 3;
+			}
+			else{
+				$this->tipo_solicitud = 0;
+			}
+			$criteria->compare('t.tipo_solicitud', $this->tipo_solicitud);
+		}
+		
+		if($this->estado_search != ''){
+			if(strtolower($this->estado_search) == "cerrado"){
+				$this->estado = 1;
+			}else{
+				$this->estado = 0;
+			}
+			$criteria->compare('t.estado', $this->estado);
 		}
 		
 		$criteria->with = array('registros');
@@ -123,6 +155,24 @@ class Pqrs extends CActiveRecord
 						'pageSize'=>20,
 				)
 		));
+	}
+	
+	public function listarColeccion()
+	{
+		$usuario = Usuario::model()->findByPk(Yii::app()->user->getId());
+		
+		$criteriaEntidad = new CDbCriteria;
+		$criteriaEntidad->compare('usuario_id',$usuario->id);
+		
+		$entidad = Entidad::model()->find($criteriaEntidad);
+		
+		$criteriaRegistro = new CDbCriteria;
+		$criteriaRegistro->compare('Entidad_id', $entidad->id);
+		$criteriaRegistro->compare('estado', 1);
+		
+		$registros = Registros::model()->findAll($criteriaRegistro);
+		
+		return CHtml::listData($registros, 'numero_registro','numero_registro');
 	}
 	
 	public function listarTipoSolicitud()

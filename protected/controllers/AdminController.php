@@ -64,6 +64,7 @@ class AdminController extends Controller{
 				
 			}
 			
+			$this->cleanFileTmp();
 			$this->render('panel',array('model'=>$model,'entidad' => $entidad,'registro' => $registro,'pqrs' => $pqrs));
 		}else{
 			$this->redirect(array("admin/login"));
@@ -105,5 +106,26 @@ class AdminController extends Controller{
 	{
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
+	}
+	
+	public function cleanFileTmp(){
+	
+		$dirPath	= "tmp/";
+		$directorio = opendir($dirPath);
+	
+		while ($archivo = readdir($directorio)){
+			$path		= $dirPath.$archivo;
+			if (is_file($path)) {
+				$op_file = pathinfo($path);
+				
+				$filetime = time() - filemtime($path);
+				if($filetime >= (60*60*1)){
+					unlink($path);
+				}
+				
+			}
+		}
+	
+		closedir($directorio);
 	}
 }

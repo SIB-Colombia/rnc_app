@@ -237,8 +237,10 @@ div.loading * {
 }
 
 #header-front {
-    background: none repeat scroll 0 0 #2b7fbc;
-    border-bottom: 1px solid #2b7fbc;
+    //background: none repeat scroll 0 0 #2b7fbc;
+    background: none repeat scroll 0 0 rgba(17, 131, 85, 0.75);
+    //border-bottom: 1px solid #2b7fbc;
+    border-bottom: 1px solid rgba(0, 121, 71, 0.5);
     color: #FFFFFF !important;
     font-size: 16px;
     margin: 0 0 1em;

@@ -1,7 +1,7 @@
 <?php 
 $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	'type'=>'striped bordered condensed',
-	'id'=>'entidades_lista-grid',
+	'id'=>'nivel_cata_lista_grid',
 	//'fixedHeader' => true,
 	'dataProvider'=>$listComposicion,
 	//'responsiveTable' => true,

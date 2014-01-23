@@ -156,6 +156,13 @@ class Entidad extends CActiveRecord
 		));
 	}
 	
+	public function entidadesRegistradas(){
+		$criteria = new CDbCriteria;
+	
+		$criteria->compare('estado', 2);
+	
+		return Entidad::model()->count($criteria);
+	}
 		
 	public function ListarSolicitudEntidad()
 	{

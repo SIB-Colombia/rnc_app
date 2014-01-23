@@ -27,6 +27,7 @@
  * @property int	$tamano_coleccion_total
  * @property int	$tipo_coleccion_total
  * @property int	$terminos
+ * @property float  $deorreferenciados
  * @property string $sistematizacion
  * 
  * @property int $contactos_id
@@ -81,8 +82,10 @@ class Registros_Update extends CActiveRecord
 				array('nombre,direccion,telefono,pagina_web','length','max'=>150),
 				array('acronimo,email','length','max'=>45),
 				array('telefono','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
+				array('deorreferenciados','numerical','min' => 0,'max' => 100,'message' => 'El dato solo puede ser numérico'),
 				array('cobertura_tax,cobertura_geog,cobertura_temp,redes_social,info_adicional,comentario,sistematizacion','length','max'=>200),
 				array('email', 'email'),
+				array('acronimo', 'safe', 'on'=>'search'),
 				
 				/*array('archivoAnexo','file','maxSize' => 20000,'types' => 'pdf,zip'),
 				array('archivoColeccion','file','maxSize' => 20000,'types' => 'jpg,gif,jpeg,avi,mp4,mp3'),
@@ -141,8 +144,40 @@ class Registros_Update extends CActiveRecord
 				'archivoColeccion'			=> 'Material divulgativo',
 				'archivoDivulgativo'		=> 'Material divulgativo',
 				'terminos'					=> 'Acepto los términos y condiciones.',
-				'sistematizacion'			=> 'Sistematización y Publicación'
+				'sistematizacion'			=> 'Sistematización y Publicación',
+				'deorreferenciados'			=> '% de Datos georreferenciados'
 		);
+	}
+	
+	public function search(){
+		
+		$criteria=new CDbCriteria;
+		if(isset($this->registros->numero_registro)){
+			$criteria->compare('registros.numero_registro', $this->registros->numero_registro);
+		}
+		if(isset($this->registros->fecha_dil)){
+			$criteria->compare('registros.fecha_dil', $this->registros->fecha_dil);
+		}
+		if(isset($this->registros->estado)){
+			$criteria->compare('registros.estado', $this->registros->estado);
+		}
+		$criteria->compare('t.estado', 2);
+		$criteria->compare('acronimo',$this->acronimo);
+		
+		if(isset($this->registros->entidad)){
+			$criteria->compare('registros.entidad.id',$this->registros->entidad->id);
+		}
+		
+		$criteria->with = array('registros','county');
+		
+		
+		return new CActiveDataProvider($this, array(
+				'criteria'=>$criteria,
+				'sort' => false,
+				'pagination'=>array(
+						'pageSize'=>20,
+						)
+					));
 	}
 	
 	public function dataTamanoList($id){
@@ -254,7 +289,7 @@ class Registros_Update extends CActiveRecord
 	}
 	public function ListarCiudades()
 	{
-		return CHtml::listData(County::model()->findAll(County::model()->listCounty()), 'id','county_name');
+		return CHtml::listData(County::model()->findAll(County::model()->listCounty()), 'iso_county_code','county_name');
 	}
 	
 	public function getArchivoAnexo() {

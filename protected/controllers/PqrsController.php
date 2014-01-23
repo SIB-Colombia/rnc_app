@@ -71,6 +71,30 @@ class PqrsController extends Controller{
 				try {
 				
 					if($model->save()){
+						if(isset($_POST['Pqrs']['nombreArchivo']) && $_POST['Pqrs']['nombreArchivo'] != ''){
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR."pqrs".DIRECTORY_SEPARATOR.$model->id;
+							if(!file_exists($pathDir)){
+								mkdir($pathDir);
+							}
+								
+							$dataFiles_ar = explode(",", $_POST['Pqrs']['nombreArchivo']);
+							foreach ($dataFiles_ar as $value){
+								$dataFiles = explode("/", $value);
+								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
+										
+										$archivoModel = new Archivos_Pqrs();
+										$archivoModel->nombre	= $dataFiles[0];
+										$archivoModel->ruta		= $pathDir;
+										$archivoModel->pqrs_id	= $model->id;
+										
+										$archivoModel->save();
+									}
+								}
+							}
+							
+						}
+						$model->save();
 						$success_saving_all = true;
 					}
 				
@@ -114,7 +138,7 @@ class PqrsController extends Controller{
 	{
 		$model = new Pqrs;
 		$model->registros = Registros::model();
-		
+		$userRole = Yii::app()->user->getState("roles");
 		if(isset($_POST['Pqrs']))
 		{
 			$model->attributes	= $_POST['Pqrs'];
@@ -150,14 +174,14 @@ class PqrsController extends Controller{
 					$model->entidad_id = $_POST['Pqrs']['entidad'];
 					$model->registros_id 	= 0;
 					
-				}else if($model->entidad_id == 0 && Yii::app()->user->getId() !== null){
+				}else if($model->entidad_id == 0 && Yii::app()->user->getId() !== null && $userRole != "admin"){
 					$usuario = Usuario::model()->findByPk(Yii::app()->user->getId());
 						
 					$criteriaEntidad = new CDbCriteria;
 					$criteriaEntidad->compare('usuario_id',$usuario->id);
 						
 					$entidad = Entidad::model()->find($criteriaEntidad);
-					$model->entidad_id = $entidad->id;
+					$model->entidad_id 		= $entidad->id;
 					$model->registros_id 	= 0;
 				}
 				
@@ -179,7 +203,7 @@ class PqrsController extends Controller{
 									$archivoModel->nombre	= $dataFiles[0];
 									$archivoModel->ruta		= $pathDir;
 									$archivoModel->pqrs_id	= $model->id;
-									
+									$archivoModel->visitas_id = 0;
 									$archivoModel->save();
 								}
 							}
@@ -204,8 +228,7 @@ class PqrsController extends Controller{
 			if($success_saving_all){
 				
 				$emailAdmin			= Usuario::model()->obtenerMailAdmin();
-				$emails				= $model->email.$emailAdmin;
-				$emails				= explode(',', $emails);
+				$mails = array(0 => $model->email,1 => 'ksoacha@humboldt.org.co');
 				
 				$message 			= new YiiMailMessage;
 				$message->view 		= "enviarContacto";
@@ -214,7 +237,7 @@ class PqrsController extends Controller{
 				$message->subject	= 'Sistema RNC - Envío de Solicitud';
 				$message->from		= 'hescobar@humboldt.org';
 				$message->setBody($params,'text/html');
-				$message->setTo($emails);
+				$message->setTo($mails);
 				Yii::app()->mail->send($message);
 				
 				if(Yii::app()->user->getId() !== null){
@@ -270,6 +293,58 @@ class PqrsController extends Controller{
 			));
 		}else {
 			$this->redirect(array("admin/login"));
+		}
+	}
+	
+	public function actionBusqueda(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			$model = new Pqrs('search');
+			$model->unsetAttributes();
+			
+			$userRole = Yii::app()->user->getState("roles");
+			if($userRole == "entidad"){
+				$usuario = Usuario::model()->findByPk(Yii::app()->user->getId());
+					
+				$criteriaEntidad = new CDbCriteria;
+				$criteriaEntidad->compare('usuario_id',$usuario->id);
+					
+				$entidad = Entidad::model()->find($criteriaEntidad);
+					
+				$model->entidad = $entidad;
+				$model->entidad_id = $entidad->id;
+			}
+			
+			if(isset($_REQUEST['Pqrs'])){
+				$model->attributes = $_GET['Pqrs'];
+				$arr = $_GET;
+				$this->renderPartial('_pqrs_table', array('listPqrs'=>$model->search(),'model' => $model));
+			}
+		}
+	}
+	
+	public function actionDeleteFileAjax(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_POST['id'])){
+	
+				$modelArchivo = Archivos_Pqrs::model()->findByPk($_POST['id']);
+				if(unlink($modelArchivo->ruta.DIRECTORY_SEPARATOR.$modelArchivo->nombre)){
+					if($modelArchivo->delete()){
+						echo 1;
+					}else{
+						echo 0;
+					}
+				}else {
+					echo 0;
+				}
+			}else if(isset($_POST['name'])){
+				if(unlink("tmp".DIRECTORY_SEPARATOR.$_POST['name'])){
+					echo 1;
+				}else {
+					echo 0;
+				}
+			}
 		}
 	}
 }

@@ -4,12 +4,13 @@
 	//'fixedHeader' => true,
 	'dataProvider'=>$listVisitas,
 	//'responsiveTable' => true,
-	//'filter'=>$model,
+	'filter'=>$model,
 	'ajaxUrl'=>array('visitas/busqueda'),
 	'columns'=>array(
-			'registros.numero_registro',
-			'registros.entidad.titular',
-			'county.county_name',
+			'entidad',
+			array('name' => 'numero_registro_search','value' => 'CHtml::encode(isset($data->registros->numero_registro) ? $data->registros->numero_registro : "")'),
+			array('name' => 'titular_search','value' => 'CHtml::encode(isset($data->registros->entidad->titular) ? $data->registros->entidad->titular : "")'),
+			array('name' => 'municipio_search','value' => 'CHtml::encode(isset($data->county->county_name) ? $data->county->county_name : "")'),
 			'fecha_visita',
 			'concepto',
 			array(

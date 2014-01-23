@@ -47,7 +47,7 @@ input#search {
 	margin: 0 0 0 18px;
 }
 thead {
-	color: #34BCE0;
+	color: #007947;
 }
 table.results th {
 }
@@ -173,7 +173,7 @@ table.actionsList {
 }
 
 .table-panel{
-	width: 70%;
+	width: 96%;
 	padding: 10px 0 20px 20px
 }
 
@@ -309,4 +309,25 @@ b{
 .panelInicio h3{
 	font-size: 16px !important;
 	margin-top: 0px !important
+}
+
+.area-widget{
+	width: 190px;
+	height: 150px;
+	background: none repeat scroll 0 0 #FFFFFF;
+	box-shadow: 0 0 40px #555555;
+	border-radius: 5px 5px 5px 5px;
+	margin: 20px 0 40px 0
+	
+}
+
+#nivel_cata_lista_grid th{
+	font-size: 12px
+}
+
+footer section div {
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+	color: #868686
 }
