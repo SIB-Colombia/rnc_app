@@ -208,7 +208,7 @@ class Registros extends CActiveRecord
 	
 	public function listarFolderHistoricos($folder = ""){
 		$datos = array();
-		$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas";
+		$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos";
 		$dir = "";
 		if($folder != ""){
 			$dirPath = $dirPath.DIRECTORY_SEPARATOR.$folder;

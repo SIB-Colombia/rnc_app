@@ -49,7 +49,7 @@ class Usuario extends CActiveRecord
 				array('password, password2','length', 'max'=>64),
 				array('password2', 'compare', 'compareAttribute'=>'password', 'on'=>'insert'),
 				array('password2', 'compare', 'compareAttribute'=>'newpassword', 'on'=>'update'),
-					
+				array('email', 'email'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				array('username, password, email, role', 'safe', 'on'=>'search'),
@@ -117,6 +117,21 @@ class Usuario extends CActiveRecord
 		}
 		
 		return $emails;
+	}
+	
+	public function generaPassword(){
+		$cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+		$longCadena = strlen($cadena);
+		$pass = "";
+		$longPass = 8;
+		
+		for ($i = 1; $i < $longPass; $i++) {
+			$pos = rand(0, $longCadena-1);
+			
+			$pass .= substr($cadena, $pos,1);
+		}
+		
+		return $pass;
 	}
 }
 ?>

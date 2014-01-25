@@ -62,6 +62,7 @@ $(document).ready(function() {
 			<?php echo $form->label($model,'rememberMe'); ?>
 			<?php echo $form->error($model,'rememberMe'); ?>
 		</div>
+		
 		<div class="btn-login">
 			<?php echo CHtml::submitButton('Ingresar', array('class' => 'boton')); ?>
         </div>
@@ -70,3 +71,6 @@ $(document).ready(function() {
 <?php $this->endWidget(); ?>
 </div><!-- form -->
 </div><!-- ingreso -->
+
+
+

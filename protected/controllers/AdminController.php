@@ -79,7 +79,7 @@ class AdminController extends Controller{
 	public function actionLogin()
 	{
 		$model=new LoginForm;
-	
+		$modelUser = Usuario::model();	
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
 		{
@@ -96,7 +96,7 @@ class AdminController extends Controller{
 				$this->redirect(array("admin/index"));
 		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		$this->render('login',array('model'=>$model,'modelUser' => $modelUser));
 	}
 	
 	/**

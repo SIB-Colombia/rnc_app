@@ -5,4 +5,4 @@ Yii::app()->theme = 'rnc_theme';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 ?>
 
-<img src="<?=Yii::app()->theme->baseUrl?>/img/SAM_2079.jpg" width="845px" height="463px" style="margin-left: 40px"/>
+<img src="<?=Yii::app()->theme->baseUrl?>/img/SAM_2079.jpg" width="645px" height="463px" />

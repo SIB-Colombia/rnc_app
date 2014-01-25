@@ -279,6 +279,39 @@ class UsuarioController extends Controller{
 				}
 			}
 		}
-	} 
+	}
+	
+	public function actionRecuperaPassword(){
+		if(isset($_POST['Usuario'])){
+			$criteria = new CDbCriteria;
+			$criteria->compare("email", $_POST['Usuario']['email']);
+			
+			$modelUsuario = Usuario::model()->find($criteria);
+			
+			if($modelUsuario){
+				$pass = Usuario::model()->generaPassword();
+				
+				$modelUsuario->password	= md5($pass);
+				$modelUsuario->password	= crypt($modelUsuario->password, self::blowfishSalt());
+				
+				if($modelUsuario->save()){
+					$mails = array(0 => $modelUsuario->email);
+					$message 			= new YiiMailMessage;
+					$message->view 		= "recuperaPassword";
+					//$data 			= "Mensaje prueba";
+					$params				= array('data' => $modelUsuario, 'pass' => $pass);
+					$message->subject	= 'Datos de Acceso de Usuario Sistema RNC';
+					$message->from		= 'hescobar@humboldt.org';
+					$message->setBody($params,'text/html');
+					$message->setTo($mails);
+					Yii::app()->mail->send($message);
+				}
+				
+				echo json_encode(array('status' => 'ok','pass'=>$pass));
+			}else{
+				echo json_encode(array('status' => 'failure'));
+			}
+		}
+	}
 }
 ?>

@@ -10,7 +10,7 @@
 		   			text-align: justify;
 		   		}
 		   	</style>
-   			<tr style = "background-color: #2b7fbc">
+   			<tr style = "background-color: rgba(17, 131, 85, 0.75)">
 				<td style="color: #ffffff;padding: 10px;height: 20px">
 					Mensaje Plataforma RNC
 				</td>

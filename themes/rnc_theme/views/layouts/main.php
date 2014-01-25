@@ -56,7 +56,7 @@
 				<div>
 					<h1><?php echo CHtml::encode(Yii::app()->name);  ?></h1>
 					
-					<div id="twopartheader">
+					<div id="twopartheader" style="text-align: center;">
 						<?=$content;?>
 						<div class="panel-der">
 							<?php 

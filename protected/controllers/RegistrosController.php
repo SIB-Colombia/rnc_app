@@ -263,7 +263,7 @@ class RegistrosController extends Controller{
 						}
 						
 						if(isset($_POST['Registros_Update']['archivosAnexos']) && $_POST['Registros_Update']['archivosAnexos'] != ''){
-							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo."_".$model->registros_update->id;
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -294,7 +294,7 @@ class RegistrosController extends Controller{
 						}
 						
 						if(isset($_POST['Registros_Update']['archivosColecciones'])  && $_POST['Registros_Update']['archivosColecciones'] != ''){
-							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo."_".$model->registros_update->id;
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -530,7 +530,7 @@ class RegistrosController extends Controller{
 						}
 							
 						if(isset($_POST['Registros_Update']['archivosAnexos'])  && $_POST['Registros_Update']['archivosAnexos'] != ''){
-							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo."_".$model->registros_update->id;
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -561,7 +561,7 @@ class RegistrosController extends Controller{
 						}
 							
 						if(isset($_POST['Registros_Update']['archivosColecciones'])  && $_POST['Registros_Update']['archivosColecciones'] != ''){
-							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo."_".$model->registros_update->id;
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -856,7 +856,7 @@ class RegistrosController extends Controller{
 						}
 				
 						if(isset($_POST['Registros_Update']['archivosAnexos']) && $_POST['Registros_Update']['archivosAnexos'] != ''){
-							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->acronimo."_".$modelRegistroUpdate->id;
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -887,7 +887,7 @@ class RegistrosController extends Controller{
 						}
 				
 						if(isset($_POST['Registros_Update']['archivosColecciones'])  && $_POST['Registros_Update']['archivosColecciones'] != ''){
-							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->acronimo."_".$modelRegistroUpdate->id;
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -1133,7 +1133,7 @@ class RegistrosController extends Controller{
 			}else {
 				$name = "";
 			}
-			$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas".DIRECTORY_SEPARATOR.$name;
+			$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
 			
 			if(is_dir($dirPath)){
 				$model = Registros::model();

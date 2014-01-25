@@ -61,11 +61,33 @@ $(document).ready(function() {
 				<?php echo $form->checkBox($model,'rememberMe'); ?>
 				<?php echo $form->label($model,'rememberMe'); ?>
 				<?php echo $form->error($model,'rememberMe'); ?>
+				
 			</div>
+			<?php 
+				$this->widget('bootstrap.widgets.TbButton', array(
+						'label'=>'Recuperar Contraseña',
+						'type'=>'success',
+						'htmlOptions'=>array(
+								'data-toggle'=>'modal',
+								'data-target'=>'#modalUser',
+								'style'	=> 'float:left;margin-left: 10px;clear:left'
+						),
+				));
+			?>
+			
 			<div class="btn-login">
 				<?php echo CHtml::submitButton('Ingresar', array('class' => 'boton')); ?>
 	        </div>
+	        
 		</div>
 		<?php $this->endWidget(); ?>
 	</div><!-- form -->
 </div><!-- ingreso -->
+
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'modalUser','htmlOptions' => array('style'=>'width:420px;padding:20px'))); ?>
+	<div class="modal-header">
+    <a class="close" data-dismiss="modal">&times;</a>
+    	<h3 style="color:#007947">Recuperar Contraseña</h3>
+	</div>
+<?php echo $this->renderPartial('../usuario/_recuperaPassword', array('model'=>$modelUser,'ajaxMode' => true)); ?>
+<?php $this->endWidget(); ?>

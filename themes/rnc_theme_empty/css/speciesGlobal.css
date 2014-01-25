@@ -974,3 +974,7 @@ footer section div {
 	background-color: #bfdc7a;
 	background-image: -webkit-linear-gradient(top,#bfdc7a,#8ebf45)
 }
+
+.add-on{
+	height: 30px !important
+}

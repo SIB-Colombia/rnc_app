@@ -51,8 +51,8 @@ return array(
 			'transportType' => 'smtp',
 			'transportOptions' => array(
 				'host' => 'smtp.gmail.com',
-				'username'=>'xxx@gmail.com',
-				'password'=>'xxx',
+				'username'=>'xxxx@gmail.com',
+				'password'=>'xxxx',
 				'port'=>'465',
 				'encryption' => 'ssl'
 			),
