@@ -331,3 +331,8 @@ footer section div {
 	width: 100%;
 	color: #868686
 }
+
+.printR{
+	float: right;
+	cursor: pointer;
+}

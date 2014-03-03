@@ -11,14 +11,14 @@ $userRole  = Yii::app()->user->getState("roles");
 //Yii::app()->end();
 ?>
 
-<div id="header-front">Modificar Registro: <?php echo $model->registros_update->nombre; ?></div>
+<div id="header-front">Modificar registro: <?php echo $model->registros_update->nombre; ?></div>
 
 <div id="content-front">
 <?php 
 	
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 			'buttons'=>array(
-					array('label'=>'Listar Registros', 'icon'=>'icon-list', 'url'=>array('index')),
+					array('label'=>'Listar registros', 'icon'=>'icon-list', 'url'=>array('index')),
 					array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel')),
 			),
 	));

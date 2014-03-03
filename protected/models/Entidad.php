@@ -13,6 +13,7 @@
 * @property int	   $tipo_id_rep
 * @property string $representante_id
 * @property int    $ciudad_id
+* @property int    $departamento_id
 * @property string $telefono
 * @property string $direccion
 * @property string $email
@@ -21,11 +22,13 @@
 * @property int $usuario_id
 * @property date $fecha_creacion
 * @property int $dilegenciadores_id
+* @property int $tipo_institucion_id
 * 
 * The followings are the available model relations:
 * 
 * @property Usuario $usuario
 * @property Dilegenciadores $dilegenciadores
+* @property Tipo_Institucion $tipo_institucion
 */
 
 class Entidad extends CActiveRecord
@@ -41,6 +44,8 @@ class Entidad extends CActiveRecord
 	private $estado_s;
 	private $usuario_id_s;
 	private $aprobado;
+	public 	$colecciones;
+	
 	
 	public static function model($className=__CLASS__)
 	{
@@ -63,11 +68,11 @@ class Entidad extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('tipo_titular,titular,tipo_nit,nit,representante_legal,tipo_id_rep,representante_id,direccion,telefono,email,ciudad_id', 'required'),
+				array('tipo_titular,titular,tipo_nit,nit,representante_legal,tipo_id_rep,representante_id,direccion,telefono,email,departamento_id,ciudad_id,colecciones,tipo_institucion_id', 'required'),
 				array('titular,telefono,direccion,representante_legal,email', 'length', 'max'=>150),
 				array('nit,representante_id','length', 'max'=>64),
 				array('email', 'email'),
-				array('telefono,nit,representante_id','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
+				array('representante_id','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				//array('titular,nit,representante_id,direccion,telefono,email,dependencia_d,cargo_d,telefono_d,', 'safe', 'on'=>'search'),
@@ -85,7 +90,9 @@ class Entidad extends CActiveRecord
 		return array(
 				'usuario' => array(self::BELONGS_TO, 'Usuario', 'usuario_id'),
 				'dilegenciadores' => array(self::BELONGS_TO, 'Dilegenciadores', 'dilegenciadores_id'),
-				'county' => array(self::BELONGS_TO, 'County', 'ciudad_id')
+				'county' => array(self::BELONGS_TO, 'County', 'ciudad_id'),
+				'department' => array(self::BELONGS_TO, 'Department', 'departamento_id'),
+				'tipo_institucion' => array(self::BELONGS_TO, 'Tipo_Institucion', 'tipo_institucion_id')
 		);
 	}
 	
@@ -95,31 +102,34 @@ class Entidad extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-				'tipo_titular' => 'Tipo de Titular',
+				'tipo_titular' => 'Tipo de titular',
 				'titular' => 'Titular',
-				'tipo_nit' => 'Tipo de Identificación',
+				'tipo_nit' => 'Tipo de identificación',
 				'nit' => 'Número',
-				'representante_legal' => 'Representante Legal',
+				'representante_legal' => 'Representante legal',
 				'tipo_id_rep' => 'Tipo de identificación',
 				'representante_id' => 'Número',
-				'ciudad_id' => 'Ciudad',
+				'ciudad_id' => 'Municipio',
 				'direccion' => 'Dirección',
 				'telefono' => 'Teléfono',
-				'email' => 'Correo Electrónico',
+				'email' => 'Correo electrónico',
 				'usuario_id' => 'Usuario',
-				'fecha_creacion' => 'Fecha de Creación',
+				'fecha_creacion' => 'Fecha de creación',
 				'tipo_titular_s' => '',
 				'titular_s' => 'Titular',
 				'tipo_nit_s' => '',
 				'nit_s'=> 'Número',
-				'representante_legal_s' => 'Representante Legal',
+				'representante_legal_s' => 'Representante legal',
 				'tipo_id_rep_s' => '',
 				'representante_id_s' => 'Número',
 				'ciudad_id_s' => 'Ciudad',
 				'estado_s' => 'Estado',
 				'usuario_id_s' => 'Usuario',
 				'aprobado' => 'Aprobado',
-				'comentario' => 'Comentario'
+				'comentario' => 'Comentario',
+				'colecciones' => 'Colecciones a registrar',
+				'tipo_institucion_id' => 'Tipo de institución',
+				'departamento_id' => 'Departamento',
 		);
 	}
 	
@@ -146,7 +156,7 @@ class Entidad extends CActiveRecord
 		$criteria->compare('usuario_id',$this->usuario_id);
 		
 		$criteria->with = array('usuario','dilegenciadores');
-	
+		$criteria->order = 'titular ASC';
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
 				'sort' => false,
@@ -185,19 +195,25 @@ class Entidad extends CActiveRecord
 		$criteria=new CDbCriteria;
 		
 		$criteria->compare('estado',2);
-		
+		$criteria->order = 'titular ASC';
 		return CHtml::listData($this->findAll($criteria), 'id','titular');
 	}
 	
 	public function ListarEstado()
 	{
-		return CHtml::listData([['id' => 1, 'nombre' => 'En Espera'],['id' => 2, 'nombre' => 'Aprobado'],['id' => 3, 'nombre' => ' No Aprobado']], 'id','nombre');
+		return CHtml::listData(array(array('id' => 1, 'nombre' => 'En Espera'),array('id' => 2, 'nombre' => 'Aprobado'),array('id' => 3, 'nombre' => ' No Aprobado')), 'id','nombre');
 	}
 	
-	public function ListarCiudades()
+	public function ListarCiudades($idDepartment = 0,$idCounty = 0)
 	{
-		return CHtml::listData(County::model()->findAll(County::model()->listCounty()), 'iso_county_code','county_name');
+		return CHtml::listData(County::model()->findAll(County::model()->listCounty($idDepartment,$idCounty)), 'iso_county_code','county_name');
 	}
+	
+	public function ListarDepartamentos()
+	{
+		return CHtml::listData(Department::model()->findAll(Department::model()->listDepartment()), 'iso_department_code','department_name');
+	}
+	
 	public function ListarUsuarios($tipo = "")
 	{
 		$criteria=new CDbCriteria;
@@ -211,17 +227,17 @@ class Entidad extends CActiveRecord
 	
 	public function ListarTipo()
 	{
-		return CHtml::listData([['id' => 1, 'nombre' => 'Persona Natural'],['id' => 2, 'nombre' => 'Persona Jurídica']], 'id','nombre');
+		return CHtml::listData(array(array('id' => 1, 'nombre' => 'Persona Natural'),array('id' => 2, 'nombre' => 'Persona Jurídica')), 'id','nombre');
 	}
 	
 	public function ListarTipoIdTit()
 	{
-		return CHtml::listData([['id' => 1, 'nombre' => 'Nit'],['id' => 2, 'nombre' => 'Cédula de Ciudadanía']], 'id','nombre');
+		return CHtml::listData(array(array('id' => 1, 'nombre' => 'Nit'),array('id' => 2, 'nombre' => 'Cédula de Ciudadanía')), 'id','nombre');
 	}
 	
 	public function ListarTipoIdRep()
 	{
-		return CHtml::listData([['id' => 1, 'nombre' => 'Cédula de Ciudadanía'],['id' => 2, 'nombre' => 'Cédula de Extranjería']], 'id','nombre');
+		return CHtml::listData(array(array('id' => 1, 'nombre' => 'Cédula de Ciudadanía'),array('id' => 2, 'nombre' => 'Cédula de Extranjería')), 'id','nombre');
 	}
 	
 	public function getAprobado() {

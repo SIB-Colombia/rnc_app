@@ -17,6 +17,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 		),
 ));
 ?>
+<i class="icon-print printR" onclick="print();"></i>
 <div style="margin-top: 20px">
 <?php 
 $this->widget('zii.widgets.CDetailView', array(
@@ -28,12 +29,13 @@ $this->widget('zii.widgets.CDetailView', array(
 		'registros.entidad.titular',
 		'fecha_visita',
 		'concepto',
+		'county.department.department_name',
 		'county.county_name'
 	),
 )); ?>
 <br>
 <fieldset>
-		<legend class="form_legend">Datos de quien hizo la visita</legend>
+		<legend class="form_legend">Datos de la persona que realizó la visita</legend>
 		
 		<?php 
 			$this->widget('zii.widgets.CDetailView', array(

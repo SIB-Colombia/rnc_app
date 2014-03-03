@@ -333,8 +333,9 @@ class VisitasController extends Controller{
 			if(isset($_REQUEST['Visitas'])){
 				$model->attributes = $_GET['Visitas'];
 				$arr = $_GET;
-				$this->renderPartial('_visitas_table', array('listVisitas'=>$model->search(),'model' => $model));
 			}
+			
+			$this->renderPartial('_visitas_table', array('listVisitas'=>$model->search(),'model' => $model));
 		}
 	}
 	

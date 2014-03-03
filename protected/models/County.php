@@ -68,12 +68,24 @@ class County extends CActiveRecord
 		));
 	}
 	
-	public function listCounty(){
+	public function listCounty($idDepartment = 0,$idCiudad = 0){
 		
 		$criteria=new CDbCriteria;
+		if($idDepartment == ''){
+			$idDepartment = '0';
+		}
 		
+		if($idDepartment != '0'){
+			
+			$criteria->compare('department.iso_department_code',$idDepartment);
+		}elseif($idCiudad != 0){
+			
+			$criteria->compare('iso_county_code',$idCiudad);
+		}else{
+			$criteria->compare('department_id',$idDepartment);
+		}
 		$criteria->with = array('department');
-		$criteria->order = 'department_id ASC, county_name ASC';
+		$criteria->order = 'county_name ASC';
 		
 		return $criteria;
 	}

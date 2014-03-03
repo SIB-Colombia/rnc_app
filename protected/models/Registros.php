@@ -10,16 +10,19 @@
  * @property int $numero_registro
  * @property int $estado
  * @property int $terminos
+ * @property int $tipo_coleccion_id
  *
  * The followings are the available model relations:
  *
  * @property Entidad $entidad
- * @property Registros_Update $registros_update
+ * @property Registros_update $registros_update
+ * @property Tipo_Coleccion $tipo_coleccion
  */
 
 class Registros extends CActiveRecord
 {
 	public $acronimo_search;
+	public $departamento_search;
 	public $ciudad_search;
 	public $titular_search;
 	public $estado_search;
@@ -45,9 +48,9 @@ class Registros extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('numero_registro,fecha_dil','required')	,
+			array('numero_registro,tipo_coleccion_id','required')	,
 			array('numero_registro','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
-			array('acronimo_search,ciudad_search,titular_search,numero_registro,estado_search,fecha_dil', 'safe', 'on'=>'search'),
+			array('acronimo_search,departamento_search,ciudad_search,titular_search,numero_registro,estado_search,fecha_dil', 'safe', 'on'=>'search'),
 		);
 	}
 	
@@ -60,7 +63,8 @@ class Registros extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 				'entidad' => array(self::BELONGS_TO, 'Entidad', 'Entidad_id'),
-				'registros_update' => array(self::HAS_MANY, 'registros_update', 'registros_id')
+				'registros_update' => array(self::HAS_MANY, 'Registros_update', 'registros_id'),
+				'tipo_coleccion' => array(self::BELONGS_TO, 'Tipo_Coleccion', 'tipo_coleccion_id'),
 		);
 	}
 	
@@ -70,14 +74,16 @@ class Registros extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'numero_registro' 	=> 'Colección No.',
-			'fecha_dil'			=> 'Última Actualización',
-			'fecha_prox'		=> 'Próxima Actualización',
-			'estado' 			=> 'Estado de la Colección',
-			'acronimo_search'	=> 'Acrónimo',
-			'ciudad_search'		=> 'Municipio',
-			'titular_search'	=> 'Titular',
-			'estado_search'		=> 'Estado de la Colección'
+			'numero_registro' 		=> 'Colección No.',
+			'fecha_dil'				=> 'Fecha de registro de la colección',
+			'fecha_prox'			=> 'Próxima actualización',
+			'estado' 				=> 'Estado de la colección',
+			'acronimo_search'		=> 'Acrónimo',
+			'departamento_search'	=> 'Departamento',
+			'ciudad_search'			=> 'Municipio',
+			'titular_search'		=> 'Titular',
+			'estado_search'			=> 'Estado de la colección',
+			'tipo_coleccion_id'		=> 'Tipo de colección'
 		);
 	}
 	
@@ -129,12 +135,24 @@ class Registros extends CActiveRecord
 			$sql .= " ".$where;
 			$criteria->addCondition('t.id IN ('.$sql.')');
 		}
+		
+		$sql='';
+		
+		if($this->departamento_search != ''){
+			$sql = "SELECT registros_update.registros_id FROM department ";
+			$sql .= "INNER JOIN county ON  department.id = county.department_id ";
+			$sql .= "INNER JOIN registros_update ON  county.iso_county_code = registros_update.ciudad_id ";
+			$where = "WHERE LOWER(department.department_name) LIKE '".strtolower($this->departamento_search)."'";
+			
+			$sql .= " ".$where;
+			$criteria->addCondition('t.id IN ('.$sql.')');
+		}
 	
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
 				'sort' => false,
 				'pagination'=>array(
-						'pageSize'=>20,
+						'pageSize'=>10,
 				)
 		));
 	}
@@ -146,12 +164,12 @@ class Registros extends CActiveRecord
 		$criteria->compare('t.estado', 1);
 		//$criteria->compare('registros_update.estado', 2);
 		//$criteria->addCondition('Registros_Update.estado = 2');
-		$criteria->order = 'fecha_dil DESC';
+		$criteria->order = 'numero_registro ASC, fecha_dil DESC';
 		if(isset($this->entidad)){
 			$criteria->compare('entidad.id',$this->entidad->id);
 		}
 		
-		$criteria->with = array('entidad');
+		$criteria->with = array('entidad','registros_update');
 		
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,
@@ -170,7 +188,7 @@ class Registros extends CActiveRecord
 				
 		$criteria->with = array('registros.entidad','registros');
 		
-		$modelRegistroUpdate = Registros_Update::model();
+		$modelRegistroUpdate = Registros_update::model();
 		
 		return new CActiveDataProvider($modelRegistroUpdate, array(
 				'criteria'=>$criteria,
@@ -210,21 +228,51 @@ class Registros extends CActiveRecord
 		$datos = array();
 		$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos";
 		$dir = "";
+		$cols = array();
 		if($folder != ""){
 			$dirPath = $dirPath.DIRECTORY_SEPARATOR.$folder;
 			$dir = $folder.DIRECTORY_SEPARATOR;
 			
+		}else{
+			if(Yii::app()->user->getState("roles") == "entidad"){
+				$criteriaEntidad = new CDbCriteria;
+				$criteriaEntidad->compare('usuario_id',Yii::app()->user->getId());
+				$entidad = Entidad::model()->find($criteriaEntidad);
+			
+				$criteriaRegistro = new CDbCriteria;
+				$criteriaRegistro->compare('entidad_id', $entidad->id);
+				$criteriaRegistro->with = array('registros_update'); 
+				$modelRegistros = Registros::model()->findAll($criteriaRegistro);
+				
+				foreach ($modelRegistros as $registro){
+					foreach ($registro->registros_update as $reg_update){
+						$cols[] = $reg_update->acronimo;
+					}
+				}
+			}
 		}
 		$directorio = opendir($dirPath);
 		$cont = 1;
 		while ($archivo = readdir($directorio)){
 			$isDir = 1;
-			if($archivo != "." && $archivo != ".."){
-				if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
-					$isDir = 0;
+			$arch_aux = explode("_", $archivo);
+			
+			if(Yii::app()->user->getState("roles") == "entidad"){
+				if(($archivo != "." && $archivo != "..") && (in_array($arch_aux[1], $cols) || $folder != "")){
+					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
+						$isDir = 0;
+					}
+					$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					$cont++;
 				}
-				$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
-				$cont++;
+			}else {
+				if($archivo != "." && $archivo != ".."){
+					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
+						$isDir = 0;
+					}
+					$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					$cont++;
+				}
 			}
 		}
 		

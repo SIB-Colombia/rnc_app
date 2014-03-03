@@ -7,11 +7,13 @@
  * @property string $nombre
  * @property string $email
  * @property int	$tipo_solicitud
+ * @property string $entidad_otra
  * @property string $descripcion
  * @property string $ruta_anexo
  * @property string $respuesta
  * @property int	$estado
  * @property date	$fecha
+ * @property date 	$fecha_respuesta
  * @property int 	$registros_id
  * @property int 	$entidad_id
  *
@@ -28,6 +30,7 @@ class Pqrs extends CActiveRecord
 	public $archivo;
 	public $aprobado;
 	public $nombreArchivo;
+	public $entidad_search;
 	public $numero_registro_search;
 	public $estado_search;
 	public $tipoSol_search;
@@ -53,13 +56,13 @@ class Pqrs extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('nombre,email,tipo_solicitud,descripcion', 'required'),
+				array('nombre,email,descripcion', 'required'),
 				array('nombre', 'length', 'max'=>150),
 				array('email', 'email'),
 				array('numero_registro','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
-				array('numero_registro_search,estado_search,tipoSol_search,fecha', 'safe', 'on'=>'search'),
+				array('numero_registro_search,estado_search,tipoSol_search,fecha,entidad_search', 'safe', 'on'=>'search'),
 		);
 	}
 	
@@ -82,12 +85,12 @@ class Pqrs extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-				'nombre' 			=> 'Nombre Solicitante',
-				'email' 			=> 'Correo Electrónico',
-				'fecha'				=> 'Fecha de Solicitud',
-				'tipo_solicitud' 	=> 'Tipo de Solicitud',
+				'nombre' 			=> 'Nombre del solicitante',
+				'email' 			=> 'Correo electrónico',
+				'fecha'				=> 'Fecha de solicitud',
+				'tipo_solicitud' 	=> 'Tipo de solicitud',
 				'descripcion' 		=> 'Descripción',
-				'archivo' 			=> 'Archivo Anexo',
+				'archivo' 			=> 'Archivo anexo',
 				'respuesta'			=> 'Respuesta',
 				'estado' 			=> 'Estado',
 				'aprobado' 			=> 'Cerrado',
@@ -95,7 +98,10 @@ class Pqrs extends CActiveRecord
 				'entidad'			=> 'Entidad',
 				'numero_registro_search' => 'Colección No.',
 				'estado_search' 	=> 'Estado',
-				'tipoSol_search'	=> 'Tipo de Solicitud'
+				'tipoSol_search'	=> 'Tipo de solicitud',
+				'entidad_search'	=> 'Titular',
+				'fecha_respuesta'	=> 'Fecha de respuesta',
+				'entidad_otra'		=> 'Otra Entidad'
 			);
 	}
 	
@@ -110,7 +116,7 @@ class Pqrs extends CActiveRecord
 	
 		$criteria=new CDbCriteria;
 	
-		$criteria->compare('nombre', $this->nombre);
+		$criteria->compare('nombre', $this->nombre,true);
 		$criteria->compare('email',$this->email);
 		$criteria->compare('fecha', $this->fecha,true);
 		
@@ -120,6 +126,10 @@ class Pqrs extends CActiveRecord
 		
 		if($this->numero_registro_search != ''){
 			$criteria->compare('registros.numero_registro',$this->numero_registro_search);
+		}
+		
+		if($this->entidad_search != ''){
+			$criteria->compare('entidad.titular',$this->entidad_search,true);
 		}
 		
 		if($this->tipoSol_search != ''){
@@ -145,7 +155,7 @@ class Pqrs extends CActiveRecord
 			$criteria->compare('t.estado', $this->estado);
 		}
 		
-		$criteria->with = array('registros');
+		$criteria->with = array('entidad','registros');
 		$criteria->order = 'fecha DESC';
 	
 		return new CActiveDataProvider($this, array(
@@ -177,7 +187,7 @@ class Pqrs extends CActiveRecord
 	
 	public function listarTipoSolicitud()
 	{
-		return CHtml::listData([['id' => 1, 'nombre' => 'Petición'],['id' => 2, 'nombre' => 'Queja'],['id' => 3, 'nombre' => 'Felicitación']], 'id','nombre');
+		return CHtml::listData(array(array('id' => 1, 'nombre' => 'Petición'),array('id' => 2, 'nombre' => 'Queja'),array('id' => 3, 'nombre' => 'Felicitación')), 'id','nombre');
 	}
 	
 	public function dataArchivosList($id){

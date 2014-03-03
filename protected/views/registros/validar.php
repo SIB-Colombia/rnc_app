@@ -6,14 +6,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 $userRole  = Yii::app()->user->getState("roles");
 ?>
 
-<div id="header-front">Validar Registro: <?php echo $model->registros_update->nombre; ?></div>
+<div id="header-front">Validar registro: <?php echo $model->registros_update->nombre; ?></div>
 
 <div id="content-front">
 <?php 
 	if($userRole == "admin"){
 		$this->widget('bootstrap.widgets.TbButtonGroup', array(
 				'buttons'=>array(
-						array('label'=>'Listar Registros', 'icon'=>'icon-list', 'url'=>array('index')),
+						array('label'=>'Listar registros', 'icon'=>'icon-list', 'url'=>array('index')),
 						array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel')),
 				),
 		));

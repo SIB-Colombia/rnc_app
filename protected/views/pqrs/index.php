@@ -24,10 +24,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	}
 </script>
 
-<div id="header-front">Listado de Solicitudes</div>
+<div id="header-front">Listado de solicitudes</div>
 
 <div id="content-front">
-			
+	 <i class="icon-print printR" onclick="print();"></i>
 	  <div class="tab-content">
 	       <?php echo $this->renderPartial('_pqrs_table', array('listPqrs'=>$model->search(),'model'=>$model)); ?>
 	  </div>

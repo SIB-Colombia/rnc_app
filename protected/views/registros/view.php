@@ -4,10 +4,10 @@
 Yii::app()->theme = 'rnc_theme_panel';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
-
+$userRole  = Yii::app()->user->getState("roles");
 ?>
 
-<div id="header-front">Colección Número: <?php echo ($model->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->numero_registro); ?></div>
+<div id="header-front">Colección número: <?php echo ($model->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->numero_registro); ?></div>
 
 <div id="content-front">
 <?php
@@ -18,12 +18,14 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 ));
 ?>
 <div style="margin-top: 20px">
+<i class="icon-print printR" onclick="print();"></i>
 	<fieldset>
-		<legend class="form_legend">Colección Número: <?php echo ($model->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->numero_registro); ?></legend>
+		<legend class="form_legend">Colección número: <?php echo ($model->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->numero_registro); ?></legend>
 		<?php 
 		$this->widget('zii.widgets.CDetailView', array(
 			'data'=>$model,
 			'attributes'=>array(
+				'tipo_coleccion.nombre',
 				'fecha_dil',
 				array(
 					'name' => 'estado',

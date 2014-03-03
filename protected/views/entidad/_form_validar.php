@@ -41,6 +41,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		echo $form->textFieldRow($model, 'direccion', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
 		echo $form->textFieldRow($model, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
 		echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA','disabled'=>true));
+		echo $form->dropDownListRow($model, 'tipo_institucion_id', Tipo_Institucion::model()->listarTipoInstitucion(),array('prompt' => 'Seleccionar...','disabled'=>true));
 	?>
 </fieldset>
 
@@ -79,6 +80,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <div id="catalogouser-botones-internos" class="form-actions pull-right">
 	<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar')); ?>
     <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
+    <?php 
+		$this->widget('bootstrap.widgets.TbButtonGroup', array(
+			'buttons'=>array(
+				array('label'=>'Cancel', 'url'=>array('admin/panel')),
+			),
+		));
+	?>
 </div>
 <?php $this->endWidget(); ?>
 </div>

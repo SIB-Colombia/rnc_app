@@ -24,8 +24,10 @@
 						$this->widget('zii.widgets.CDetailView', array(
 								'data'=>$data,
 								'attributes'=>array(
+									'fecha',
 									'nombre',
 									'email',
+									'entidad.titular',
 									'registros.numero_registro',
 									array(
 											'name' => 'titular',

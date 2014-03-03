@@ -63,13 +63,14 @@ class PqrsController extends Controller{
 				
 				$model->estado = ($_REQUEST['Pqrs']['aprobado'] == 0) ? 1 : 0;
 				$model->respuesta = $_REQUEST['Pqrs']['respuesta'];
+				$model->fecha_respuesta		= Yii::app()->Date->now();
 				
 				$success_saving_all = false;
 				
 				$transaction = Yii::app()->db->beginTransaction();
 				
 				try {
-				
+					$archivos = array();
 					if($model->save()){
 						if(isset($_POST['Pqrs']['nombreArchivo']) && $_POST['Pqrs']['nombreArchivo'] != ''){
 							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR."pqrs".DIRECTORY_SEPARATOR.$model->id;
@@ -89,6 +90,7 @@ class PqrsController extends Controller{
 										$archivoModel->pqrs_id	= $model->id;
 										
 										$archivoModel->save();
+										$archivos[] = $archivoModel;
 									}
 								}
 							}
@@ -109,7 +111,9 @@ class PqrsController extends Controller{
 				}
 				
 				if($success_saving_all){
-								
+					
+					$mails = array(0 => $model->email,1 => 'ksoacha@humboldt.org.co');
+					
 					$message 			= new YiiMailMessage;
 					$message->view 		= "responderContacto";
 					//$data 			= "Mensaje prueba";
@@ -117,7 +121,13 @@ class PqrsController extends Controller{
 					$message->subject	= 'Sistema RNC - Respuesta de Solicitud';
 					$message->from		= 'hescobar@humboldt.org';
 					$message->setBody($params,'text/html');
-					$message->setTo($model->email);
+					$message->setTo($mails);
+					
+					if(count($archivos) > 0){
+						foreach ($archivos as $archivo){
+							$message->attach(Swift_Attachment::fromPath($archivo->ruta.DIRECTORY_SEPARATOR.$archivo->nombre,'multipart/mixed')->setFilename($archivo->nombre));
+						}
+					}
 					Yii::app()->mail->send($message);
 				
 				}
@@ -228,14 +238,14 @@ class PqrsController extends Controller{
 			if($success_saving_all){
 				
 				$emailAdmin			= Usuario::model()->obtenerMailAdmin();
-				$mails = array(0 => $model->email,1 => 'ksoacha@humboldt.org.co');
+				$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
 				
 				$message 			= new YiiMailMessage;
 				$message->view 		= "enviarContacto";
 				//$data 			= "Mensaje prueba";
 				$params				= array('data' => $model);
 				$message->subject	= 'Sistema RNC - Envío de Solicitud';
-				$message->from		= 'hescobar@humboldt.org';
+				$message->setFrom(array('rnc@humboldt.org.co'));
 				$message->setBody($params,'text/html');
 				$message->setTo($mails);
 				Yii::app()->mail->send($message);
@@ -244,8 +254,8 @@ class PqrsController extends Controller{
 					$this->redirect(array('view','id'=>$model->id));
 				}else{
 					$mensaje = new Mensaje();
-					$mensaje->setTitulo("Envío Exitoso");
-					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará la información y dará respuesta a la misma.");
+					$mensaje->setTitulo("Envío exitoso");
+					$mensaje->setMensaje("La solicitud fue enviada con éxito, en los próximos días el administrador verificará la información y dará respuesta a la misma.");
 					
 					$this->render('mensaje',array(
 							'model'=>$mensaje,
@@ -324,19 +334,20 @@ class PqrsController extends Controller{
 	}
 	
 	public function actionDeleteFileAjax(){
-		if(Yii::app()->user->getId() !== null)
-		{
+		
 			if(isset($_POST['id'])){
-	
-				$modelArchivo = Archivos_Pqrs::model()->findByPk($_POST['id']);
-				if(unlink($modelArchivo->ruta.DIRECTORY_SEPARATOR.$modelArchivo->nombre)){
-					if($modelArchivo->delete()){
-						echo 1;
-					}else{
+				if(Yii::app()->user->getId() !== null)
+				{
+					$modelArchivo = Archivos_Pqrs::model()->findByPk($_POST['id']);
+					if(unlink($modelArchivo->ruta.DIRECTORY_SEPARATOR.$modelArchivo->nombre)){
+						if($modelArchivo->delete()){
+							echo 1;
+						}else{
+							echo 0;
+						}
+					}else {
 						echo 0;
 					}
-				}else {
-					echo 0;
 				}
 			}else if(isset($_POST['name'])){
 				if(unlink("tmp".DIRECTORY_SEPARATOR.$_POST['name'])){
@@ -345,7 +356,7 @@ class PqrsController extends Controller{
 					echo 0;
 				}
 			}
-		}
+		
 	}
 }
 ?>

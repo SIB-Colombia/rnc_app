@@ -6,14 +6,14 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 */
 
 // Define a destination
-$targetFolder = '/rnc_app/tmp'; // Relative to the root
+$targetFolder = DIRECTORY_SEPARATOR.'rnc_app'.DIRECTORY_SEPARATOR.'tmp'; // Relative to the root
 
 if (!empty($_FILES)) {
 	$tempFile = $_FILES['Filedata']['tmp_name'];
 	$targetPath = $_SERVER['DOCUMENT_ROOT'] . $targetFolder;
 	
 	$aux_name	= rand(10, 999);
-	$targetFile = rtrim($targetPath,'/') . '/' . $_POST['randWord'].'_'.$_FILES['Filedata']['name'];
+	$targetFile = rtrim($targetPath,DIRECTORY_SEPARATOR) .DIRECTORY_SEPARATOR. $_POST['randWord'].'_'.$_FILES['Filedata']['name'];
 	
 	// Validate the file type
 	$fileTypes = array('txt','xls','csv', 'xlsx'); // File extensions

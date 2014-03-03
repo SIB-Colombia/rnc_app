@@ -80,15 +80,15 @@ class UsuarioController extends Controller{
 			{
 				$model->attributes=$_POST['Usuario'];
 				//$this->performAjaxValidation($model);
-				if($model->password != "" && $model->password2 != ""){
-					
-					if($model->password === $model->password2){
-						if($model->role == "admin"){
-							$model->password	= md5($model->password);
-							$model->password	= crypt($model->password, self::blowfishSalt());
-							$model->password2	= $model->password;
-						}
-					}
+				$passwd =  Usuario::model()->generaPassword();
+				
+				if($model->role == "admin"){
+					$model->password	= md5($passwd);
+					$model->password	= crypt($model->password, self::blowfishSalt());
+					$model->password2	= $model->password;
+				}else{
+					$model->password = $passwd;
+					$model->password2 = $passwd;
 				}
 					
 				if($model->save()){
@@ -99,6 +99,17 @@ class UsuarioController extends Controller{
 						));
 						exit;
 					}else{
+						if($model->role == "admin"){
+							$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
+							$message 			= new YiiMailMessage;
+							$message->view 		= "crearUsuario";
+							$params				= array('data' => $model,'user' => $model->username,'pass' => $passwd);
+							$message->subject	= 'Nuevo Usuario Sistema RNC';
+							$message->setFrom(array('rnc@humboldt.org.co'));
+							$message->setBody($params,'text/html');
+							$message->setTo($mails);
+							Yii::app()->mail->send($message);
+						}
 						$this->redirect(array('view','id'=>$model->id));
 					}
 				}else{
@@ -142,24 +153,42 @@ class UsuarioController extends Controller{
 				$model->newpassword = $_POST['Usuario']['newpassword'];
 				$model->password = $model->newpassword;
 				$password = "";
+				
+				$criteria=new CDbCriteria;
+				$criteria->compare('usuario_id', $model->id);
+				$modelEntidad = Entidad::model()->find($criteria);
+				
 				if($model->password === $model->password2){
+					
 					$password			= $model->password;
 					
 					$model->password	= md5($model->password);
 					$model->password	= crypt($model->password, self::blowfishSalt());
 					$model->newpassword = $model->password;
 					$model->password2	= $model->password;
+					
+					/*if(!isset($modelEntidad)){
+						$model->password	= md5($model->password);
+						$model->password	= crypt($model->password, self::blowfishSalt());
+						$model->newpassword = $model->password;
+						$model->password2	= $model->password;
+					}else {
+						$model->newpassword = $model->password;
+						$model->password2	= $model->password;
+					}*/
 				}
 				if($model->save()){
-					$message 			= new YiiMailMessage;
-					$message->view 		= "actualizaUsuario";
-					$params				= array('data' => $model,'user' => $model->username,'pass' => $password);
-					$message->subject	= 'Actualizar Usuario Sistema RNC';
-					$message->from		= 'hescobar@humboldt.org';
-					$message->setBody($params,'text/html');
-					$message->addto($model->email);
-					Yii::app()->mail->send($message);
 					
+					if(isset($modelEntidad)){
+						$message 			= new YiiMailMessage;
+						$message->view 		= "actualizaUsuario";
+						$params				= array('data' => $model,'user' => $model->username,'pass' => $password);
+						$message->subject	= 'Actualizar Usuario Sistema RNC';
+						$message->setFrom(array('rnc@humboldt.org.co'));
+						$message->setBody($params,'text/html');
+						$message->addto($model->email);
+						Yii::app()->mail->send($message);
+					}
 					$this->redirect(array('view','id'=>$model->id));
 				}
 			}
@@ -220,7 +249,10 @@ class UsuarioController extends Controller{
 	 */
 	public function loadModel($id)
 	{
-		$model=Usuario::model()->findByPk($id);
+		$criteria=new CDbCriteria;
+		$criteria->with = array('entidad');
+		
+		$model=Usuario::model()->findByPk($id,$criteria);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -295,19 +327,19 @@ class UsuarioController extends Controller{
 				$modelUsuario->password	= crypt($modelUsuario->password, self::blowfishSalt());
 				
 				if($modelUsuario->save()){
-					$mails = array(0 => $modelUsuario->email);
+					$mails = array(0 => "andresciceri@gmail.com");
 					$message 			= new YiiMailMessage;
 					$message->view 		= "recuperaPassword";
 					//$data 			= "Mensaje prueba";
 					$params				= array('data' => $modelUsuario, 'pass' => $pass);
 					$message->subject	= 'Datos de Acceso de Usuario Sistema RNC';
-					$message->from		= 'hescobar@humboldt.org';
+					$message->setFrom(array('rnc@humboldt.org.co'));
 					$message->setBody($params,'text/html');
 					$message->setTo($mails);
 					Yii::app()->mail->send($message);
 				}
 				
-				echo json_encode(array('status' => 'ok','pass'=>$pass));
+				echo json_encode(array('status' => 'ok'));
 			}else{
 				echo json_encode(array('status' => 'failure'));
 			}

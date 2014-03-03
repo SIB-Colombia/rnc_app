@@ -4,16 +4,17 @@
  *
  * The followings are the available columns in table 'tamaño_coleccion':
  * @property int 	$id
- * @property string $tipo_preservacion
  * @property string	$unidad_medida
- * @property int	$cantidad
+ * @property string	$otro
  *
  *@property int	$Registros_update_id
+ *@property int $tipo_preservacion_id
  *
  * The followings are the available model relations:
  *
  * 
  * @property Registros_Update $registros_update
+ * @property Tipo_Preservacion $tipo_preservacion
  */
 
 class Tamano_Coleccion extends CActiveRecord
@@ -39,8 +40,8 @@ class Tamano_Coleccion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('tipo_preservacion,unidad_medida','required'),
-				array('tipo_preservacion','length','max'=>150),
+				array('tipo_preservacion_id,unidad_medida','required'),
+				//array('tipo_preservacion','length','max'=>150),
 				//array('cantidad','numerical','integerOnly'=>true),
 				array('unidad_medida','length','max'=>45),
 				);
@@ -54,7 +55,8 @@ class Tamano_Coleccion extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				'registros_update' => array(self::BELONGS_TO, 'Registros_Update', 'Registros_update_id')
+				'registros_update' => array(self::BELONGS_TO, 'Registros_Update', 'Registros_update_id'),
+				'tipo_preservacion' => array(self::BELONGS_TO, 'Tipo_Preservacion', 'tipo_preservacion_id')
 		);
 	}
 	
@@ -64,9 +66,10 @@ class Tamano_Coleccion extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-				'tipo_preservacion' => 'Tipo de preservación',
+				//'tipo_preservacion' => 'Tipo de preservación',
 				'unidad_medida'		=> 'Descripción',
-				'cantidad'			=> 'Cantidad de ejemplares'
+				'otro'				=> 'Otro tipo',
+				'tipo_preservacion_id' => 'Tipo de preservación',
 		);
 	}
 	
@@ -82,7 +85,7 @@ class Tamano_Coleccion extends CActiveRecord
 		$criteria=new CDbCriteria;
 	
 			
-		$criteria->with = array('registros_update');
+		$criteria->with = array('registros_update','tipo_preservacion');
 	
 		return new CActiveDataProvider($this, array(
 				'criteria'=>$criteria,

@@ -5,27 +5,30 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 
 ?>
 
-<div id="header-front">Colección Número: <?php echo ($model->registros->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->registros->numero_registro); ?></div>
+<div id="header-front">Colección número: <?php echo ($model->registros->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->registros->numero_registro); ?></div>
 
 <div id="content-front">
 <?php
 $this->widget('bootstrap.widgets.TbButtonGroup', array(
 		'buttons'=>array(
-				array('label'=>'Listar Colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
-				array('label'=>'Volver a la Colección', 'icon'=>'icon-list', 'url'=>Yii::app()->createUrl('registros'.DIRECTORY_SEPARATOR.$model->registros->id)),
+				array('label'=>'Listar colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
+				array('label'=>'Volver a la colección', 'icon'=>'icon-list', 'url'=>Yii::app()->createUrl('registros'.DIRECTORY_SEPARATOR.$model->registros->id)),
 		),
 ));
 ?>
 
 <div style="margin-top: 20px">
 <ul class="nav nav-tabs">
-    	<li class="active"><a href="#tab1" data-toggle="tab">Información Básica</a></li>
-    	<li><a href="#tab2" data-toggle="tab">Contacto</a></li>
-    	<li><a href="#tab3" data-toggle="tab">Elaborado Por</a></li>
+		<li class="active"><a href="#tab1" data-toggle="tab">Titular</a></li>
+		<li><a href="#tab2" data-toggle="tab">Información básica</a></li>
+    	<li><a href="#tab3" data-toggle="tab">Contacto</a></li>
+    	<li><a href="#tab4" data-toggle="tab">Elaborado por</a></li>
   	</ul>
   	
   	<div class="tab-content">
-	  	<div class="tab-pane fade in active" id="tab1">
+  		<i class="icon-print printR" onclick="document.getElementById('tab1').focus(); print();"></i>
+	  	<div class="tab-pane fade " id="tab2">
+	  		
 			<fieldset>
 				<legend class="form_legend">INFORMACIÓN BÁSICA DE LA COLECCIÓN</legend>
 				<?php 
@@ -34,13 +37,18 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 					'attributes'=>array(
 						'nombre',
 						'registros.numero_registro',
+						'registros.tipo_coleccion.nombre',
 						'acronimo',
 						'fecha_fund',
 						'descripcion',
 						'direccion',
+						'county.department.department_name',
 						'county.county_name',
 						'telefono',
-						'email'
+						'email',
+						'registros.fecha_dil',
+						'fecha_act',
+						'fecha_rev',
 					)
 				));
 				?>
@@ -81,19 +89,33 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 						'deorreferenciados',
 						'sistematizacion',
 						'info_adicional',
-						'pagina_web'
+						'pagina_web',
+						'comentario'
 					)
 				));
 				?>
 			</fieldset>
 			
 			<fieldset>
-				<legend class="form_legend">Tamaño de la colección</legend>
+				<legend class="form_legend">Tipos de preservación</legend>
 			       	<?php echo $this->renderPartial('_tamano_col_table', array('listTamano'=>$model->dataTamanoList($model->id))); ?>
 			</fieldset>
 			
 			<fieldset>
 				<legend class="form_legend">Tipos en la colección</legend>
+					<?php 
+						$this->widget('zii.widgets.CDetailView', array(
+							'data'=>$model,
+							'attributes'=>array(
+								array(
+									'name' => 'ejemplar_tipo',
+									'type'	=> 'raw',
+									'value' => CHtml::encode(($model->ejemplar_tipo == 0) ? "Si" : "No")
+								),
+								'ej_tipo_cantidad',
+							)
+						));
+					?>
 			       	<?php echo $this->renderPartial('_tipo_col_table', array('listTipo'=>$model->dataTipoList($model->id))); ?>
 			</fieldset>
 			
@@ -108,7 +130,40 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 			</fieldset>
 		</div>
 		
-		<div class="tab-pane fade" id="tab2">
+		<div class="tab-pane fade in active" id="tab1">
+			<fieldset>
+				<legend class="form_legend">DATOS DEL TITULAR</legend>
+				<?php 
+				$this->widget('zii.widgets.CDetailView', array(
+					'data'=>$model->registros,
+					'attributes'=>array(
+						array(
+							'name' => 'entidad.tipo_titular',
+							'type'	=> 'raw',
+							'value' => CHtml::encode(($model->registros->entidad->tipo_titular == 1) ? "Persona Natural" : (($model->registros->entidad->tipo_titular == 2) ? "Persona Jurídica" : "No Asignado"))
+						),
+						'entidad.titular',
+						'entidad.nit',
+						'entidad.representante_legal',
+						array(
+							'name' => 'entidad.tipo_id_rep',
+							'type'	=> 'raw',
+							'value' => CHtml::encode(($model->registros->entidad->tipo_id_rep == 1) ? "Cédula de Ciudadanía" : (($model->registros->entidad->tipo_id_rep == 2) ? "Cédula de Extranjería" : "No Asignado"))
+						),
+						'entidad.representante_id',
+						'entidad.county.department.department_name',
+						'entidad.county.county_name',
+						'entidad.telefono',
+						'entidad.direccion',
+						'entidad.email',
+						'entidad.tipo_institucion.nombre'
+					)
+				));
+				?>
+			</fieldset>
+		</div>
+		
+		<div class="tab-pane fade" id="tab3">
 			<fieldset>
 				<legend class="form_legend">DATOS DE CONTACTO</legend>
 				<?php 
@@ -119,6 +174,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 						'contactos.cargo',
 						'contactos.dependencia',
 						'contactos.direccion',
+						'contactos.county.department.department_name',
 						'contactos.county.county_name',
 						'contactos.telefono',
 						'contactos.email',
@@ -128,7 +184,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 			</fieldset>
 		</div>
 		
-		<div class="tab-pane fade" id="tab3">
+		<div class="tab-pane fade" id="tab4">
 			<fieldset>
 				<legend class="form_legend">ELABORACIÓN DEL REGISTRO</legend>
 				<?php 

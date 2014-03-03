@@ -8,7 +8,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	//'filter'=>$model,
 	'columns'=>array(
 		'nombre',
-		array('name' => 'clase','value' => '($data->clase == 1) ? "Anexos" : (($data->clase == 2) ? "Fotos y videos de la colección" : "")'),
+		array('name' => 'clase','value' => '($data->clase == 1) ? "Anexos" : (($data->clase == 2) ? "Fotos y videos de la colección" : (($data->clase == 3) ? "Certificado" : ""))'),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{val}',

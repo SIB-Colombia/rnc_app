@@ -172,7 +172,7 @@ table.actionsList {
 }
 
 .form_legend{
-	font-size: 16px
+	font-size: 21px
 }
 
 .control-group{
@@ -191,4 +191,11 @@ footer section div {
 	margin: 0 auto;
 	width: 100%;
 	color: #868686
+}
+
+.uploadify-queue-item{
+	float: left !important;
+	clear: left !important;
+	min-width: 200px !important;
+	margin-left: 200px !important
 }

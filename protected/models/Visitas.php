@@ -5,7 +5,8 @@
  * The followings are the available columns in table 'entidad':
  * @property int 	$id
  * @property string $entidad
- * @property int    $ciudad_id
+ * @property string $ciudad_id
+ * @property string $departamento_id
  * @property string $concepto
  * @property int 	$registros_id
  * @property date 	$fecha_visita
@@ -24,6 +25,7 @@ class Visitas extends CActiveRecord
 	public $nombreArchivo;
 	public $numero_registro_search;
 	public $titular_search;
+	public $departamento_search;
 	public $municipio_search;
 	
 	public static function model($className=__CLASS__)
@@ -47,12 +49,12 @@ class Visitas extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('concepto,fecha_visita,ciudad_id,entidad', 'required'),
+				array('concepto,fecha_visita,departamento_id,ciudad_id,entidad', 'required'),
 				array('concepto', 'length', 'max'=>500),
 				array('fecha_visita','date','format' => 'yyyy-M-d H:m:s'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
-				array('concepto,fecha_visita,numero_registro_search,titular_search,municipio_search', 'safe', 'on'=>'search'),
+				array('concepto,fecha_visita,numero_registro_search,titular_search,departamento_search,municipio_search', 'safe', 'on'=>'search'),
 		);
 	}
 	
@@ -66,6 +68,7 @@ class Visitas extends CActiveRecord
 		return array(
 				'registros' => array(self::BELONGS_TO, 'Registros', 'registros_id'),
 				'dilegenciadores' => array(self::BELONGS_TO, 'Dilegenciadores', 'dilegenciadores_id'),
+				'department' => array(self::BELONGS_TO, 'Department', 'departamento_id'),
 				'county' => array(self::BELONGS_TO, 'County', 'ciudad_id'),
 				'archivos'		=> array(self::HAS_MANY,'Archivos_Pqrs', 'visitas_id')
 		);
@@ -77,14 +80,16 @@ class Visitas extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-				'fecha_visita' 		=> 'Fecha de la Visita',
+				'fecha_visita' 		=> 'Fecha de la visita',
 				'concepto' 			=> 'Concepto',
 				'numero_registro_search' => 'Colección No.',
 				'titular_search'	=> 'Titular',
 				'municipio_search'	=> 'Municipio',
 				'ciudad_id'			=> 'Municipio',
 				'entidad'			=> 'Entidad',
-				'archivo' 			=> 'Archivo Anexo',
+				'archivo' 			=> 'Archivo anexo',
+				'departamento_search' => 'Departamento',
+				'departamento_id'	=> 'Departamento'
 		);
 	}
 	
@@ -103,6 +108,16 @@ class Visitas extends CActiveRecord
 		
 		if($this->municipio_search != ''){
 			$criteria->compare('county.county_name',$this->municipio_search);
+		}
+		
+		if($this->departamento_search != ''){
+			$sql = "SELECT visitas.id FROM department ";
+			$sql .= "INNER JOIN county ON  department.id = county.department_id ";
+			$sql .= "INNER JOIN visitas ON  county.iso_county_code = visitas.ciudad_id ";
+			$where = "WHERE LOWER(department.department_name) LIKE '".strtolower($this->departamento_search)."'";
+				
+			$sql .= " ".$where;
+			$criteria->addCondition('t.id IN ('.$sql.')');
 		}
 		
 		if($this->titular_search != '') {

@@ -8,7 +8,6 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	//'filter'=>$model,
 	'columns'=>array(
 		'grupo',
-		'informacion_ejemplar',
-		'nombre_cientifico',
+		'cantidad',
 	),
 )); ?>

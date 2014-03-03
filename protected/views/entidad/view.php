@@ -12,24 +12,25 @@ $this->breadcrumbs=array(
 
 ?>
 
-<div id="header-front">Detalle de la Entidad: <?php echo $model->titular; ?></div>
+<div id="header-front">Detalle de la entidad: <?php echo $model->titular; ?></div>
 
 <div id="content-front">
 <?php
 if($userRole == "admin"){
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 		'buttons'=>array(
-				array('label'=>'Listar Entidades', 'icon'=>'icon-list', 'url'=>array('index')),
+				array('label'=>'Listar entidades', 'icon'=>'icon-list', 'url'=>array('index')),
 		),
 	));
 }else{
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 		'buttons'=>array(
-				array('label'=>'Editar Entidad', 'icon'=>'icon-list', 'url'=>array('entidad/update/'.$model->id)),
+				array('label'=>'Editar entidad', 'icon'=>'icon-list', 'url'=>array('entidad/update/'.$model->id)),
 		),
 	));
 }
 ?>
+<i class="icon-print printR" onclick="print();"></i>
 <div style="margin-top: 20px">
 <?php 
 $this->widget('zii.widgets.CDetailView', array(
@@ -58,6 +59,7 @@ $this->widget('zii.widgets.CDetailView', array(
 			'type'	=> 'raw',
 			'value' => CHtml::encode(($model->representante_id == 0) ? "No Asignado" : $model->representante_id)
 		),
+		'county.department.department_name',
 		array(
 			'name' => 'ciudad_id',
 			'type'	=> 'raw',
@@ -75,7 +77,8 @@ $this->widget('zii.widgets.CDetailView', array(
 			'label' => 'Usuario',
 			'type'	=> 'raw',
 			'value' => CHtml::encode(isset($model->usuario->username) ? $model->usuario->username : "No Asignado")
-		)
+		),
+		'tipo_institucion.nombre'
 	),
 )); ?>
 <br>

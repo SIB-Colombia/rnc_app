@@ -19,6 +19,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 					'url'=>'Yii::app()->createUrl("..".DIRECTORY_SEPARATOR.$data->ruta.DIRECTORY_SEPARATOR.$data->nombre)',
 					'options'=>array(
 							'class'=>'btn btn-success btn-small',
+							'target' => '_blank'
 					),
 				)
 			),

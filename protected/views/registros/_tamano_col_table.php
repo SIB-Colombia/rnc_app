@@ -7,7 +7,8 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 	//'responsiveTable' => true,
 	//'filter'=>$model,
 	'columns'=>array(
-		'tipo_preservacion',
+		'tipo_preservacion.nombre',
+		'otro',
 		'unidad_medida'
 	),
 )); ?>

@@ -58,10 +58,14 @@ class EntidadController extends Controller{
 			$model=new Entidad;
 			$model->dilegenciadores = new Dilegenciadores('search');
 			$model->dilegenciadores->unsetAttributes();
+			$model->tipo_institucion = new Tipo_Institucion();
+			$model->usuario = new Usuario();
 			
 			if(isset($_POST['Entidad']))
 			{
 				$model->attributes=$_POST['Entidad'];
+				$model->usuario_id = $_REQUEST['Entidad']['usuario_id'];
+				$model->colecciones = "-";
 				$model->validate();
 				
 				$success_saving_all = true;
@@ -77,11 +81,18 @@ class EntidadController extends Controller{
 						$model->dilegenciadores->save();
 					}
 					
+					if($model->tipo_titular == 1){
+						$model->representante_legal = "-";
+						$model->tipo_id_rep = 0;
+						$model->representante_id = 0;
+					}
+					
 									
 					$model->dilegenciadores_id	= $model->dilegenciadores->id;
 					//$model->dilegenciadores 	= $dilegenciadores;
 					$model->estado				= 1;
 					$model->fecha_creacion		= Yii::app()->Date->now();
+					
 					
 					if(!$model->save()){
 						$success_saving_all = false;
@@ -123,13 +134,20 @@ class EntidadController extends Controller{
 		if(Yii::app()->user->getId() !== null)
 		{
 			$model=$this->loadModel($id);
-	
+			$usuario = Usuario::model()->findByPk($model->usuario_id);
+			if(isset($usuario)){
+				$model->usuario = $usuario;
+			}else{
+				$model->usuario = Usuario::model();
+			}
+			
 			// Uncomment the following line if AJAX validation is needed
 			// $this->performAjaxValidation($model);
 	
 			if(isset($_POST['Entidad']))
 			{
 				$model->attributes=$_POST['Entidad'];
+				$model->colecciones = "-";
 				$model->validate();
 				
 				$success_saving_all = true;
@@ -137,18 +155,23 @@ class EntidadController extends Controller{
 				$transaction = Yii::app()->db->beginTransaction();
 				
 				try {
-						
+										
 					if(isset($_POST['Dilegenciadores']))
 					{
 						$model->dilegenciadores->attributes = $_POST['Dilegenciadores'];
 						$model->dilegenciadores->validate();
 						$model->dilegenciadores->save();
 					}
-						
+
+					if($model->tipo_titular == 1){
+						$model->representante_legal = "-";
+						$model->tipo_id_rep = 0;
+						$model->representante_id = 0;
+					}
 						
 					$model->dilegenciadores_id	= $model->dilegenciadores->id;
 					//$model->dilegenciadores 	= $dilegenciadores;
-					$model->estado				= 1;
+					//$model->estado				= 1;
 					$model->fecha_creacion		= Yii::app()->Date->now();
 					
 					if(!$model->save()){
@@ -169,7 +192,32 @@ class EntidadController extends Controller{
 					$mensaje = new Mensaje();
 					$mensaje->setTitulo("Envío Exitoso");
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
-						
+
+					/*if($model->estado != 1){
+						$user = "";
+						$password = "";
+						if($model->estado == 2){
+							$usuario 			= Usuario::model()->findByPk($model->usuario_id);
+							$user				= $usuario->username;
+							$password 			= $usuario->password;
+							$usuario->password	= md5($usuario->password);
+							$usuario->password	= crypt($usuario->password, self::blowfishSalt());
+								
+							$usuario->save();
+						}
+					
+						//$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
+						$mails = array(0 => 'rnc@humboldt.org.co');
+						$message 			= new YiiMailMessage;
+						$message->view 		= "aprobarEntidad";
+						$params				= array('data' => $model,'user' => $user,'pass' => $password);
+						$message->subject	= 'Aprobación de Solicitud Sistema RNC';
+						$message->setFrom(array('rnc@humboldt.org.co'));
+						$message->setBody($params,'text/html');
+						$message->setTo($mails);
+						Yii::app()->mail->send($message);
+					}*/
+					
 					$this->redirect(array('view','id'=>$model->id));
 						
 					Yii::app()->end();
@@ -195,10 +243,21 @@ class EntidadController extends Controller{
 		if(Yii::app()->user->getId() !== null)
 		{
 			$model = $this->loadModel($id);
-			$dilegenciadores = $model->dilegenciadores; 
-			$model->delete();
-			$dilegenciadores->delete();
-	
+			
+			$criteria=new CDbCriteria;
+			$criteria->compare('entidad_id',$model->id);
+			$registro = Registros::model()->find($criteria);
+			
+			if (!isset($registro)) {
+				$dilegenciadores = $model->dilegenciadores;
+				$usuario = $model->usuario;
+				$model->delete();
+				if($usuario){
+					$usuario->delete();
+				}
+				
+			}
+			
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -236,7 +295,10 @@ class EntidadController extends Controller{
 	 */
 	public function loadModel($id)
 	{
-		$model=Entidad::model()->findByPk($id);
+		$criteria=new CDbCriteria;
+		$criteria->with = array('tipo_institucion');
+		
+		$model=Entidad::model()->findByPk($id,$criteria);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -305,15 +367,15 @@ class EntidadController extends Controller{
 			
 			if($success_saving_all){
 				$mensaje = new Mensaje();
-				$mensaje->setTitulo("Envío Exitoso");
-				$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
-				$mails = array(0 => $model->email,1 => 'ksoacha@humboldt.org.co');
+				$mensaje->setTitulo("Envío exitoso");
+				$mensaje->setMensaje("La solicitud fue enviada con éxito, próximamente el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
+				$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
 				$message 			= new YiiMailMessage;
 				$message->view 		= "solicitudEntidad";
 				//$data 			= "Mensaje prueba";
 				$params				= array('data' => $model);
 				$message->subject	= 'Certificado de Solicitud de Usuario Sistema RNC';
-				$message->from		= 'hescobar@humboldt.org';
+				$message->setFrom(array('rnc@humboldt.org.co'));
 				$message->setBody($params,'text/html');
 				$message->setTo($mails);
 				Yii::app()->mail->send($message);
@@ -350,10 +412,19 @@ class EntidadController extends Controller{
 			$model->usuario_id			= $_REQUEST['Entidad']['usuario_id_s'];
 			
 			$listEntidades = $model->search();
-			
+				
 			$this->renderPartial('_entidades_table', array('listEntidades' => $listEntidades));
 			Yii::app()->end();
+		}else{
+			/*
+			$this->render('index',array(
+					'model'=>$model,
+			));*/
+			
+			$this->renderPartial('_entidades_table', array('listEntidades' => $model->search()));
+			Yii::app()->end();
 		}
+		
 	}
 	
 	public function actionValidar($id){
@@ -367,7 +438,7 @@ class EntidadController extends Controller{
 				$model->estado = ($_REQUEST['Entidad']['aprobado'] == 0) ? 2 : (($_REQUEST['Entidad']['aprobado'] == 1) ? 3 : 1);
 				$model->comentario = $_REQUEST['Entidad']['comentario'];
 				$model->usuario_id = $_REQUEST['Entidad']['usuario_id'];
-				
+				$model->colecciones = "-";
 				$success_saving_all = true;
 				
 				$transaction = Yii::app()->db->beginTransaction();
@@ -400,18 +471,19 @@ class EntidadController extends Controller{
 							$usuario->save();
 						}
 						
-						$mails = array(0 => $model->email,1 => 'ksoacha@humboldt.org.co');
+						//$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
+						$mails = array(0 => 'hescobar@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "aprobarEntidad";
 						$params				= array('data' => $model,'user' => $user,'pass' => $password);
 						$message->subject	= 'Aprobación de Solicitud Sistema RNC';
-						$message->from		= 'hescobar@humboldt.org';
+						$message->setFrom(array('rnc@humboldt.org.co'));
 						$message->setBody($params,'text/html');
 						$message->setTo($mails);
 						Yii::app()->mail->send($message);
 					}
 					
-					$this->redirect(array('index'));
+					$this->redirect(array('admin/panel'));
 				
 					Yii::app()->end();
 				
@@ -454,6 +526,45 @@ class EntidadController extends Controller{
 		$salt	= '$2a$'.sprintf('%02d',$cost).'$';
 		$salt	.= strtr(substr(base64_encode($rand), 0, 22), array('+' => '.'));
 		return  $salt;
+	}
+	
+	function actionMigracionDatos(){
+		
+		
+		$dir		= "rnc_files/";
+		$nombre		= $dir."instituciones.csv";
+			
+		$dataArray 	= array();
+		
+		//$dataArray = file($nombre,FILE_IGNORE_NEW_LINES);
+		
+		if(($gestor = fopen($nombre, "r")) !== FALSE)
+		{
+			while (($dataArray = fgetcsv($gestor,0,",")) !== FALSE){
+				print_r($dataArray);
+			}
+				
+			fclose($gestor);
+		}
+		
+		
+	}
+	
+	public function actionCargaCiudad(){
+		
+			$criteria = new CDbCriteria;
+			$criteria->compare("department.iso_department_code",$_POST['idDpto']);
+			$criteria->with = array('department');
+			$criteria->order = "county_name ASC";
+			$ciudades = County::model()->findAll($criteria);
+			$lista = array();
+			if(isset($ciudades)){
+				foreach ($ciudades as $dato){
+					$lista[] = array("id" => $dato->iso_county_code,"nombre" => $dato->county_name);
+				}
+			}
+				
+			echo json_encode($lista);
 	}
 	
 }

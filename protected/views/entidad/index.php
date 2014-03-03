@@ -6,21 +6,6 @@ Yii::app()->theme = 'rnc_theme_panel';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
 
-/*
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#catalogoespecies-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
-*/
-
 ?>
 
 <script type="text/javascript">
@@ -45,11 +30,12 @@ $('.search-form form').submit(function(){
 	<?php 
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 			'buttons'=>array(
-					array('label'=>'Nueva Entidad', 'icon'=>'icon-plus', 'url'=>array('create')),
+					array('label'=>'Nueva entidad', 'icon'=>'icon-plus', 'url'=>array('create')),
 					array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel')),
 			),
 	));
 	?>
+	<i class="icon-print printR" onclick="print();"></i>
 	<div class="tabbable"> <!-- Only required for left/right tabs -->
 	  
 	  	<?php 
@@ -106,7 +92,7 @@ $('.search-form form').submit(function(){
 			</div>
 		</fieldset>
 		<div>
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'type'=>'primary', 'label'=>'Buscar', 'loadingText' => 'Cargando...', 'htmlOptions' => array('id' => 'enviarData','onclick'=>'{buscarEntidades(\'entidades_lista-grid\')}'))); ?>
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'type'=>'success', 'label'=>'Buscar', 'loadingText' => 'Cargando...', 'htmlOptions' => array('id' => 'enviarData','onclick'=>'{buscarEntidades(\'entidades_lista-grid\')}'))); ?>
 		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'label'=>'Limpiar')); ?>
 		</div>
 		<?php $this->endWidget(); ?>

@@ -12,7 +12,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Registro Nacional de Colecciones',
+	'name'=>'Registro Único Nacional de Colecciones Biológicas (RNC)',
 	'charset'=>'utf-8',	
 	
 	// Bootstrap configuration
@@ -28,7 +28,8 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		'ext.yii-mail.YiiMailMessage'
+		'ext.yii-mail.YiiMailMessage',
+		'ext.tcpdf.*'
 	),
 
 	'modules'=>array(
@@ -51,8 +52,8 @@ return array(
 			'transportType' => 'smtp',
 			'transportOptions' => array(
 				'host' => 'smtp.gmail.com',
-				'username'=>'xxxx@gmail.com',
-				'password'=>'xxxx',
+				'username'=>'xxx',
+				'password'=>'xxx',
 				'port'=>'465',
 				'encryption' => 'ssl'
 			),

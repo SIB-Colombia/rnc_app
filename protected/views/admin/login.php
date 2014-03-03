@@ -49,7 +49,7 @@ $(document).ready(function() {
 				<?php echo $form->textField($model,'codigoVerificacion', array('class'=>'field')); ?>
 				<?php $this->widget('CCaptcha'); ?>
 				<div class="hint">
-					Digite la letras que se muestran en el código de verificación.
+					Digite las letras que se muestran en el código de verificación.
 					<br/>Puede escribirlas en mayúscula o minúscula.
 				</div>
 				<?php //echo $form->error($model,'codigoVerificacion'); ?>
@@ -57,12 +57,13 @@ $(document).ready(function() {
 		<?php endif; ?>
 		
 		<div class="row buttons">
+		<!-- 
 			<div class="btn-rememberme">
-				<?php echo $form->checkBox($model,'rememberMe'); ?>
+				<?php /*echo $form->checkBox($model,'rememberMe'); ?>
 				<?php echo $form->label($model,'rememberMe'); ?>
-				<?php echo $form->error($model,'rememberMe'); ?>
+				<?php echo $form->error($model,'rememberMe'); */?>
 				
-			</div>
+			</div> -->
 			<?php 
 				$this->widget('bootstrap.widgets.TbButton', array(
 						'label'=>'Recuperar Contraseña',

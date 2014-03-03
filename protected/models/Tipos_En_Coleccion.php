@@ -40,8 +40,9 @@ class Tipos_En_Coleccion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('informacion_ejemplar,grupo,nombre_cientifico','required'),
+				//array('informacion_ejemplar,grupo,nombre_cientifico','required'),
 				array('informacion_ejemplar','length','max'=>150),
+				array('cantidad','numerical','message' => 'El dato solo puede ser numérico'),
 		);
 	}
 	
@@ -65,7 +66,7 @@ class Tipos_En_Coleccion extends CActiveRecord
 		return array(
 				'informacion_ejemplar' 	=> 'Ejemplar tipo',
 				'cantidad'				=> 'Cantidad de ejemplares',
-				'grupo'					=> 'Grupo',
+				'grupo'					=> 'Grupo biológico',
 				'nombre_cientifico'		=> 'Nombre Científico'
 		);
 	}

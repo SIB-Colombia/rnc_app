@@ -27,13 +27,13 @@ $('.search-form form').submit(function(){
 	<?php 
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 			'buttons'=>array(
-					array('label'=>'Nuevo Usuario', 'icon'=>'icon-plus', 'url'=>array('create')),
+					array('label'=>'Nuevo usuario', 'icon'=>'icon-plus', 'url'=>array('create')),
 					array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel')),
 			),
 	));
 	?>
+	<i class="icon-print printR" onclick="print();"></i>
 	<div class="tabbable"> <!-- Only required for left/right tabs -->
-	  
 	  <div class="tab-content">
 	       <?php echo $this->renderPartial('_usuarios_table', array('model'=>$model)); ?>
 	  </div>

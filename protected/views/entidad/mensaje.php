@@ -16,7 +16,7 @@ $this->beginWidget('bootstrap.widgets.TbHeroUnit', array(
 <p style="color: #999"><?=$model->getMensaje();?></p>
 <br>
 <p><?php $this->widget('bootstrap.widgets.TbButton', array(
-        'type'=>'primary',
+        'type'=>'success',
         'size'=>'large',
         'label'=>'Inicio',
 		'url' => '../site/index'

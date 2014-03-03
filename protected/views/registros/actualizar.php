@@ -9,14 +9,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 $userRole  = Yii::app()->user->getState("roles");
 ?>
 
-<div id="header-front">Actualizar Colección No. <?php echo $model->numero_registro; ?></div>
+<div id="header-front">Actualizar colección No. <?php echo $model->numero_registro; ?></div>
 
 <div id="content-front">
 <?php 
 	
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 			'buttons'=>array(
-					array('label'=>'Listar Colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
+					array('label'=>'Listar colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
 					array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel')),
 			),
 	));

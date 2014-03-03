@@ -21,7 +21,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 <?php 
 if(Yii::app()->user->getId() !== null){
 ?>
-	<div id="header-front">Crear Nueva Solicitud</div>
+	<div id="header-front">Crear nueva solicitud</div>
 	<div id="content-front">
 	<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 	</div>

@@ -57,9 +57,9 @@ $(function() {
     $('#Visitas_archivo').uploadify({
     	'auto'     		: true,
     	'fileSizeLimit' : '20MB',
-    	'buttonText'	: 'Seleccionar Archivo',
+    	'buttonText'	: 'Seleccionar archivo',
     	'width'         : 140,
-    	'fileTypeExts'  : '*.pdf;*.doc;*.docx;jpg',
+    	'fileTypeExts'  : '*.pdf;*.doc;*.docx;*.jpg;*.mp3;*.mp4',
     	'multi'			: true,
     	'formData'		: {'randWord' : randWord},
     	'swf'      		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.swf',
@@ -88,6 +88,17 @@ $(function() {
 		}
 	});
 });
+
+function actSelectCiudad(dato,id){
+	$.post('../entidad/cargaCiudad',{idDpto: $(dato).val()},function(data){
+		var options = '';
+		for(var i = 0; i < data.length; i++){
+			options += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
+		}
+		$("#"+id).html(options);
+	},"json");
+}
+
 </script>
 
 <div class="form">
@@ -111,7 +122,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		<?php 
 			echo $form->textFieldRow($model, 'entidad', array('size'=>32,'maxlength'=>64, 'class'=>'textareaA'));
 			echo $form->textFieldRow($model->registros, 'numero_registro', array('size'=>32,'maxlength'=>64, 'class'=>'textareaA'));
-			echo $form->dropDownListRow($model, 'ciudad_id', $model->ListarCiudades(),array('prompt' => 'Seleccionar...'));
+			echo $form->dropDownListRow($model, 'departamento_id', Entidad::model()->ListarDepartamentos(),array('prompt' => 'Seleccione...','onChange' => 'actSelectCiudad(this,"Visitas_ciudad_id")'));
+			echo $form->dropDownListRow($model, 'ciudad_id', Entidad::model()->ListarCiudades($model->departamento_id,$model->ciudad_id),array('prompt' => 'Seleccionar...'));
 			echo $form->datepickerRow($model, 'fecha_visita');
 			echo $form->textAreaRow($model, 'concepto', array('class'=>'span4', 'rows'=>5));
 			echo $form->fileFieldRow($model, 'archivo');
@@ -152,6 +164,13 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	<div id="catalogouser-botones-internos" class="form-actions pull-right">
 		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
 	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
+	    <?php 
+			$this->widget('bootstrap.widgets.TbButtonGroup', array(
+				'buttons'=>array(
+					array('label'=>'Cancel', 'url'=>array('admin/panel')),
+				),
+			));
+		?>
     </div>
     
 <?php $this->endWidget(); ?>

@@ -6,14 +6,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 $userRole  = Yii::app()->user->getState("roles");
 ?>
 
-<div id="header-front">Validar Entidad: <?php echo $model->titular; ?></div>
+<div id="header-front">Validar entidad: <?php echo $model->titular; ?></div>
 
 <div id="content-front">
 <?php 
 	if($userRole == "admin"){
 		$this->widget('bootstrap.widgets.TbButtonGroup', array(
 				'buttons'=>array(
-						array('label'=>'Listar Entidades', 'icon'=>'icon-list', 'url'=>array('index')),
+						array('label'=>'Listar entidades', 'icon'=>'icon-list', 'url'=>array('index')),
 						array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel')),
 				),
 		));

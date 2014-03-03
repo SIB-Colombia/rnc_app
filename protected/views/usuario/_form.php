@@ -8,7 +8,7 @@ $userRole  = Yii::app()->user->getState("roles");
 ?>
 
 <script type="text/javascript">
-function enviarForm(){
+function enviarFormUser(){
 	$("#usuario-form").submit();
 }
 
@@ -19,7 +19,7 @@ function resetForm(id) {
 }
 
 function enviarFormAjax(){
-
+	
 	$.post("../../usuario/create", $("#usuario-form").serialize(),function(data){
 		if(data.status == 'failure'){
 			$("#usuario-form").remove();
@@ -61,7 +61,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'id'=>'usuario-form',
 		'type'=>'horizontal',
 		'enableClientValidation'=>true,
-		'enableAjaxValidation'=>true,
+		'enableAjaxValidation'=>false,
 ));
 ?>
 
@@ -74,12 +74,12 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		<?php 
 			$action = $this->action->id;
 			echo $form->textFieldRow($model, 'username', array('size'=>32,'maxlength'=>32, 'class'=>'textareaA', 'onchange' => 'validarUsuario(this,this.value);')); 
-			echo $form->passwordFieldRow($model, 'password', array('size'=>64,'maxlength'=>64, 'class'=>'textareaA'));
-			if($action == "update"){
+			if($action == "update" && isset($model->id)){
+				echo $form->passwordFieldRow($model, 'password', array('size'=>64,'maxlength'=>64, 'class'=>'textareaA'));
 				echo $form->passwordFieldRow($model, 'newpassword', array('size'=>64,'maxlength'=>64, 'class'=>'textareaA'));
+				echo $form->passwordFieldRow($model, 'password2', array('size'=>64,'maxlength'=>64, 'class'=>'textareaA'));
 			}
-			echo $form->passwordFieldRow($model, 'password2', array('size'=>64,'maxlength'=>64, 'class'=>'textareaA'));
-			echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>32, 'class'=>'textareaA'));
+			echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
 			$disable = true;
 			if($userRole == "admin"){
 				$disable = false;
@@ -93,7 +93,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 			if(isset($ajaxMode)){
 				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Crear' : 'Crear', 'htmlOptions' => array('onclick' => 'enviarFormAjax()'))); 
 			}else{
-				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()')));
+				$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Guardar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarFormUser()')));
 			}
 		?>
     	<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>

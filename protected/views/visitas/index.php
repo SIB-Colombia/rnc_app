@@ -31,7 +31,7 @@ $('.search-form form').submit(function(){
 	}
 </script>
 
-<div id="header-front">Entidades</div>
+<div id="header-front">Visitas</div>
 
 <div id="content-front">
 	<?php 
@@ -42,7 +42,7 @@ $('.search-form form').submit(function(){
 			),
 	));
 	?>
-		
+	  <i class="icon-print printR" onclick="print();"></i>
 	  <div class="tab-content">
 	       <?php echo $this->renderPartial('_visitas_table', array('listVisitas'=>$model->search(),'model' => $model)); ?>
 	  </div>

@@ -10,25 +10,19 @@ $this->breadcrumbs=array(
 	$model->username,
 );
 
-/*$this->menu=array(
-	array('label'=>'List CatalogoUser', 'url'=>array('index')),
-	array('label'=>'Create CatalogoUser', 'url'=>array('create')),
-	array('label'=>'Update CatalogoUser', 'url'=>array('update', 'id'=>$model->username)),
-	array('label'=>'Delete CatalogoUser', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->username),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage CatalogoUser', 'url'=>array('admin')),
-);*/
 ?>
 
-<div id="header-front">Detalle de Usuario: <?php echo $model->username; ?></div>
+<div id="header-front">Detalle de usuario: <?php echo $model->username; ?></div>
 
 <div id="content-front">
 <?php
 $this->widget('bootstrap.widgets.TbButtonGroup', array(
 		'buttons'=>array(
-				array('label'=>'Listar Usuarios', 'icon'=>'icon-list', 'url'=>array('index')),
+				array('label'=>'Listar usuarios', 'icon'=>'icon-list', 'url'=>array('index')),
 		),
 ));
 ?>
+<i class="icon-print printR" onclick="print();"></i>
 <div style="margin-top: 20px">
 <?php 
 $this->widget('zii.widgets.CDetailView', array(

@@ -10,14 +10,14 @@ $userRole  = Yii::app()->user->getState("roles");
 
 ?>
 
-<div id="header-front">Modificar Usuario: <?php echo $model->username; ?></div>
+<div id="header-front">Modificar usuario: <?php echo $model->username; ?></div>
 
 <div id="content-front">
 <?php 
 	if($userRole == "admin"){
 		$this->widget('bootstrap.widgets.TbButtonGroup', array(
 				'buttons'=>array(
-						array('label'=>'Listar Usuarios', 'icon'=>'icon-list', 'url'=>array('index')),
+						array('label'=>'Listar usuarios', 'icon'=>'icon-list', 'url'=>array('index')),
 						array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel'))
 				),
 		));

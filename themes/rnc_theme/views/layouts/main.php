@@ -4,11 +4,11 @@
 	<!-- Meta Tags -->
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::app()->charset ?>" />
 	<meta name="language" content="es" />
-	<meta name="keywords" content="Sistema de busqueda taxonomica"/>
-	<meta name="description" content="Plataforma para la busqueda de familia taxonomica y lsids."/>
-	<meta name="author" content="Sistema de Información sobre Biodiversidad de Colombia" />
-	<meta name="copyright" content="Copyright 2012-2022 por el Sistema de Información sobre Biodiversidad de Colombia" />
-	<meta name="company" content="Sistema de Información sobre Biodiversidad de Colombia" />
+	<meta name="keywords" content="Sistema de registro nacional de colecciones biologicas"/>
+	<meta name="description" content="Sistema de registro nacional de colecciones biologicas."/>
+	<meta name="author" content="Instituto Alexander Von Humboldt" />
+	<meta name="copyright" content="Copyright 2012-2022 por el Instituto Alexander Von Humboldt" />
+	<meta name="company" content="Instituto Alexander Von Humboldt" />
 	<link rel="shortcut icon" href="<?= Yii::app()->theme->baseUrl; ?>/css/images/favicon.ico" />
 	<link rel="apple-touch-icon" href="http://www.sibcolombia.net/catalogo/admin/apple.png" />
 	
@@ -46,7 +46,7 @@
 		 	
 	<header class="sib">
 		<div class="ribbon-wrapper-green"><div class="ribbon-green">BETA</div></div>
-		<a class="logo" href= "http://localhost/rnc_app" title="Portal de datos SiB Colombia"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png"></a>
+		<a class="logo" href= "http://www.humboldt.org.co" title="Portal de datos SiB Colombia"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png"></a>
 	</header> <!-- Fin header -->
 	
 	<div id="cocoon" >
@@ -64,9 +64,10 @@
 								'type' => 'pills',
 								'stacked'=>false,
 								'items' => array(
+									array('label' => 'Inicio', 'icon' => '', 'url' => array('site/index')),
 									array('label' => 'Ingresar', 'icon' => '', 'url' => array('admin/index')),
 									//array('label' => 'Colecciones', 'icon' => '', 'url' => array('coleccion/index')),
-									array('label' => 'Solicitar Usuario', 'icon' => '', 'url' => array('entidad/solicitud')),
+									array('label' => 'Solicitar usuario', 'icon' => '', 'url' => array('entidad/solicitud')),
 									array('label' => 'Contacto', 'icon' => '', 'url' => array('pqrs/create'))
 								)
 							));

@@ -13,7 +13,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 );*/
 ?>
 
-<div id="header-front">Crear Nuevo Usuario</div>
+<div id="header-front">Crear nuevo usuario</div>
 
 <div id="content-front">
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

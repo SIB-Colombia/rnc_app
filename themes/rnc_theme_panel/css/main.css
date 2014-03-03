@@ -191,7 +191,7 @@ header,footer,nav,article,aside,section {
 	border: 0 solid #EEEEEE;
 	border-radius: 5px 5px 5px 5px;
 	box-shadow: 0 0 40px #555555;
-	min-height: 450px;
+	min-height: 350px;
 	/*font-size: 1.3em;*/
 }
 .area-contenido {

@@ -11,6 +11,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 		'numero_registro',
 		array('name' => 'acronimo_search','value' => 'CHtml::encode(isset($data->registros_update[0]->acronimo) ? $data->registros_update[0]->acronimo : "" )'),
 		array('name' => 'titular_search','value' => 'CHtml::encode($data->entidad->titular)'),
+		array('name' => 'departamento_search','value' => 'CHtml::encode(isset($data->registros_update[0]->county->department->department_name) ? $data->registros_update[0]->county->department->department_name : "No Asignado")'),
 		array('name' => 'ciudad_search','value' => 'CHtml::encode(isset($data->registros_update[0]->county->county_name) ? $data->registros_update[0]->county->county_name : "No Asignado")'),
 		array('name' => 'estado_search','value' => '($data->estado == 0) ? "Sin Aprobar" : "Aprobado"'),
 		'fecha_dil',

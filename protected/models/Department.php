@@ -49,5 +49,14 @@ class Department extends CActiveRecord
 				'department_name' => 'Departamento',
 		);
 	}
+	
+	public function listDepartment(){
+	
+		$criteria=new CDbCriteria;
+	
+		$criteria->order = 'department_name ASC';
+	
+		return $criteria;
+	}
 }
 ?>

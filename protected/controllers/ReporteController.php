@@ -44,12 +44,22 @@ class ReporteController extends Controller{
 				
 				
 				$criteria = new CDbCriteria;
-				$criteria->compare("t.estado", 2);
+				//$criteria->compare("t.estado", 2);
+				$criteria->condition = "t.estado != 0";
+				$_POST['Reporte']['estado'] = 1;
 				$criteria->with = array('registros','registros.entidad','county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos');
-				$registros_update = Registros_Update::model()->findAll($criteria);
+				$registros_update = Registros_update::model()->findAll($criteria);
 				
 				$dataReporte = array();
-				$dataReporte[0]['entidadNombre'] 			= 'Entidad';
+				$dataReporte[0]['entidadTitular'] 			= 'Titular';
+				$dataReporte[0]['entidadTipoTitular']		= 'Tipo de Titular';
+				$dataReporte[0]['entidadNit']				= 'Identificación';
+				$dataReporte[0]['entidadRepresentante']		= 'Representante Legal';
+				$dataReporte[0]['entidadRepresentanteId']	= 'Identificación Representante';
+				$dataReporte[0]['entidadDireccion']			= 'Dirección';
+				$dataReporte[0]['entidadCiudad']			= 'Municipio';
+				$dataReporte[0]['entidadTelefono']			= 'Teléfono';
+				$dataReporte[0]['entidadEmail']				= 'Correo Electrónico';
 				$dataReporte[0]['coleccionNumero'] 			= 'No. Colección';
 				$dataReporte[0]['coleccionFecha'] 			= 'Última Actualización';
 				$dataReporte[0]['reporteNombre'] 			= 'Nombre de la colección';
@@ -67,6 +77,7 @@ class ReporteController extends Controller{
 				$dataReporte[0]['tamanoUnidad']		 		= 'Unidad de medida';
 				//$dataReporte[0]['tamanoCantidad']	 		= 'Cantidad de ejemplares';
 				$dataReporte[0]['nivelGrupo']		 		= 'Grupo taxonómico o biológico';
+				$dataReporte[0]['nivelSubgrupo']	 		= 'Subgrupo taxonómico o biológico';
 				$dataReporte[0]['nivelEjemplares']	 		= 'No. Ejemplares';
 				$dataReporte[0]['nivelCatalogados']	 		= 'Ejemplares catalogados';
 				$dataReporte[0]['nivelSistematizados'] 		= 'Ejemplares sistematizados';
@@ -75,10 +86,12 @@ class ReporteController extends Controller{
 				$dataReporte[0]['nivelGenero']		 		= 'Ejemplares identificados al nivel de genero';
 				$dataReporte[0]['nivelEspecie']		 		= 'Ejemplares identificados al nivel de especie';
 				$dataReporte[0]['sistematizacion']	 		= 'Sistematización y Publicación';
-				$dataReporte[0]['tipoGrupo']		 		= 'Grupo';
-				$dataReporte[0]['tipoEjemplar']		 		= 'Información sobre el ejemplar tipo';
-				$dataReporte[0]['tipoNombreCientifico']		= 'Nombre Científico';
-				//$dataReporte[0]['tipoCantidad']		 		= 'Cantidad de ejemplares';
+				$dataReporte[0]['tipoEjemplarTipo']			= 'Ejemplares tipo';
+				$dataReporte[0]['tipoEjemplarTipoCant']		= 'Cantidad ejemplares tipo';
+				$dataReporte[0]['tipoGrupo']		 		= 'Grupo biológico';
+				//$dataReporte[0]['tipoEjemplar']		 		= 'Información sobre el ejemplar tipo';
+				//$dataReporte[0]['tipoNombreCientifico']		= 'Nombre Científico';
+				$dataReporte[0]['tipoCantidad']		 		= 'Cantidad de ejemplares';
 				$dataReporte[0]['documentoAnexos']	 		= 'Listado de anexos';
 				$dataReporte[0]['informacionAdicional']	 	= 'Información adicional';
 				$dataReporte[0]['informacionPagina']	 	= 'Página web de la colección';
@@ -89,6 +102,12 @@ class ReporteController extends Controller{
 				$dataReporte[0]['contactoCiudad']		 	= 'Ciudad';
 				$dataReporte[0]['contactoTelefono']		 	= 'Teléfono(s)';
 				$dataReporte[0]['contactoEmail']		 	= 'Correo electrónico';
+				$dataReporte[0]['dilegenciadorNombre']	 	= 'Nombre Dilegenciador';
+				$dataReporte[0]['dilegenciadorDependencia']	= 'Dependencia';
+				$dataReporte[0]['dilegenciadorCargo']		= 'Cargo';
+				$dataReporte[0]['dilegenciadorTelefono']	= 'Teléfono';
+				$dataReporte[0]['dilegenciadorEmail']		= 'Correo Electrónico';
+				$dataReporte[0]['estado']					= 'Estado';
 				
 				$cont = 1;
 				foreach ($registros_update as $data){
@@ -108,23 +127,31 @@ class ReporteController extends Controller{
 					
 					foreach ($dataM as $k => $value){
 
-						$dataReporte[$cont]['entidadNombre'] 		= $data->registros->entidad->titular;
-						$dataReporte[$cont]['coleccionNumero'] 		= $data->registros->numero_registro;
-						$dataReporte[$cont]['coleccionFecha'] 		= $data->registros->fecha_dil;
-						$dataReporte[$cont]['reporteNombre'] 		= $data->nombre;
-						$dataReporte[$cont]['reporteAcronimo'] 		= $data->acronimo;
-						$dataReporte[$cont]['reporteFundacion'] 	= $data->fecha_fund;
-						$dataReporte[$cont]['reporteDescripcion'] 	= $data->descripcion;
-						$dataReporte[$cont]['reporteDireccion'] 	= $data->direccion;
-						$dataReporte[$cont]['reporteCiudad'] 		= isset($data->county->county_name) ? $data->county->county_name : "";
-						$dataReporte[$cont]['reporteTelefono'] 		= $data->telefono;
-						$dataReporte[$cont]['reporteEmail'] 		= $data->email;
-						$dataReporte[$cont]['coberturaTaxonomica'] 	= $data->cobertura_tax;
-						$dataReporte[$cont]['coberturaGeografica'] 	= $data->cobertura_geog;
-						$dataReporte[$cont]['coberturaTemporal'] 	= $data->cobertura_temp;
+						$dataReporte[$cont]['entidadTitular'] 			= $data->registros->entidad->titular;
+						$dataReporte[$cont]['entidadTipoTitular']		= CHtml::encode(($data->registros->entidad->tipo_titular == 1) ? "Persona Natural" : (($data->registros->entidad->tipo_titular == 2) ? "Persona Jurídica" : "No Asignado"));
+						$dataReporte[$cont]['entidadNit'] 				= $data->registros->entidad->nit;
+						$dataReporte[$cont]['entidadRepresentante']		= $data->registros->entidad->representante_legal;
+						$dataReporte[$cont]['entidadRepresentanteId']	= $data->registros->entidad->representante_id;
+						$dataReporte[$cont]['entidadDireccion']			= $data->registros->entidad->direccion;
+						$dataReporte[$cont]['entidadCiudad']			= $data->registros->entidad->county->county_name;
+						$dataReporte[$cont]['entidadTelefono']			= $data->registros->entidad->telefono;
+						$dataReporte[$cont]['entidadEmail']				= $data->registros->entidad->email;
+						$dataReporte[$cont]['coleccionNumero'] 			= $data->registros->numero_registro;
+						$dataReporte[$cont]['coleccionFecha'] 			= $data->registros->fecha_dil;
+						$dataReporte[$cont]['reporteNombre'] 			= $data->nombre;
+						$dataReporte[$cont]['reporteAcronimo'] 			= $data->acronimo;
+						$dataReporte[$cont]['reporteFundacion'] 		= $data->fecha_fund;
+						$dataReporte[$cont]['reporteDescripcion'] 		= $data->descripcion;
+						$dataReporte[$cont]['reporteDireccion'] 		= $data->direccion;
+						$dataReporte[$cont]['reporteCiudad'] 			= isset($data->county->county_name) ? $data->county->county_name : "";
+						$dataReporte[$cont]['reporteTelefono'] 			= $data->telefono;
+						$dataReporte[$cont]['reporteEmail'] 			= $data->email;
+						$dataReporte[$cont]['coberturaTaxonomica'] 		= $data->cobertura_tax;
+						$dataReporte[$cont]['coberturaGeografica'] 		= $data->cobertura_geog;
+						$dataReporte[$cont]['coberturaTemporal'] 		= $data->cobertura_temp;
 						
 						if(isset($data->tamano_coleccion[$k])){
-							$dataReporte[$cont]['tamanoTipo'] 			= $data->tamano_coleccion[$k]->tipo_preservacion;
+							$dataReporte[$cont]['tamanoTipo'] 			= ($data->tamano_coleccion[$k]->tipo_preservacion_id == 22) ? $data->tamano_coleccion[$k]->otro : $data->tamano_coleccion[$k]->tipo_preservacion->nombre;
 							$dataReporte[$cont]['tamanoUnidad'] 		= $data->tamano_coleccion[$k]->unidad_medida;
 							//$dataReporte[$cont]['tamanoCantidad']		= $data->tamano_coleccion[$k]->cantidad;
 						}else {
@@ -134,7 +161,8 @@ class ReporteController extends Controller{
 						}
 						
 						if(isset($data->composicion_general[$k])){
-							$dataReporte[$cont]['nivelGrupo']			= $data->composicion_general[$k]->grupo_taxonomico;
+							$dataReporte[$cont]['nivelGrupo']			= $data->composicion_general[$k]->grupo_taxonomico->nombre;
+							$dataReporte[$cont]['nivelSubgrupo']		= ($data->composicion_general[$k]->subgrupo_taxonomico_id == 2) ? $data->composicion_general[$k]->subgrupo_otro : $data->composicion_general[$k]->subgrupo_taxonomico->nombre;
 							$dataReporte[$cont]['nivelEjemplares']		= $data->composicion_general[$k]->numero_ejemplares;
 							$dataReporte[$cont]['nivelCatalogados']		= $data->composicion_general[$k]->numero_catalogados;
 							$dataReporte[$cont]['nivelSistematizados']	= $data->composicion_general[$k]->numero_sistematizados;
@@ -152,15 +180,19 @@ class ReporteController extends Controller{
 							$dataReporte[$cont]['nivelGenero']			= "-";
 							$dataReporte[$cont]['nivelEspecie']			= "-";
 						}
-							
+						
+						$dataReporte[$cont]['tipoEjemplarTipo']			= ($data->ejemplar_tipo == 0) ? "Si" : "No";
+						$dataReporte[$cont]['tipoEjemplarTipoCant']		= $data->ej_tipo_cantidad;
 						if(isset($data->tipos_en_coleccion[$k])){
 							$dataReporte[$cont]['tipoGrupo']			= $data->tipos_en_coleccion[$k]->grupo;
-							$dataReporte[$cont]['tipoEjemplar']			= $data->tipos_en_coleccion[$k]->informacion_ejemplar;
-							$dataReporte[$cont]['tipoNombreCientifico']	= $data->tipos_en_coleccion[$k]->nombre_cientifico;
-							//$dataReporte[$cont]['tipoCantidad']			= $data->tipos_en_coleccion[$k]->cantidad;
+							//$dataReporte[$cont]['tipoEjemplar']			= $data->tipos_en_coleccion[$k]->informacion_ejemplar;
+							//$dataReporte[$cont]['tipoNombreCientifico']	= $data->tipos_en_coleccion[$k]->nombre_cientifico;
+							$dataReporte[$cont]['tipoCantidad']			= $data->tipos_en_coleccion[$k]->cantidad;
 						}else {
-							$dataReporte[$cont]['tipoEjemplar']			= "-";
-							//$dataReporte[$cont]['tipoCantidad']			= "-";
+							$dataReporte[$cont]['tipoGrupo']			= "-";
+							//$dataReporte[$cont]['tipoEjemplar']			= "-";
+							//$dataReporte[$cont]['tipoNombreCientifico']	= "-";
+							$dataReporte[$cont]['tipoCantidad']			= "-";
 						}
 						
 						$dataReporte[$cont]['documentoAnexos']			= $data->listado_anexos;
@@ -171,9 +203,17 @@ class ReporteController extends Controller{
 						$dataReporte[$cont]['contactoCargo']			= $data->contactos->cargo;
 						$dataReporte[$cont]['contactoDependencia']		= $data->contactos->dependencia;
 						$dataReporte[$cont]['contactoDireccion']		= $data->contactos->direccion;
-						$dataReporte[$cont]['contactoCiudad']			= $data->contactos->county->county_name;
+						$dataReporte[$cont]['contactoCiudad']			= isset($data->contactos->county->county_name) ? $data->contactos->county->county_name : '-';
 						$dataReporte[$cont]['contactoTelefono']			= $data->contactos->telefono;
 						$dataReporte[$cont]['contactoEmail']			= $data->contactos->email;
+						
+						$dataReporte[$cont]['dilegenciadorNombre']		= $data->dilegenciadores->nombre;
+						$dataReporte[$cont]['dilegenciadorDependencia']	= $data->dilegenciadores->dependencia;
+						$dataReporte[$cont]['dilegenciadorCargo']		= $data->dilegenciadores->cargo;
+						$dataReporte[$cont]['dilegenciadorTelefono']	= $data->dilegenciadores->telefono;
+						$dataReporte[$cont]['dilegenciadorEmail']		= $data->dilegenciadores->email;
+						$dataReporte[$cont]['estado']					= ($data->estado == 0) ? "Sin Enviar" : (($data->estado == 1) ? "En Revisión" : (($data->estado == 2) ? "Aprobado" : (($data->estado == 3) ? "No Aprobado" : "Aprobado")));
+						
 						$cont++;
 					}					
 					

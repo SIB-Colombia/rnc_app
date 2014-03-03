@@ -10,7 +10,7 @@ function enviarFormAjax(){
 		if(data.status == 'failure'){
 			alert("El usuario con el correo ingresado no existe, favor enviar una solicitud de usuario.");
 		}else{
-			alert("Se ha enviado un correo con la información de ingreso "+data.pass);
+			alert("Se ha enviado un correo con la información de ingreso.");
 		}
 	},"json");
 }

@@ -14,7 +14,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 	<div class="table-panel">
 	<?php 
 		$box = $this->beginWidget('bootstrap.widgets.TbBox', array(
-				'title' => 'Solicitud Usuarios',
+				'title' => 'Solicitud de usuarios',
 	    		'headerIcon' => 'icon-th-list',
 	    		// when displaying a table, if we include bootstra-widget-table class
 	    		// the table will be 0-padding to the box

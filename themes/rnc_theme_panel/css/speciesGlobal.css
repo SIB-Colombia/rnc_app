@@ -951,6 +951,16 @@ h2 .twitter-share-button{
 	background-color: rgba(17, 131, 85, 0.75) !important;
 }
 
+.dropdown-menu .active > a, .dropdown-menu .active > a:hover, .dropdown-menu li > a:hover{
+	color: #fff !important;
+	background-color: rgba(17, 131, 85, 0.75) !important;
+	background-image: none !important;
+}
+
+.nav .dropdown-toggle .caret{
+	border-top-color:  rgba(17, 131, 85, 0.75) !important;
+	border-bottom-color:  rgba(17, 131, 85, 0.75) !important;
+}
 .btn-success{
 	color: #fff !important;
 }
@@ -979,4 +989,8 @@ h2 .twitter-share-button{
 	width: 120px;
 	background-color: #bfdc7a;
 	background-image: -webkit-linear-gradient(top,#bfdc7a,#8ebf45)
+}
+
+.nav-list li{
+	margin-bottom: 10px;
 }

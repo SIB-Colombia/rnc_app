@@ -11,7 +11,8 @@
  * @property int 	$fecha_fund
  * @property string	$descripcion
  * @property string	$direccion
- * @property int	$ciudad_id
+ * @property string	$ciudad_id
+ * @property string	$departamento_id
  * @property string	$telefono
  * @property string	$email
  * @property string	$cobertura_tax
@@ -29,6 +30,8 @@
  * @property int	$terminos
  * @property float  $deorreferenciados
  * @property string $sistematizacion
+ * @property int 	$ejemplar_tipo
+ * @property int	$ej_tipo_cantidad
  * 
  * @property int $contactos_id
  * @property int $dilegenciadores_id
@@ -45,7 +48,7 @@
  * @property Archivos				$archivos
  */
 
-class Registros_Update extends CActiveRecord
+class Registros_update extends CActiveRecord
 {
 	private $archivoAnexo;
 	private $archivoColeccion;
@@ -54,8 +57,11 @@ class Registros_Update extends CActiveRecord
 	private $archivosAnexos;
 	private $archivosColecciones;
 	private $archivosDivulgativos;
+	public  $archivoCertificado;
+	public  $archivoCertificados;
+
 	
-	private $aprobado;
+	public $comentarioCancelar;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -78,12 +84,13 @@ class Registros_Update extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('nombre,acronimo,fecha_fund,descripcion,direccion,ciudad_id,telefono,email,cobertura_tax,cobertura_geog,cobertura_temp,listado_anexos,terminos,sistematizacion','required'),
-				array('nombre,direccion,telefono,pagina_web','length','max'=>150),
+				array('nombre,acronimo,fecha_fund,descripcion,direccion,departamento_id,ciudad_id,telefono,email,cobertura_tax,cobertura_geog,cobertura_temp,listado_anexos,terminos,sistematizacion,deorreferenciados','required'),
+				array('nombre,telefono,pagina_web','length','max'=>150),
 				array('acronimo,email','length','max'=>45),
-				array('telefono','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
-				array('deorreferenciados','numerical','min' => 0,'max' => 100,'message' => 'El dato solo puede ser numérico'),
-				array('cobertura_tax,cobertura_geog,cobertura_temp,redes_social,info_adicional,comentario,sistematizacion','length','max'=>200),
+				//array('telefono','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
+				array('deorreferenciados,ej_tipo_cantidad','numerical','min' => 0,'max' => 100,'message' => 'El dato solo puede ser numérico'),
+				array('cobertura_tax,cobertura_geog,cobertura_temp,redes_social,info_adicional,comentario','length','max'=>200),
+				array('sistematizacion,direccion','length','max'=>2000),
 				array('email', 'email'),
 				array('acronimo', 'safe', 'on'=>'search'),
 				
@@ -108,7 +115,9 @@ class Registros_Update extends CActiveRecord
 				'contactos'				=> array(self::BELONGS_TO, 'Contactos', 'contactos_id'),
 				'dilegenciadores'		=> array(self::BELONGS_TO, 'Dilegenciadores', 'dilegenciadores_id'),
 				'county' 				=> array(self::BELONGS_TO, 'County', 'ciudad_id'),
-				'archivos'				=> array(self::HAS_MANY,'Archivos', 'Registros_update_id')
+				'department'			=> array(self::BELONGS_TO, 'Department', 'departamento_id'),
+				'archivos'				=> array(self::HAS_MANY,'Archivos', 'Registros_update_id'),
+				'estado_registro'		=> array(self::BELONGS_TO,'Estado_Registro','estado')
 		);
 	}
 	
@@ -118,14 +127,14 @@ class Registros_Update extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-				'fecha_act'					=> 'Última Actualización',
+				'fecha_act'					=> 'Fecha de la última actualización',
 				'fecha_rev'					=> 'Última fecha de revisión',
 				'nombre'					=> 'Nombre de la colección',
 				'acronimo'					=> 'Acrónimo',
 				'fecha_fund'				=> 'Año de fundación',
 				'descripcion'				=> 'Descripción',
 				'direccion'					=> 'Dirección de la colección',
-				'ciudad_id'					=> 'Ciudad',
+				'ciudad_id'					=> 'Municipio',
 				'telefono'					=> 'Teléfono',
 				'email'						=> 'Correo electrónico',
 				'cobertura_tax'				=> 'Cobertura taxonómica',
@@ -144,8 +153,13 @@ class Registros_Update extends CActiveRecord
 				'archivoColeccion'			=> 'Material divulgativo',
 				'archivoDivulgativo'		=> 'Material divulgativo',
 				'terminos'					=> 'Acepto los términos y condiciones.',
-				'sistematizacion'			=> 'Sistematización y Publicación',
-				'deorreferenciados'			=> '% de Datos georreferenciados'
+				'sistematizacion'			=> 'Sistematización y publicación',
+				'deorreferenciados'			=> 'Porcentaje de especímenes georreferenciados',
+				'departamento_id'			=> 'Departamento',
+				'ejemplar_tipo'				=> '¿La colección cuenta con ejemplares tipo?',
+				'ej_tipo_cantidad'			=> '¿Cuántos ejemplares tipo existen?',
+				'comentarioCancelar'		=> 'Motivo de la cancelación',
+				'aprobado'					=> 'Aprobado'
 		);
 	}
 	
@@ -184,9 +198,10 @@ class Registros_Update extends CActiveRecord
 		$criteria = new CDbCriteria;
 		
 		$criteria->compare('t.Registros_update_id', $id);
-		$criteria->order = 'id ASC';
+		$criteria->with = array('tipo_preservacion');
+		$criteria->order = 't.id ASC';
 		
-		$modelTamano = Tamano_Coleccion::model();
+		$modelTamano = Tamano_Coleccion::model()->find();
 		
 		return new CActiveDataProvider($modelTamano, array(
 				'criteria'=>$criteria,
@@ -218,8 +233,9 @@ class Registros_Update extends CActiveRecord
 		$criteria = new CDbCriteria;
 	
 		$criteria->compare('t.Registros_update_id', $id);
-		$criteria->order = 'id ASC';
-	
+		$criteria->with = array('grupo_taxonomico','subgrupo_taxonomico');
+		$criteria->order = 't.id ASC';
+		
 		$modelComposicion = Composicion_General::model();
 	
 		return new CActiveDataProvider($modelComposicion, array(
@@ -243,7 +259,7 @@ class Registros_Update extends CActiveRecord
 				'criteria'=>$criteria,
 				'sort' => false,
 				'pagination'=>array(
-						'pageSize'=>5,
+						'pageSize'=>100,
 				)
 		));
 	}
@@ -275,7 +291,7 @@ class Registros_Update extends CActiveRecord
 		$listyear = array();
 		$year		= 1800;
 		for ($i = 0; $i < 221; $i++) {
-			$listyear[$i] = ['id' => $year + $i, 'nombre' => $year + $i];
+			$listyear[$i] = array('id' => $year + $i, 'nombre' => $year + $i);
 		}
 		
 		return CHtml::listData($listyear, 'id','nombre');
@@ -346,13 +362,5 @@ class Registros_Update extends CActiveRecord
 		$this->archivosDivulgativos = $value;
 	}
 	
-	public function getAprobado() {
-		return $this->aprobado;
-	}
-	
-	public function setAprobado($value)
-	{
-		$this->aprobado = $value;
-	}
 }
 ?>

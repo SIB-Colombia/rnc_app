@@ -4,11 +4,11 @@
 	<!-- Meta Tags -->
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo Yii::app()->charset ?>" />
 	<meta name="language" content="es" />
-	<meta name="keywords" content="Sistema de busqueda taxonomica"/>
-	<meta name="description" content="Plataforma para la busqueda de familia taxonomica y lsids."/>
-	<meta name="author" content="Sistema de Información sobre Biodiversidad de Colombia" />
-	<meta name="copyright" content="Copyright 2012-2022 por el Sistema de Información sobre Biodiversidad de Colombia" />
-	<meta name="company" content="Sistema de Información sobre Biodiversidad de Colombia" />
+	<meta name="keywords" content="Sistema de registro nacional de colecciones biologicas"/>
+	<meta name="description" content="Sistema de registro nacional de colecciones biologicas."/>
+	<meta name="author" content="Instituto Alexander Von Humboldt" />
+	<meta name="copyright" content="Copyright 2012-2022 por el Instituto Alexander Von Humboldt" />
+	<meta name="company" content="Instituto Alexander Von Humboldt" />
 	<link rel="shortcut icon" href="<?= Yii::app()->theme->baseUrl; ?>/css/images/favicon.ico" />
 	<link rel="apple-touch-icon" href="http://www.sibcolombia.net/catalogo/admin/apple.png" />
 	
@@ -22,6 +22,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap-wysihtml5-0.0.2.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/speciesGlobal.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/panes.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/opa-icons.css" />
 	
 	<!-- Stylesheet for jquery-fineuploader library -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jquery-fineuploader/fineuploader-3.6.3.css" />
@@ -46,7 +47,7 @@
 
 	<header class="sib">
 		<div class="ribbon-wrapper-green"><div class="ribbon-green">BETA</div></div>
-		<a class="logo" href= "http://localhost/rnc_app" title="Portal de datos SiB Colombia"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png"></a>
+		<a class="logo" href= "http://www.humboldt.org.co" title="Portal de datos SiB Colombia"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png"></a>
 	</header> <!-- Fin header -->
 	
 	<div id="cocoon" >
@@ -55,7 +56,7 @@
 				<div id="panes">
 				<div>
 					<h1><?php echo CHtml::encode(Yii::app()->name); ?></h1>
-					
+					<!--<a href=""><span class="icon32 icon-color icon-info"> </span></a>-->
 					<div class="span2">
 						<div class="menu-izquierda">
 							<?php 
@@ -67,29 +68,37 @@
 									'type' => 'list',
 									'items' => array(
 										array('label'=>'Inicio', 'icon'=>'home', 'url' => array('admin/panel')),
-										array('label' => 'Usuarios'),
-										array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('usuario/create')),
-										array('label' => 'Administrar', 'icon' => 'icon-th-list', 'url' => array('usuario/index')),
-										array('label' => 'Entidades'),
-										array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('entidad/create')),
-										array('label' => 'Administrar', 'icon' => 'icon-th-list', 'url' => array('entidad/index')),
-										array('label' => 'Colecciones'),
-										array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
-										array('label' => 'Validar', 'icon' => 'icon-ok', 'url' => array('registros/listarValidar')),
-										array('label' => 'Históricos', 'icon' => 'icon-folder-close', 'url' => array('registros/listarHistoricosFolder')),
+										array('label' => 'Usuarios', 'items' => array(
+											array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('usuario/create')),
+											array('label' => 'Administrar', 'icon' => 'icon-th-list', 'url' => array('usuario/index')),
+										)),
+										array('label' => 'Entidades', 'items' => array(
+											array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('entidad/create')),
+											array('label' => 'Administrar', 'icon' => 'icon-th-list', 'url' => array('entidad/index')),
+										)),
+										array('label' => 'Colecciones', 'items' => array(
+											array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
+											array('label' => 'Validar', 'icon' => 'icon-ok', 'url' => array('registros/listarValidar')),
+											array('label' => 'Históricos', 'icon' => 'icon-folder-close', 'url' => array('registros/listarHistoricosFolder')),
+										)),
+										
 										/*array('label' => 'Contenido'),
 										array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('contenido/create')),
 										array('label' => 'Listar', 'icon' => 'icon-th-list', 'url' => array('contenido/index')),*/
-										array('label' => 'Visitas'),
-										array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('visitas/create')),
-										array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('visitas/index')),
-										array('label' => 'CONTACTOS'),
-										array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('pqrs/create')),
-										array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('pqrs/index')),
-										array('label' => 'Reportes'),
-										array('label' => 'Bitácora', 'icon' => 'icon-plus', 'url' => array('reporte/create')),
-										//array('label' => 'Bitácora Colección', 'icon' => 'icon-file', 'url' => array('reporte/index')),
+										array('label' => 'Visitas', 'items' => array(
+											array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('visitas/create')),
+											array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('visitas/index')),
+										)),
+										array('label' => 'Contacto', 'items' => array(
+											array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('pqrs/create')),
+											array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('pqrs/index')),
+										)),
+										array('label' => 'Reportes', 'items' => array(
+											array('label' => 'Bitácora', 'icon' => 'icon-plus', 'url' => array('reporte/create')),
+											//array('label' => 'Bitácora Colección', 'icon' => 'icon-file', 'url' => array('reporte/index')),
+										)),
 										array('label' => 'Cerrar Sesión', 'icon' => 'icon-off', 'url' => array('site/logout')),
+										array('label' => 'Ayuda', 'icon' => 'icon icon-color icon-info', 'url' => array('')),
 									)
 								));
 							}else {
@@ -97,19 +106,24 @@
 									'type' => 'list',
 									'items' => array(
 											array('label'=>'Inicio', 'icon'=>'home', 'url' => array('admin/panel')),
-											array('label' => 'Editar Entidad', 'icon' => 'icon-plus', 'url' => array('entidad/update/'.Yii::app()->user->idEntidad)),
+											//array('label' => 'Editar Entidad', 'icon' => 'icon-pencil', 'url' => array('entidad/update/'.Yii::app()->user->idEntidad)),
 											//array('label' => 'Usuario'),
 											//array('label' => 'Editar', 'icon' => 'icon-plus', 'url' => array('usuario/update/'.Yii::app()->user->id)),
-											array('label' => 'Colecciones'),
-											array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('registros/create')),
-											array('label' => 'Actualizar', 'icon' => 'icon-th-list', 'url' => array('registros/indexActualizar')),
-											array('label' => 'Consultas'),
-											array('label' => 'Coleccion', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
-											array('label' => 'Bitácora Colección', 'icon' => 'icon-plus', 'url' => array('visita/create')),
-											array('label' => 'Contáctenos'),
-											array('label' => 'Registrar', 'icon' => 'icon-plus', 'url' => array('pqrs/create')),
-											array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('pqrs/index')),
+											array('label' => 'Colecciones', 'items' => array(
+												array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('registros/create')),
+												array('label' => 'Actualizar', 'icon' => 'icon-th-list', 'url' => array('registros/indexActualizar')),
+											)),
+											array('label' => 'Consultas', 'items' => array(
+												array('label' => 'Coleccion', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
+												array('label' => 'Históricos', 'icon' => 'icon-folder-close', 'url' => array('registros/listarHistoricosFolder')),
+												//array('label' => 'Bitácora Colección', 'icon' => 'icon-plus', 'url' => array('visita/create')),
+											)),
+											array('label' => 'Contáctenos', 'items' => array(
+												array('label' => 'Crear', 'icon' => 'icon-plus', 'url' => array('pqrs/create')),
+												array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('pqrs/index')),
+											)),
 											array('label' => 'Cerrar Sesión', 'icon' => 'icon-off', 'url' => array('site/logout')),
+											array('label' => 'Ayuda', 'icon' => 'icon icon-color icon-info', 'url' => array('')),
 									)
 							));
 							}
@@ -123,7 +137,8 @@
 						</div> <!-- Fin area-contenido -->
 					</div> <!-- Fin span8 -->
 					
-					<?php 
+					<!-- 
+					<?php /*
 					if($userRole === 'admin')
 					{
 					?>
@@ -152,7 +167,8 @@
 						?>
 						</div>
 					</div>
-					<?php }?>
+					<?php }*/?>
+					 -->
 				</div>
 				</div>
 			</div>

@@ -2,7 +2,16 @@
 
 class Reporte extends CFormModel
 {
-	public $entidadNombre;
+	public $entidadTitular;
+	public $entidadTipoTitular;
+	public $entidadNit;
+	public $entidadRepresentante;
+	public $entidadRepresentanteTipo;
+	public $entidadRepresentanteId;
+	public $entidadDireccion;
+	public $entidadCiudad;
+	public $entidadTelefono;
+	public $entidadEmail;
 	public $coleccionNumero;
 	public $coleccionFecha;
 	public $reporteNombre;
@@ -23,10 +32,13 @@ class Reporte extends CFormModel
 	public $tamanoUnidad;
 	//public $tamanoCantidad;
 	public $tipoGrupo;
-	public $tipoEjemplar;
-	public $tipoNombreCientifico;
-	//public $tipoCantidad;
+	public $tipoEjemplarTipo;
+	public $tipoEjemplarTipoCant;
+	//public $tipoEjemplar;
+	//public $tipoNombreCientifico;
+	public $tipoCantidad;
 	public $nivelGrupo;
+	public $nivelSubgrupo;
 	public $nivelEjemplares;
 	public $nivelCatalogados;
 	public $nivelSistematizados;
@@ -69,15 +81,23 @@ class Reporte extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-				'entidadNombre'				=> 'Entidad',
-				'coleccionNumero' 			=> 'No. Colección',
-				'coleccionFecha' 			=> 'Última Actualización',
+				'entidadTitular'			=> 'Titular',
+				'entidadTipoTitular'		=> 'Tipo de titular',
+				'entidadNit'				=> 'Identificación',
+				'entidadRepresentante'		=> 'Representante legal',
+				'entidadRepresentanteId'	=> 'Identificación representante',
+				'entidadDireccion'			=> 'Dirección',
+				'entidadCiudad'				=> 'Municipio',
+				'entidadTelefono'			=> 'Teléfono',
+				'entidadEmail'				=> 'Correo electrónico',
+				'coleccionNumero' 			=> 'No. colección',
+				'coleccionFecha' 			=> 'Última actualización',
 				'reporteNombre' 			=> 'Nombre de la colección',
 				'reporteAcronimo'			=> 'Acrónimo',
 				'reporteFundacion'			=> 'Año de fundación',
 				'reporteDescripcion'		=> 'Descripción',
 				'reporteDireccion'			=> 'Dirección de la colección',
-				'reporteCiudad'				=> 'Ciudad',
+				'reporteCiudad'				=> 'Municipio',
 				'reporteTelefono'			=> 'Teléfono',
 				'reporteEmail'				=> 'Correo electrónico',
 				'coberturaTaxonomica'		=> 'Cobertura taxonómica',
@@ -89,19 +109,20 @@ class Reporte extends CFormModel
 				'tamanoTipo'				=> 'Tipo de preservación',
 				'tamanoUnidad'				=> 'Unidad de medida',
 				'tamanoCantidad'			=> 'Cantidad de ejemplares',
-				'tipoGrupo'					=> 'Grupo',
+				'tipoGrupo'					=> 'Grupo biológico',
 				'tipoEjemplar'				=> 'Información sobre el ejemplar tipo',
-				'tipoNombreCientifico'		=> 'Nombre Científico',
+				'tipoNombreCientifico'		=> 'Nombre científico',
 				'tipoCantidad'				=> 'Cantidad de ejemplares',
 				'nivelGrupo'				=> 'Grupo taxonómico o biológico',
-				'nivelEjemplares'			=> 'No. Ejemplares',
+				'nivelSubgrupo'				=> 'Subgrupo taxonómico o biológico',
+				'nivelEjemplares'			=> 'No. ejemplares',
 				'nivelCatalogados'			=> 'Ejemplares catalogados',
 				'nivelSistematizados'		=> 'Ejemplares sistematizados',
 				'nivelOrden'				=> 'Ejemplares identificados al nivel de orden',
 				'nivelFamilia'				=> 'Ejemplares identificados al nivel de familia',
 				'nivelGenero'				=> 'Ejemplares identificados al nivel de genero',
 				'nivelEspecie'				=> 'Ejemplares identificados al nivel de especie',
-				'sistematizacion'			=> 'Sistematización y Publicación',
+				'sistematizacion'			=> 'Sistematización y publicación',
 				'contactoNombre'			=> 'Persona de contacto',
 				'contactoCargo'				=> 'Cargo',
 				'contactoDependencia'		=> 'Dependencia',
@@ -109,12 +130,14 @@ class Reporte extends CFormModel
 				'contactoCiudad'			=> 'Ciudad',
 				'contactoTelefono'			=> 'Teléfono(s)',
 				'contactoEmail'				=> 'Correo electrónico',
-				'dilegenciadorNombre'		=> 'Nombre',
+				'dilegenciadorNombre'		=> 'Nombre dilegenciador',
 				'dilegenciadorDependencia'	=> 'Dependencia',
 				'dilegenciadorCargo'		=> 'Cargo',
-				'dilegenciadorTelefono'		=> 'Telefono',
-				'dilegenciadorEmail'		=> 'Correo Electrónico',
-				'checkAll'					=> 'Seleccionar'
+				'dilegenciadorTelefono'		=> 'Teléfono',
+				'dilegenciadorEmail'		=> 'Correo electrónico',
+				'checkAll'					=> 'Seleccionar',
+				'tipoEjemplarTipo'			=> 'Ejemplares tipo',
+				'tipoEjemplarTipoCant'		=> 'Cantidad ejemplares tipo'
 		);
 	}
 }

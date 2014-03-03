@@ -13,7 +13,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 );*/
 ?>
 
-<div id="header-front">Crear Nueva Entidad</div>
+<div id="header-front">Crear nueva entidad</div>
 
 <div id="content-front">
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

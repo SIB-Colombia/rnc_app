@@ -48,7 +48,7 @@ $(function() {
     $('#Pqrs_archivo').uploadify({
     	'auto'     		: true,
     	'fileSizeLimit' : '20MB',
-    	'buttonText'	: 'Seleccionar Archivo',
+    	'buttonText'	: 'Seleccionar archivo',
     	'width'         : 140,
     	'fileTypeExts'  : '*.pdf;*.doc;*.docx;jpg',
     	'multi'			: true,
@@ -91,27 +91,30 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'enableAjaxValidation'=>false,
 ));
 ?>
-	
-	<?php 
-	if(Yii::app()->user->getId() !== null){
-	?>
-		<p class="note">Los campos con <span class="required">*</span> son obligatorios.</p>
-	<?php }else{?>
-		<p class="note" style="color: #999">Los campos con <span class="required">*</span> son obligatorios.</p>
-	<?php }?>
 
-	
+	<p class="note" style="color: #999">
+	Relacione sus inquietudes, sugerencias y comentarios en este formulario. Si lo requiere anexe los documentos que acompañan su comunicación.
+	</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
 	<fieldset>
 		<legend class="form_legend">Datos de la solicitud</legend>
 		<?php 
+			if(Yii::app()->user->getId() !== null){
+		?>
+			<p class="note">Los campos con <span class="required">*</span> son obligatorios.</p>
+		<?php }else{?>
+			<p class="note" style="color: #999;text-align: justify;margin-bottom: 20px">Los campos con <span class="required">*</span> son obligatorios.</p>
+		<?php }?>
+		
+		<?php 
 			echo $form->textFieldRow($model, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
 			echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA'));
 			
-			if(Yii::app()->user->getId() === null){
+			if(Yii::app()->user->getId() === null || $userRole == "admin"){
 				echo $form->dropDownListRow($model, 'entidad', Entidad::model()->listarEntidades(),array('prompt' => 'Seleccionar...','onchange' => ''));
+				echo $form->textFieldRow($model, 'entidad_otra', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
 			}
 			
 			if(Yii::app()->user->getId() === null || $userRole == "admin"){
@@ -119,20 +122,37 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 			}else{
 				echo $form->dropDownListRow($model, 'numero_registro', $model->listarColeccion(),array('prompt' => 'Seleccionar...','onchange' => ''));
 			}
-			
-			
-			echo $form->dropDownListRow($model, 'tipo_solicitud', $model->listarTipoSolicitud(),array('prompt' => 'Seleccionar...'));
+			echo '<i class="icon-info-sign" rel="tooltip" title = "Si la consulta no está relacionada con una colección registrada por favor escriba 0"></i>';
+			if($userRole == 'admin'){
+				echo $form->dropDownListRow($model, 'tipo_solicitud', $model->listarTipoSolicitud(),array('prompt' => 'Seleccionar...'));
+			}
 			echo $form->textAreaRow($model, 'descripcion', array('class'=>'span4', 'rows'=>4));
 			echo $form->fileFieldRow($model, 'archivo');
 			echo $form->hiddenField($model, 'nombreArchivo');
 		?>
 		<div id = "adjFile">
 		</div>
+		<label class="control-label inlineLabel2" style="clear: left;margin-left: 220px;width: auto">Formatos válidos: PDF (*.pdf), World  (*.doc,*.docx) e Imágenes (*.jpg). Tamaño máximo 20MB.</label>
 	</fieldset>
 	
 	<div id="catalogouser-botones-internos" class="form-actions pull-right">
 		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Enviar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
 	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
+	    <?php 
+	    if(Yii::app()->user->getId() !== null){
+			$this->widget('bootstrap.widgets.TbButtonGroup', array(
+				'buttons'=>array(
+					array('label'=>'Cancel', 'url'=>array('admin/panel')),
+				),
+			));
+		}else{
+			$this->widget('bootstrap.widgets.TbButtonGroup', array(
+				'buttons'=>array(
+						array('label'=>'Cancel', 'url'=>array('site/index')),
+				),
+			));
+		}
+		?>
     </div>
 
 <?php $this->endWidget(); ?>

@@ -39,20 +39,20 @@ $('.search-form form').submit(function(){
 	}
 </script>
 
-<div id="header-front">Registros de Colecciones Biológicas</div>
+<div id="header-front">Registros de colecciones biológicas</div>
 
 <div id="content-front">
 	<?php 
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(
 			'buttons'=>array(
-					array('label'=>'Nuevo Registro', 'icon'=>'icon-plus', 'url'=>array('create')),
+					array('label'=>'Nuevo registro', 'icon'=>'icon-plus', 'url'=>array('create')),
 					array('label'=>'Inicio', 'icon'=>'icon-home', 'url'=>array('admin/panel')),
 			),
 	));
 	?>
+	<i class="icon-print printR" onclick="print();"></i>
 	<div class="tabbable"> <!-- Only required for left/right tabs -->
 	  
-	  			
 	  <div class="tab-content">
 	       <?php echo $this->renderPartial('_registros_table', array('listRegistros'=>$model->search(),'model' => $model)); ?>
 	  </div>

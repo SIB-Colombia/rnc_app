@@ -27,9 +27,9 @@ $(function() {
     $('#Pqrs_archivo').uploadify({
     	'auto'     		: true,
     	'fileSizeLimit' : '20MB',
-    	'buttonText'	: 'Seleccionar Archivo',
+    	'buttonText'	: 'Seleccionar archivo',
     	'width'         : 140,
-    	'fileTypeExts'  : '*.pdf;*.doc;*.docx;jpg',
+    	'fileTypeExts'  : '*.pdf;*.doc;*.docx;*.jpg',
     	'multi'			: true,
     	'formData'		: {'randWord' : randWord},
     	'swf'      		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.swf',
@@ -53,7 +53,7 @@ $(function() {
 
 </script>
 
-<div id="header-front">Detalle de la Solicitud: <?php echo $model->id; ?></div>
+<div id="header-front">Detalle de la solicitud: <?php echo $model->nombre; ?></div>
 
 <div id="content-front">
 <?php
@@ -63,15 +63,21 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 		),
 ));
 ?>
+<i class="icon-print printR" onclick="print();"></i>
 <div style="margin-top: 20px">
 <?php 
 	$this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
 		'attributes'=>array(
 			'id',
+			'fecha',
 			'nombre',
 			'registros.numero_registro',
-			'entidad.titular',
+			array(
+				'name' => 'entidad.titular',
+				'type'	=> 'raw',
+				'value' => CHtml::encode(($model->entidad_id != "") ? $model->entidad->titular : (($model->entidad_otra != "") ? $model->entidad_otra : "No asignado"))
+			),
 			'email',
 			array(
 				'name' => 'tipo_solicitud',
@@ -84,7 +90,8 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 				'type'	=> 'raw',
 				'value' => CHtml::encode(($model->estado == 0) ? "Pendiente" : "Cerrado")
 			),
-			'respuesta'
+			'respuesta',
+			'fecha_respuesta'
 		),
 	));
 

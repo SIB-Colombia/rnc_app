@@ -48,6 +48,7 @@
 								'telefono',
 								'direccion',
 								'email',
+								'colecciones'
 						),
 				));
 			?>
@@ -74,7 +75,7 @@
 								'value' => $data->dilegenciadores->cargo
 							),
 							array(
-								'name' => 'telefono',
+								'name' => 'tel&eacute;fono',
 								'type'	=> 'raw',
 								'value' => $data->dilegenciadores->telefono
 							),
