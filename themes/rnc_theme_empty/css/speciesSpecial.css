@@ -176,5 +176,10 @@ footer section div {
 	text-align: center;
 	margin: 0 auto;
 	width: 100%;
-	color: #868686
+	color: #868686;
+	padding: 0 150px
+}
+
+footer section div img{
+	float: left;
 }

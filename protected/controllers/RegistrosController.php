@@ -168,13 +168,13 @@ class RegistrosController extends Controller{
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
 			
-			if(isset($_POST['Registros_Update'])){
+			if(isset($_POST['Registros_update'])){
 				//print_r($_POST);
 				//Yii::app()->end();
 				//$model->fecha_dil = $_POST['Registros']['fecha_dil'];
 				$model->numero_registro = $_POST['Registros']['numero_registro'];
 				$model->tipo_coleccion_id = $_POST['Registros']['tipo_coleccion_id'];
-				$model->registros_update->estado	= $_POST['Registros_Update']['estado'];
+				$model->registros_update->estado	= $_POST['Registros_update']['estado'];
 				
 				$success_saving_all = false;
 				$success_saving_all_1 = false;
@@ -194,13 +194,13 @@ class RegistrosController extends Controller{
 						
 					}
 					
-					$model->registros_update->attributes 			= $_POST['Registros_Update'];
+					$model->registros_update->attributes 			= $_POST['Registros_update'];
 					$model->registros_update->contactos_id 			= 0;
 					$model->registros_update->dilegenciadores_id 	= 0;
 					//$model->registros_update->fecha_act				= $_POST['Registros']['fecha_dil'];
 					$model->registros_update->registros_id			= 0;
 					$model->registros_update->registros				= $model;
-					$model->registros_update->ejemplar_tipo		 	= $_POST['Registros_Update']['ejemplar_tipo'];
+					$model->registros_update->ejemplar_tipo		 	= $_POST['Registros_update']['ejemplar_tipo'];
 					
 					if($model->registros_update->terminos == 0){
 						$model->registros_update->terminos = '';
@@ -295,7 +295,7 @@ class RegistrosController extends Controller{
 							}
 						}
 						
-						if(isset($_POST['Registros_Update']['archivosAnexos']) && $_POST['Registros_Update']['archivosAnexos'] != ''){
+						if(isset($_POST['Registros_update']['archivosAnexos']) && $_POST['Registros_update']['archivosAnexos'] != ''){
 							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
@@ -305,7 +305,7 @@ class RegistrosController extends Controller{
 								mkdir($pathDir.DIRECTORY_SEPARATOR.$pathFile);
 							}
 							
-							$dataFiles_ar = explode(",", $_POST['Registros_Update']['archivosAnexos']);
+							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosAnexos']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
 								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
@@ -326,7 +326,7 @@ class RegistrosController extends Controller{
 							
 						}
 						
-						if(isset($_POST['Registros_Update']['archivosColecciones'])  && $_POST['Registros_Update']['archivosColecciones'] != ''){
+						if(isset($_POST['Registros_update']['archivosColecciones'])  && $_POST['Registros_update']['archivosColecciones'] != ''){
 							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
@@ -337,7 +337,7 @@ class RegistrosController extends Controller{
 								mkdir($pathDir.DIRECTORY_SEPARATOR.$pathFile);
 							}
 							
-							$dataFiles_ar = explode(",", $_POST['Registros_Update']['archivosColecciones']);
+							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosColecciones']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
 								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){	
@@ -446,7 +446,7 @@ class RegistrosController extends Controller{
 			if(isset($_POST['Registros_Update'])){
 				$success_saving_all = false;
 				//$model->fecha_dil = $_POST['Registros']['fecha_dil'];
-				$model->registros_update->estado	= $_POST['Registros_Update']['estado'];
+				$model->registros_update->estado	= $_POST['Registros_update']['estado'];
 				$model->numero_registro = $_POST['Registros']['numero_registro'];
 				$model->tipo_coleccion_id = $_POST['Registros']['tipo_coleccion_id'];
 				
@@ -466,11 +466,11 @@ class RegistrosController extends Controller{
 						
 					}
 											
-					$model->registros_update->attributes 			= $_POST['Registros_Update'];
+					$model->registros_update->attributes 			= $_POST['Registros_update'];
 					$model->registros_update->contactos_id 			= 0;
 					$model->registros_update->dilegenciadores_id 	= 0;
 					//$model->registros_update->fecha_act				= Yii::app()->Date->now();
-					$model->registros_update->ejemplar_tipo		 	= $_POST['Registros_Update']['ejemplar_tipo'];
+					$model->registros_update->ejemplar_tipo		 	= $_POST['Registros_update']['ejemplar_tipo'];
 			
 					if(isset($_POST['Contactos'])){
 						$model->registros_update->contactos->attributes = $_POST['Contactos'];
@@ -598,7 +598,7 @@ class RegistrosController extends Controller{
 							}
 						}
 							
-						if(isset($_POST['Registros_Update']['archivosAnexos'])  && $_POST['Registros_Update']['archivosAnexos'] != ''){
+						if(isset($_POST['Registros_update']['archivosAnexos'])  && $_POST['Registros_update']['archivosAnexos'] != ''){
 							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
@@ -608,7 +608,7 @@ class RegistrosController extends Controller{
 								mkdir($pathDir.DIRECTORY_SEPARATOR.$pathFile);
 							}
 			
-							$dataFiles_ar = explode(",", $_POST['Registros_Update']['archivosAnexos']);
+							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosAnexos']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
 								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
@@ -629,7 +629,7 @@ class RegistrosController extends Controller{
 			
 						}
 							
-						if(isset($_POST['Registros_Update']['archivosColecciones'])  && $_POST['Registros_Update']['archivosColecciones'] != ''){
+						if(isset($_POST['Registros_update']['archivosColecciones'])  && $_POST['Registros_update']['archivosColecciones'] != ''){
 							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
@@ -640,7 +640,7 @@ class RegistrosController extends Controller{
 								mkdir($pathDir.DIRECTORY_SEPARATOR.$pathFile);
 							}
 			
-							$dataFiles_ar = explode(",", $_POST['Registros_Update']['archivosColecciones']);
+							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosColecciones']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
 								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
@@ -732,7 +732,7 @@ class RegistrosController extends Controller{
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
 			
-			if(isset($_POST['Registros']) && isset($_POST['Registros_Update'])){
+			if(isset($_POST['Registros']) && isset($_POST['Registros_update'])){
 				
 				$transaction = Yii::app()->db->beginTransaction();
 				$success_saving_all = false;
@@ -746,13 +746,13 @@ class RegistrosController extends Controller{
 					
 					$model->fecha_dil = $_POST['Registros']['fecha_dil'];
 					$model->numero_registro	= $_POST['Registros']['numero_registro'];
-					$model->registros_update->fecha_act	 = $_POST['Registros_Update']['fecha_act'];
-					$model->registros_update->comentario = $_POST['Registros_Update']['comentario'];
-					$model->registros_update->aprobado = $_POST['Registros_Update']['aprobado'];
+					$model->registros_update->fecha_act	 = $_POST['Registros_update']['fecha_act'];
+					$model->registros_update->comentario = $_POST['Registros_update']['comentario'];
+					$model->registros_update->aprobado = $_POST['Registros_update']['aprobado'];
 					
 					$estReg = $model->estado;
 					
-					if($_POST['Registros_Update']['aprobado'] == 0){
+					if($_POST['Registros_update']['aprobado'] == 0){
 						if(isset($registros_update_ant->id)){
 							$registros_update_ant->estado = 4;
 							$registros_update_ant->save();
@@ -773,10 +773,11 @@ class RegistrosController extends Controller{
 					}else{
 						$model->save();
 						if($estReg == 0){
-							if(isset($_POST['Registros_Update']['archivoCertificados'])){
+							if(isset($_POST['Registros_update']['archivoCertificados'])){
 								$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Certificados'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo;
+								//$pathDir = 'Certificados'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo;
 								$archivos = array();
-								$dataFiles_cer = explode(",", $_POST['Registros_Update']['archivoCertificados']);
+								$dataFiles_cer = explode(",", $_POST['Registros_update']['archivoCertificados']);
 								foreach ($dataFiles_cer as $value){
 									$dataFiles = explode("/", $value);
 										
@@ -888,7 +889,7 @@ class RegistrosController extends Controller{
 			$registros_update = Registros_update::model()->find($criteria);
 			
 			$model=$this->loadModel($id);
-			$model->fecha_dil = $_POST['Registros']['fecha_dil'];
+			//$model->fecha_dil = $_POST['Registros']['fecha_dil'];
 			$model->save();
 			
 			$model->registros_update = $registros_update;
@@ -905,7 +906,7 @@ class RegistrosController extends Controller{
 				$modelRegistroUpdate->tipos_en_coleccion 	= new Tipos_En_Coleccion();
 				$modelRegistroUpdate->composicion_general	= new Composicion_General();
 				
-				$modelRegistroUpdate->estado	= $_POST['Registros_Update']['estado'];
+				$modelRegistroUpdate->estado	= $_POST['Registros_update']['estado'];
 				
 				$success_saving_all = false;
 				
@@ -974,9 +975,9 @@ class RegistrosController extends Controller{
 								$modelRegistroUpdate->tipos_en_coleccion	= new Tipos_En_Coleccion();
 								
 								$modelRegistroUpdate->tipos_en_coleccion->grupo					= $valor_tipo['grupo'];
-								$modelRegistroUpdate->tipos_en_coleccion->nombre_cientifico		= $valor_tipo['nombre_cientifico'];
-								$modelRegistroUpdate->tipos_en_coleccion->informacion_ejemplar	= $valor_tipo['informacion_ejemplar'];
-								//$modelRegistroUpdate->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
+								//$modelRegistroUpdate->tipos_en_coleccion->nombre_cientifico		= $valor_tipo['nombre_cientifico'];
+								//$modelRegistroUpdate->tipos_en_coleccion->informacion_ejemplar	= $valor_tipo['informacion_ejemplar'];
+								$modelRegistroUpdate->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
 								$modelRegistroUpdate->tipos_en_coleccion->Registros_update_id	= $modelRegistroUpdate->id;
 									
 								$modelRegistroUpdate->tipos_en_coleccion->save();
@@ -1007,7 +1008,8 @@ class RegistrosController extends Controller{
 						}
 				
 						if(isset($_POST['Registros_Update']['archivosAnexos']) && $_POST['Registros_Update']['archivosAnexos'] != ''){
-							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
+							//$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
+							$pathDir = 'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -1038,7 +1040,8 @@ class RegistrosController extends Controller{
 						}
 				
 						if(isset($_POST['Registros_Update']['archivosColecciones'])  && $_POST['Registros_Update']['archivosColecciones'] != ''){
-							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
+							//$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
+							$pathDir = 'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -1238,7 +1241,7 @@ class RegistrosController extends Controller{
 			$model->unsetAttributes();
 			
 			$model->entidad = Entidad::model();
-			$model->registros_update = Registros_Update::model();
+			$model->registros_update = Registros_update::model();
 				
 			$userRole = Yii::app()->user->getState("roles");
 			if($userRole == "entidad"){
@@ -1285,8 +1288,9 @@ class RegistrosController extends Controller{
 				$name = "";
 			}
 			
-			$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
-			
+			//$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
+
+			$dirPath        = "..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."disk2".DIRECTORY_SEPARATOR."rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
 			if(is_dir($dirPath)){
 				$model = Registros::model();
 				$this->render('listarHistoricosFolder',array(
@@ -1294,7 +1298,21 @@ class RegistrosController extends Controller{
 						'folder' => $name,
 				));
 			}else{
-				$this->redirect(Yii::app()->createUrl("..".DIRECTORY_SEPARATOR.$dirPath));
+				$filename = $dirPath;
+				header("Expires: -1");
+				header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+				header("Content-type: application/pdf;\n"); //or yours?
+				header("Content-Transfer-Encoding: binary");
+				header("Cache-Control: no-store, no-cache, must-revalidate");
+				header("Cache-Control: post-check=0, pre-check=0");
+				header("Pragma: no-cache");
+				$len = filesize($filename);
+				header("Content-Length: $len;\n");
+				$outname=$name;
+				header("Content-Disposition: attachment; filename=".$outname.";\n\n");
+				readfile($filename);
+				
+				//$this->redirect(Yii::app()->createUrl("..".DIRECTORY_SEPARATOR.$dirPath));
 			}
 			
 		}else{
@@ -1419,7 +1437,7 @@ class RegistrosController extends Controller{
 			$fechaAct = getdate($fechaAct);
 					
 			$pdf = new RNCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-			spl_autoload_register(array('YiiBase','autoload'));
+			//spl_autoload_register(array('YiiBase','autoload'));
 			
 			$pdf->SetCreator('Instituto Alexander Von Humboldt');
 			$pdf->SetTitle("Certificado RNC - 2014");
@@ -1484,6 +1502,34 @@ class RegistrosController extends Controller{
 			}
 			
 		}
+	}
+	
+	public function actionColecciones(){
+		
+		$pathDir = 'rnc_files/colecciones.xls';
+		
+		$phpExcelPath = Yii::getPathOfAlias('ext.phpexcel.Classes');
+		
+		// Turn off our amazing library autoload
+		spl_autoload_unregister(array('YiiBase','autoload'));
+		
+		include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel.php');
+		
+		include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel'. DIRECTORY_SEPARATOR .'IOFactory.php');
+		
+		spl_autoload_register(array('YiiBase','autoload'));
+		
+		$dataInfo = new PHPExcel_Reader_Excel5();
+		
+		$dataPhpExcel = $dataInfo->load($pathDir);
+		
+		$dataArrayAux = $dataPhpExcel->getActiveSheet()->toArray(null,true,true,true);
+		
+		$model = Registros::model();
+				$this->render('colecciones',array(
+						'model' => $model,
+						'datos' => $dataArrayAux,
+				));
 	}
 	
 }

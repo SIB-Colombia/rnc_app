@@ -12,8 +12,8 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Registro Único Nacional de Colecciones Biológicas (RNC)',
-	'charset'=>'utf-8',	
+	'name'=>'Registro Único Nacional de Colecciones Biológicas',
+	'charset'=>'utf-8',
 	
 	// Bootstrap configuration
 	//'theme'=>'bootstrap', // requires you to copy the theme under your themes directory
@@ -52,8 +52,8 @@ return array(
 			'transportType' => 'smtp',
 			'transportOptions' => array(
 				'host' => 'smtp.gmail.com',
-				'username'=>'xxx',
-				'password'=>'xxx',
+				'username'=>'jdiaz@humboldt.org.co',
+				'password'=>'260216.GIC',
 				'port'=>'465',
 				'encryption' => 'ssl'
 			),
@@ -97,8 +97,8 @@ return array(
 			//'username' => 'lgrajales',
 			//'password' => 'Lg2013-',
 			//'emulatePrepare' => true,
-			'username' => 'xxx', //actualizar usuario
-			'password' => 'xxx', //actualizar password
+			'username' => 'root', //actualizar usuario
+			'password' => '', //actualizar password
 			'charset' => 'utf8',
 			'emulatePrepare' => false,
 			'enableProfiling'=>true,

@@ -119,4 +119,40 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+	
+	public function actionInstructivo(){
+		$this->render('instructivo');
+	}
+	
+	public function actionArchivoAuto(){
+		$filename = "rnc_files".DIRECTORY_SEPARATOR."Certificado_autodeclaracion.docx";
+		header("Expires: -1");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Content-type: application/docx;\n"); //or yours?
+		header("Content-Transfer-Encoding: binary");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0");
+		header("Pragma: no-cache");
+		$len = filesize($filename);
+		header("Content-Length: $len;\n");
+		$outname="Certificado_autodeclaracion.docx";
+		header("Content-Disposition: attachment; filename=".$outname.";\n\n");
+		readfile($filename);
+	}
+	
+	public function actionArchivoInstructivo(){
+		$filename = "rnc_files".DIRECTORY_SEPARATOR."Instructivo_registro_o_actualizacion.xlsx";
+		header("Expires: -1");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Content-type: application/xlsx;\n"); //or yours?
+		header("Content-Transfer-Encoding: binary");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0");
+		header("Pragma: no-cache");
+		$len = filesize($filename);
+		header("Content-Length: $len;\n");
+		$outname="Instructivo_registro_o_actualizacion.xlsx";
+		header("Content-Disposition: attachment; filename=".$outname.";\n\n");
+		readfile($filename);
+	}
 }

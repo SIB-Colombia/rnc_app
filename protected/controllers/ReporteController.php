@@ -52,16 +52,16 @@ class ReporteController extends Controller{
 				
 				$dataReporte = array();
 				$dataReporte[0]['entidadTitular'] 			= 'Titular';
-				$dataReporte[0]['entidadTipoTitular']		= 'Tipo de Titular';
+				$dataReporte[0]['entidadTipoTitular']		= 'Tipo de titular';
 				$dataReporte[0]['entidadNit']				= 'Identificación';
-				$dataReporte[0]['entidadRepresentante']		= 'Representante Legal';
-				$dataReporte[0]['entidadRepresentanteId']	= 'Identificación Representante';
+				$dataReporte[0]['entidadRepresentante']		= 'Representante legal';
+				$dataReporte[0]['entidadRepresentanteId']	= 'Identificación representante';
 				$dataReporte[0]['entidadDireccion']			= 'Dirección';
 				$dataReporte[0]['entidadCiudad']			= 'Municipio';
 				$dataReporte[0]['entidadTelefono']			= 'Teléfono';
-				$dataReporte[0]['entidadEmail']				= 'Correo Electrónico';
+				$dataReporte[0]['entidadEmail']				= 'Correo electrónico';
 				$dataReporte[0]['coleccionNumero'] 			= 'No. Colección';
-				$dataReporte[0]['coleccionFecha'] 			= 'Última Actualización';
+				$dataReporte[0]['coleccionFecha'] 			= 'Última actualización';
 				$dataReporte[0]['reporteNombre'] 			= 'Nombre de la colección';
 				$dataReporte[0]['reporteAcronimo'] 			= 'Acrónimo';
 				$dataReporte[0]['reporteFundacion'] 		= 'Año de fundación';
@@ -85,7 +85,7 @@ class ReporteController extends Controller{
 				$dataReporte[0]['nivelFamilia']		 		= 'Ejemplares identificados al nivel de familia';
 				$dataReporte[0]['nivelGenero']		 		= 'Ejemplares identificados al nivel de genero';
 				$dataReporte[0]['nivelEspecie']		 		= 'Ejemplares identificados al nivel de especie';
-				$dataReporte[0]['sistematizacion']	 		= 'Sistematización y Publicación';
+				$dataReporte[0]['sistematizacion']	 		= 'Sistematización y publicación';
 				$dataReporte[0]['tipoEjemplarTipo']			= 'Ejemplares tipo';
 				$dataReporte[0]['tipoEjemplarTipoCant']		= 'Cantidad ejemplares tipo';
 				$dataReporte[0]['tipoGrupo']		 		= 'Grupo biológico';
@@ -102,11 +102,11 @@ class ReporteController extends Controller{
 				$dataReporte[0]['contactoCiudad']		 	= 'Ciudad';
 				$dataReporte[0]['contactoTelefono']		 	= 'Teléfono(s)';
 				$dataReporte[0]['contactoEmail']		 	= 'Correo electrónico';
-				$dataReporte[0]['dilegenciadorNombre']	 	= 'Nombre Dilegenciador';
+				$dataReporte[0]['dilegenciadorNombre']	 	= 'Nombre dilegenciador';
 				$dataReporte[0]['dilegenciadorDependencia']	= 'Dependencia';
 				$dataReporte[0]['dilegenciadorCargo']		= 'Cargo';
 				$dataReporte[0]['dilegenciadorTelefono']	= 'Teléfono';
-				$dataReporte[0]['dilegenciadorEmail']		= 'Correo Electrónico';
+				$dataReporte[0]['dilegenciadorEmail']		= 'Correo electrónico';
 				$dataReporte[0]['estado']					= 'Estado';
 				
 				$cont = 1;

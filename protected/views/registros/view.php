@@ -13,7 +13,7 @@ $userRole  = Yii::app()->user->getState("roles");
 <?php
 $this->widget('bootstrap.widgets.TbButtonGroup', array(
 		'buttons'=>array(
-				array('label'=>'Listar Colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
+				array('label'=>'Listar colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
 		),
 ));
 ?>

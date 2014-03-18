@@ -46,7 +46,7 @@
 		 	
 	<header class="sib">
 		<div class="ribbon-wrapper-green"><div class="ribbon-green">BETA</div></div>
-		<a class="logo" href= "http://www.humboldt.org.co" title="Portal de datos SiB Colombia"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png"></a>
+		<a class="logo" href= "<?=Yii::app()->createUrl("site/index");?>" title="Registro Único Nacional de Colecciones Biológicas"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logo_rnc.png"></a>
 	</header> <!-- Fin header -->
 	
 	<div id="cocoon" >
@@ -56,23 +56,24 @@
 				<div>
 					<h1><?php echo CHtml::encode(Yii::app()->name);  ?></h1>
 					
-					<div id="twopartheader" style="text-align: center;">
-						<?=$content;?>
+					<div id="twopartheader" style="">
 						<div class="panel-der">
 							<?php 
 							$this->widget('bootstrap.widgets.TbMenu', array(
 								'type' => 'pills',
 								'stacked'=>false,
 								'items' => array(
-									array('label' => 'Inicio', 'icon' => '', 'url' => array('site/index')),
-									array('label' => 'Ingresar', 'icon' => '', 'url' => array('admin/index')),
+									array('label' => 'Solicitar usuario', 'url' => array('entidad/solicitud')),
+									array('label' => 'Ingresar', 'url' => array('admin/index')),
 									//array('label' => 'Colecciones', 'icon' => '', 'url' => array('coleccion/index')),
-									array('label' => 'Solicitar usuario', 'icon' => '', 'url' => array('entidad/solicitud')),
-									array('label' => 'Contacto', 'icon' => '', 'url' => array('pqrs/create'))
+									array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
+									array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
+									array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
 								)
 							));
 							?>
 						</div>
+						<?=$content;?>
 					</div>
 				</div>
 				</div>
@@ -82,10 +83,8 @@
 		<footer>
 			<section>
 			  <div>
-				<p>
-					Sede Principal: Calle28A#15-09 Bogotá, D.C., Colombia | PBX: (57)(1) 3202767 | NIT 820000142-2 | Horario de atención 8:30 a.m. - 5:30 p.m.<br>
-					Prohibida su reproducción total o parcial, asi como su traducción a otro idioma - Todos los derechos reservados 2013.
-				</p>
+				<a href="http://www.minambiente.gov.co/" target="_blank"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/logoMinAmbiente.png" width="350px" style="margin-top: 20px"></a>
+				<a href="http://www.humboldt.org.co" target="_blank"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png" width="120px" style="margin-left: 200px"></a>
 			 </div>
 			</section>
 		</footer>

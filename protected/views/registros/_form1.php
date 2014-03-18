@@ -80,7 +80,7 @@ function deleteFileUpAjax(divId,name){
 }
 
 function enviarForm(){
-	$("#Registros_update_estado").val("0");
+	$("#Registros_Update_estado").val("0");
 	$("#registro-form").submit();
 }
 
@@ -230,7 +230,7 @@ function subgrupoOtroSelect(data, id){
 	}
 }
 
-$(document).ready(function() {
+$( document ).ready(function() {
 	$(".valNum").change(function(){
 		if(!isNaN($(this).val()))
 		{
@@ -262,14 +262,14 @@ $(document).ready(function() {
 });
 
 function enviarData(){
-	$("#Registros_update_estado").val("1");
+	$("#Registros_Update_estado").val("1");
 	$("#registro-form").submit();
 }
 
 contUp = 0;
 randWord = Math.floor((Math.random()*1000)+1);
 $(function() {
-    $('#Registros_update_archivoAnexo').uploadify({
+    $('#Registros_Update_archivoAnexo').uploadify({
     	'auto'     		: true,
     	'fileSizeLimit' : '20MB',
     	'buttonText'	: 'Seleccionar archivo',
@@ -284,13 +284,13 @@ $(function() {
 		'onUploadComplete' : function(file){
 			
 			dataFile = randWord+'_'+file.name+'/'+file.type+'/'+file.size;
-			val_aux	 = $('#Registros_update_archivosAnexos').val();
+			val_aux	 = $('#Registros_Update_archivosAnexos').val();
 
 			if(val_aux.trim() == ''){
-				$('#Registros_update_archivosAnexos').val(dataFile);
+				$('#Registros_Update_archivosAnexos').val(dataFile);
 			}else{
 				val_aux	+= ','+dataFile;
-				$('#Registros_update_archivosAnexos').val(val_aux);
+				$('#Registros_Update_archivosAnexos').val(val_aux);
 			}
 
 			html = '<div id="flup_'+contUp+'" class="uploadify-queue-item" style="margin-left:220px">';
@@ -305,7 +305,7 @@ $(function() {
  
     contUp2 = 0;
     
-    $('#Registros_update_archivoColeccion').uploadify({
+    $('#Registros_Update_archivoColeccion').uploadify({
     	'auto'     		: true,
     	'fileSizeLimit' : '40MB',
     	'buttonText'	: 'Seleccionar archivo',
@@ -319,13 +319,13 @@ $(function() {
 		'onUploadComplete' : function(file){
 
 			dataFile = randWord+'_'+file.name+'/'+file.type+'/'+file.size;
-			val_aux	 = $('#Registros_update_archivosColecciones').val();
+			val_aux	 = $('#Registros_Update_archivosColecciones').val();
 
 			if(val_aux.trim() == ''){
-				$('#Registros_update_archivosColecciones').val(dataFile);
+				$('#Registros_Update_archivosColecciones').val(dataFile);
 			}else{
 				val_aux	+= ','+dataFile;
-				$('#Registros_update_archivosColecciones').val(val_aux);
+				$('#Registros_Update_archivosColecciones').val(val_aux);
 			}
 
 			html = '<div id="flcolup_'+contUp2+'" class="uploadify-queue-item" style="margin-left:220px">';
@@ -416,7 +416,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						echo $form->dropDownListRow($model, 'tipo_coleccion_id', Tipo_Coleccion::model()->listarTipoColeccion(),array('prompt' => 'Seleccionar...','disabled' => true));
 					}else{
 						echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'onchange' => 'validarNumeroColeccion(this,this.value);'));
-						echo '<i class="icon-info-sign" rel="tooltip" title = "Ingrese el número 0, el administrador asignará el número de registro correspondiente."></i>';
+						echo '<i class="icon-info-sign" rel="tooltip" title = "Ingrese el número de Colección asignado, de lo contrario ingrese 0."></i>';
 						echo $form->dropDownListRow($model, 'tipo_coleccion_id', Tipo_Coleccion::model()->listarTipoColeccion(),array('prompt' => 'Seleccionar...'));
 					}
 					
@@ -463,7 +463,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					echo $form->textFieldRow($model->registros_update, 'direccion', array('size'=>32,'maxlength'=>2000, 'class'=>'textareaA'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Dirección donde se localiza físicamente la colección."></i>';
 					echo '<div style="float: left;width:640px">';
-					echo $form->dropDownListRow($model->registros_update, 'departamento_id', $model->entidad->ListarDepartamentos(),array('prompt' => 'Seleccione...','onChange' => 'actSelectCiudad(this,"Registros_update_ciudad_id")'));
+					echo $form->dropDownListRow($model->registros_update, 'departamento_id', $model->entidad->ListarDepartamentos(),array('prompt' => 'Seleccione...','onChange' => 'actSelectCiudad(this,"Registros_Update_ciudad_id")'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Departamento donde se encuentra la colección."></i>';
 					echo $form->dropDownListRow($model->registros_update, 'ciudad_id', $model->entidad->ListarCiudades($model->registros_update->departamento_id,$model->registros_update->ciudad_id),array('prompt' => 'Seleccionar...'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Municipio donde se encuentra la colección."></i>';
@@ -696,21 +696,19 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<div class="InlineFormDiv" id="tipoCole">
 				<?php
 					echo $form->radioButtonListInlineRow($model->registros_update, 'ejemplar_tipo', array('Si','No'));
-					echo '<i style="float:none;" class="icon-info-sign" rel="tooltip" title = "los ejemplares tipo son aquellos en cuales se basa la descripción de una especie; su presencia y número en las colecciones biológicas son una medida del aporte al conocimiento científico de la biodiversidad de una región ya que representan especies nuevas cuyo primer reporte se refiere a la zona de estudio."></i>';
+					echo '<i style="float:none;" class="icon-info-sign" rel="tooltip" title = "Indique si existen holotipos en la colección y relacione por cada uno grupo biológico y cantidad."></i>';
 					echo $form->textFieldRow($model->registros_update, 'ej_tipo_cantidad');
 				?>
 				<div style="padding-top: 10px;float: left;clear: both;margin-left: 220px;">
-				<?php echo '<i style="float:right;" class="icon-info-sign" rel="tooltip" title = "Indique si existen holotipos en la colección y relacione por cada uno grupo biológico y cantidad."></i>';?>
-					<label class="control-label required inlineLabel2" style="width: 160px !important;text-align: center !important; font-weight: bold;"><?=$tipos_en_coleccion->getAttributeLabel('grupo');?></label>
-					<label class="control-label required inlineLabel2" style="width: 160px !important;text-align: center !important;margin-left: 20px; font-weight: bold;"><?=$tipos_en_coleccion->getAttributeLabel('cantidad');?></label>
+					<label class="control-label required inlineLabel2" style="width: 160px !important;text-align: center !important; font-weight: bold;"><?=$model->registros_update->tipos_en_coleccion->getAttributeLabel('grupo');?></label>
+					<label class="control-label required inlineLabel2" style="width: 160px !important;text-align: center !important;margin-left: 20px; font-weight: bold;"><?=$model->registros_update->tipos_en_coleccion->getAttributeLabel('cantidad');?></label>
 				</div>
-				<?php
-					
+				<?php 
 					echo '<div style="float:left;clear:both;margin-left:210px">';
 					if(!isset($model->registros_update->id) || !is_array($model->registros_update->tipos_en_coleccion)){
 						echo "<div>";
-						echo $form->textField($model->registros_update->tipos_en_coleccion, 'grupo', array('name'=>'Tipos_En_Coleccion[0][grupo]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->getAttributeLabel('grupo')));
-						echo $form->textField($model->registros_update->tipos_en_coleccion, 'cantidad', array('name'=>'Tipos_En_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $tipos_en_coleccion->getAttributeLabel('cantidad')));
+						echo $form->textField($model->registros_update->tipos_en_coleccion, 'grupo', array('name'=>'Tipos_En_Coleccion[0][grupo]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->getAttributeLabel('grupo')));
+						echo $form->textField($model->registros_update->tipos_en_coleccion, 'cantidad', array('name'=>'Tipos_En_Coleccion[0][cantidad]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => $model->registros_update->tipos_en_coleccion->getAttributeLabel('cantidad')));
 						
 						$this->widget('bootstrap.widgets.TbButton', array(
 								'label'=>'+',

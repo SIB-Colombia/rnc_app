@@ -227,6 +227,8 @@ class Registros extends CActiveRecord
 	public function listarFolderHistoricos($folder = ""){
 		$datos = array();
 		$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos";
+
+		//$dirPath        = "..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."disk2".DIRECTORY_SEPARATOR."rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
 		$dir = "";
 		$cols = array();
 		if($folder != ""){
@@ -274,6 +276,18 @@ class Registros extends CActiveRecord
 					$cont++;
 				}
 			}
+		}
+		
+		$gridDataProvider = new CArrayDataProvider($datos);
+		return $gridDataProvider;
+	}
+	
+	public function listarColecciones($arrg){
+		
+		$datos = array();
+		
+		for ($i = 1; $i <= count($arrg); $i++) {
+			$datos[] = array('id' => $i,'numero' => $arrg[$i]['A'],'titular' => $arrg[$i]['B'],'acronimo' => $arrg[$i]['C'],'nombre' => $arrg[$i]['D'],'fundacion' => $arrg[$i]['E'],'departamento' => $arrg[$i]['F'],'ciudad' => $arrg[$i]['G'],'fecha' => $arrg[$i]['H'],'tipo' => $arrg[$i]['I']);
 		}
 		
 		$gridDataProvider = new CArrayDataProvider($datos);

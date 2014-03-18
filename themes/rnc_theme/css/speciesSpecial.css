@@ -161,14 +161,25 @@ table.actionsList {
 }
 
 .panel-der {
-	background-color: #fff;
+	
 	padding: 0px 10px 0px 10px;
-	border-radius: 10px
+	border-radius: 10px;
+	margin-bottom: 60px
 }
 
+.panel-der li{
+	width: 180px;
+	height: 45px;
+	margin-left: 20px
+}
 .panel-der li a{
-	width: 100%;
-	margin: 0px
+	width: 180px;
+	padding: 0;
+	margin: 0px;
+	line-height: 25px;
+	padding: 14px 0 14px 0;
+	text-align: center;
+	font-size: 32px
 }
 
 .form_legend{
@@ -190,7 +201,12 @@ footer section div {
 	text-align: center;
 	margin: 0 auto;
 	width: 100%;
-	color: #868686
+	color: #868686;
+	padding: 0 150px
+}
+
+footer section div img{
+	float: left;
 }
 
 .uploadify-queue-item{
@@ -198,4 +214,27 @@ footer section div {
 	clear: left !important;
 	min-width: 200px !important;
 	margin-left: 200px !important
+}
+
+#textHomeIntro{
+	float: right;
+	width: 550px
+}
+
+#textHomeIntro h3{
+	text-align: center;
+	font-size: 24px;
+	font-weight: 400;
+}
+
+#textHomeIntro p{
+	color: #666;
+	margin-top: 40px;
+	font-size: 14px
+}
+
+#textHomeIntro ul li{
+	color: #666;
+	font-size: 14px;
+	list-style: circle;
 }
