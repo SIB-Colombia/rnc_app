@@ -2,7 +2,6 @@
 	margin: 0px 0 20px 0;
 	padding:20px 20px 20px 85px;
 	min-height: 80px;
-	background:rgba(250,249,243, 1) url('../standard/images/esp_ico.png') no-repeat 20px 20px ;
 	-webkit-border-radius: 20px;
     border-radius: 20px;
 	position:relative;
@@ -145,9 +144,6 @@ h4#addSearchFilter, h4#currentSearch {
 	color:white;
 	font-size:1.6em;
 }
-input[type="submit"], button{
-	background-color:#34BCE0 !important;
-}
 table.actionsList tr:nth-child(even) td,
 table.actionsList tr:nth-child(even) th{
 	background:rgba(53, 188, 224, 0.4);
@@ -159,37 +155,140 @@ table.actionsList tr:nth-child(odd) th{
 table.actionsList {
 	border-top:rgba(53, 188, 224, 0.2) 10px solid;
 }
-
-.panel-der {
-	
-	padding: 0px 10px 0px 10px;
-	border-radius: 10px;
-	margin-bottom: 60px
+panel-der {
+	float: right;
+	background-color: #fff;
+	padding: 5px 10px;
+	border-radius: 10px
 }
 
-.panel-der li{
-	width: 180px;
-	height: 45px;
-	margin-left: 20px
-}
 .panel-der li a{
-	width: 180px;
-	padding: 0;
-	margin: 0px;
-	line-height: 25px;
-	padding: 14px 0 14px 0;
-	text-align: center;
-	font-size: 32px
+	width: 100%;
+	margin: 0px
 }
 
-.form_legend{
-	font-size: 21px
+.table-panel{
+	width: 96%;
+	padding: 10px 0 20px 20px
+}
+
+.table-panel h3{
+	color: #666 !important;
+	font-size: 18px !important;
+	line-height: 35px !important
+}
+
+.tabbable{
+	margin-top: 20px
+}
+
+.well label{
+	margin-right: 0px
+}
+
+.well div{
+	margin-bottom: 10px
+}
+
+.well legend {
+	font-size: 16px
+}
+
+.well fieldset{
+	padding-bottom: 0px !important
+}
+
+.busq_lab label {
+	width: 60px
+}
+
+#rep_leg_inp{
+	display: none;
+}
+
+.input-append .add-on, .input-prepend .add-on {
+	height: 30px;
+	line-height: 30px;
+}
+
+.textInline{
+	width: 150px !important;
+	margin: 10px
+}
+
+.InlineFormDiv{
+	padding: 10px
+}
+
+.addType{
+	margin: 10px
+}
+
+.totalRow{
+	width: 150px !important;
+	float: right;
+	margin-right:  130px
+}
+
+.totalRow2{
+	width: 150px !important;
+	margin-left: 50px
+	
+}
+
+.control-label{
+	width: 200px !important
+}
+
+.controls{
+	margin-left: 220px !important
+}
+
+.inlineLabel{
+	float: left !important;
+	margin: 4px 0 4px 4px;
+	font-size: 11px !important;
+	text-align: center !important;
+}
+
+.inlineLabel2{
+	float: left !important;
+	margin: 0 0 8px 4px;
+	font-size: 12px !important;
+	text-align: justify !important;
+	width: auto !important;
+	padding: 0px !important
+}
+
+.add-on{
+	line-height: 20px !important
+}
+
+b{
+	font-weight: bold;
+}
+
+.noteTerm{
+	background-color: #e5e5e5;
+	padding: 10px;
+	border-radius: 3px;
+	border-color: 9f9f9f;
+	border-width: 2px;
+	color: #666 !important
+}
+
+.viewFileReg{
+	background-color: #468847;
+	border-radius: 3px;
+	padding: 2px 4px;
+	color: #fff;
+	float: right;
+	margin-right: 3px
 }
 
 .control-group{
 	float: left;
-	margin-top: 0 !important;
-	clear: left
+	margin-top: 0 !important
 }
 
 .icon-info-sign{
@@ -197,44 +296,32 @@ table.actionsList {
 	margin: 8px 20px 0 20px
 }
 
-footer section div {
-	text-align: center;
-	margin: 0 auto;
-	width: 100%;
-	color: #868686;
-	padding: 0 150px
-}
-
-footer section div img{
-	float: left;
-}
-
 .uploadify-queue-item{
-	float: left !important;
-	clear: left !important;
-	min-width: 200px !important;
-	margin-left: 200px !important
+	float: left;
+	width: 350px
 }
 
-#textHomeIntro{
+.panelInicio h3{
+	font-size: 16px !important;
+	margin-top: 0px !important
+}
+
+.area-widget{
+	width: 190px;
+	height: 150px;
+	background: none repeat scroll 0 0 #FFFFFF;
+	box-shadow: 0 0 40px #555555;
+	border-radius: 5px 5px 5px 5px;
+	margin: 20px 0 40px 0
+	
+}
+
+#nivel_cata_lista_grid th{
+	font-size: 12px
+}
+
+
+.printR{
 	float: right;
-	width: 550px
-}
-
-#textHomeIntro h3{
-	text-align: center;
-	font-size: 24px;
-	font-weight: 400;
-}
-
-#textHomeIntro p{
-	color: #666;
-	margin-top: 40px;
-	font-size: 14px
-}
-
-#textHomeIntro ul li{
-	color: #666;
-	font-size: 14px;
-	list-style: circle;
+	cursor: pointer;
 }

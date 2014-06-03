@@ -45,6 +45,7 @@ class Entidad extends CActiveRecord
 	private $usuario_id_s;
 	private $aprobado;
 	public 	$colecciones;
+	public $codigoVerificacion;
 	
 	
 	public static function model($className=__CLASS__)
@@ -72,11 +73,12 @@ class Entidad extends CActiveRecord
 				array('titular,telefono,direccion,representante_legal,email', 'length', 'max'=>150),
 				array('nit,representante_id','length', 'max'=>64),
 				array('email', 'email'),
-				array('representante_id','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
+				array('nit,representante_id','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				//array('titular,nit,representante_id,direccion,telefono,email,dependencia_d,cargo_d,telefono_d,', 'safe', 'on'=>'search'),
 				array('titular', 'safe', 'on'=>'searchDetail'),
+				array('codigoVerificacion', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
 		);
 	}
 	
@@ -130,6 +132,7 @@ class Entidad extends CActiveRecord
 				'colecciones' => 'Colecciones a registrar',
 				'tipo_institucion_id' => 'Tipo de institución',
 				'departamento_id' => 'Departamento',
+				'codigoVerificacion'=>'Código de verificación',
 		);
 	}
 	

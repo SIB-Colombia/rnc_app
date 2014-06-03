@@ -327,7 +327,7 @@ class UsuarioController extends Controller{
 				$modelUsuario->password	= crypt($modelUsuario->password, self::blowfishSalt());
 				
 				if($modelUsuario->save()){
-					$mails = array(0 => "rnc@humboldt.org.co");
+					$mails = array(0 => $modelUsuario->email);
 					$message 			= new YiiMailMessage;
 					$message->view 		= "recuperaPassword";
 					//$data 			= "Mensaje prueba";

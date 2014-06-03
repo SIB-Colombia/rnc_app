@@ -1,6 +1,18 @@
 <?php
 class RegistrosController extends Controller{
 	
+	public function actions()
+	{
+		return array(
+				// captcha action renders the CAPTCHA image displayed on the contact page
+				'captcha'=>array(
+						'class'=>'CCaptchaAction',
+						'backColor'=>0xFFFFFF,
+				),
+	
+		);
+	}
+	
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -308,8 +320,8 @@ class RegistrosController extends Controller{
 							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosAnexos']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
-								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-									if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
 
 										$archivoModel = new Archivos();
 										$archivoModel->nombre 				= $dataFiles[0];
@@ -340,8 +352,8 @@ class RegistrosController extends Controller{
 							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosColecciones']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
-								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){	
-									if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){	
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
 								
 										$archivoModel = new Archivos();
 										$archivoModel->nombre 				= $dataFiles[0];
@@ -443,7 +455,7 @@ class RegistrosController extends Controller{
 			
 			$success_saving_all = false;
 			
-			if(isset($_POST['Registros_Update'])){
+			if(isset($_POST['Registros_update'])){
 				$success_saving_all = false;
 				//$model->fecha_dil = $_POST['Registros']['fecha_dil'];
 				$model->registros_update->estado	= $_POST['Registros_update']['estado'];
@@ -611,8 +623,8 @@ class RegistrosController extends Controller{
 							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosAnexos']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
-								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-									if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
 			
 										$archivoModel = new Archivos();
 										$archivoModel->nombre 				= $dataFiles[0];
@@ -643,8 +655,8 @@ class RegistrosController extends Controller{
 							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosColecciones']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
-								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-									if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
 											
 										$archivoModel = new Archivos();
 										$archivoModel->nombre 				= $dataFiles[0];
@@ -776,13 +788,16 @@ class RegistrosController extends Controller{
 							if(isset($_POST['Registros_update']['archivoCertificados'])){
 								$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Certificados'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo;
 								//$pathDir = 'Certificados'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo;
+								if(!file_exists($pathDir)){
+									mkdir($pathDir);
+								}
 								$archivos = array();
 								$dataFiles_cer = explode(",", $_POST['Registros_update']['archivoCertificados']);
 								foreach ($dataFiles_cer as $value){
 									$dataFiles = explode("/", $value);
 										
-									if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-										if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+										if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
 							
 											$archivoModel = new Archivos();
 											$archivoModel->nombre 				= $dataFiles[0];
@@ -898,8 +913,8 @@ class RegistrosController extends Controller{
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
 			
-			if(isset($_POST['Registros_Update'])){
-				$modelRegistroUpdate = new Registros_Update();
+			if(isset($_POST['Registros_update'])){
+				$modelRegistroUpdate = new Registros_update();
 				$modelRegistroUpdate->contactos 			= new Contactos();
 				$modelRegistroUpdate->dilegenciadores 		= new Dilegenciadores();
 				$modelRegistroUpdate->tamano_coleccion 		= new Tamano_Coleccion();
@@ -923,7 +938,7 @@ class RegistrosController extends Controller{
 					
 					}
 						
-					$modelRegistroUpdate->attributes 			= $_POST['Registros_Update'];
+					$modelRegistroUpdate->attributes 			= $_POST['Registros_update'];
 					$modelRegistroUpdate->contactos_id 			= 0;
 					$modelRegistroUpdate->dilegenciadores_id 	= 0;
 					//$modelRegistroUpdate->fecha_act				= Yii::app()->Date->now();
@@ -1007,9 +1022,9 @@ class RegistrosController extends Controller{
 							}
 						}
 				
-						if(isset($_POST['Registros_Update']['archivosAnexos']) && $_POST['Registros_Update']['archivosAnexos'] != ''){
-							//$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
-							$pathDir = 'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
+						if(isset($_POST['Registros_update']['archivosAnexos']) && $_POST['Registros_update']['archivosAnexos'] != ''){
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
+							//$pathDir = 'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -1018,11 +1033,11 @@ class RegistrosController extends Controller{
 								mkdir($pathDir.DIRECTORY_SEPARATOR.$pathFile);
 							}
 								
-							$dataFiles_ar = explode(",", $_POST['Registros_Update']['archivosAnexos']);
+							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosAnexos']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
-								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-									if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
 				
 										$archivoModel = new Archivos();
 										$archivoModel->nombre 				= $dataFiles[0];
@@ -1039,9 +1054,9 @@ class RegistrosController extends Controller{
 								
 						}
 				
-						if(isset($_POST['Registros_Update']['archivosColecciones'])  && $_POST['Registros_Update']['archivosColecciones'] != ''){
-							//$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
-							$pathDir = 'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
+						if(isset($_POST['Registros_update']['archivosColecciones'])  && $_POST['Registros_update']['archivosColecciones'] != ''){
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
+							//$pathDir = 'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$modelRegistroUpdate->id."_".$modelRegistroUpdate->acronimo;
 							if(!file_exists($pathDir)){
 								mkdir($pathDir);
 							}
@@ -1051,11 +1066,11 @@ class RegistrosController extends Controller{
 								mkdir($pathDir.DIRECTORY_SEPARATOR.$pathFile);
 							}
 								
-							$dataFiles_ar = explode(",", $_POST['Registros_Update']['archivosColecciones']);
+							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosColecciones']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
-								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-									if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
 				
 										$archivoModel = new Archivos();
 										$archivoModel->nombre 				= $dataFiles[0];
@@ -1188,7 +1203,7 @@ class RegistrosController extends Controller{
 					echo 0;
 				}
 			}else if(isset($_POST['name'])){
-				if(unlink("tmp".DIRECTORY_SEPARATOR.$_POST['name'])){
+				if(unlink("temp_rnc".DIRECTORY_SEPARATOR.$_POST['name'])){
 					echo 1;
 				}else {
 					echo 0;
@@ -1288,9 +1303,9 @@ class RegistrosController extends Controller{
 				$name = "";
 			}
 			
-			//$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
+			$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
 
-			$dirPath        = "..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."disk2".DIRECTORY_SEPARATOR."rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
+			//$dirPath        = "..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."disk2".DIRECTORY_SEPARATOR."rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
 			if(is_dir($dirPath)){
 				$model = Registros::model();
 				$this->render('listarHistoricosFolder',array(
@@ -1523,13 +1538,25 @@ class RegistrosController extends Controller{
 		
 		$dataPhpExcel = $dataInfo->load($pathDir);
 		
-		$dataArrayAux = $dataPhpExcel->getActiveSheet()->toArray(null,true,true,true);
+		$arrg = $dataPhpExcel->getActiveSheet()->toArray(null,true,true,true);
 		
 		$model = Registros::model();
+		
+		$datos = array();
+		
+		for ($i = 1; $i <= count($arrg); $i++) {
+			$datos[] = array($arrg[$i]['A'],$arrg[$i]['B'],$arrg[$i]['C'],$arrg[$i]['D'],$arrg[$i]['E'],$arrg[$i]['F'],$arrg[$i]['G'],$arrg[$i]['H'],$arrg[$i]['I'],$arrg[$i]['J'],$arrg[$i]['K'],$arrg[$i]['L'],$arrg[$i]['M']);
+		}
+		
+		
 				$this->render('colecciones',array(
 						'model' => $model,
-						'datos' => $dataArrayAux,
+						'datos' => json_encode($datos),
 				));
+	}
+	
+	public function actionColeccionesData(){
+		
 	}
 	
 }

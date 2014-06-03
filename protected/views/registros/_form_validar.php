@@ -273,7 +273,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		</div><!-- tab1 -->
 		
 		<div class="tab-pane fade" id="tab2">
-			<fieldset>
+			<fieldset style="width: 800px">
 				<legend class="form_legend">INFORMACIÓN BÁSICA DE LA COLECCIÓN</legend>
 				<?php 
 					echo $form->textFieldRow($model->registros_update, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));

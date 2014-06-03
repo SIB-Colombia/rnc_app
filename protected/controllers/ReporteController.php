@@ -57,6 +57,7 @@ class ReporteController extends Controller{
 				$dataReporte[0]['entidadRepresentante']		= 'Representante legal';
 				$dataReporte[0]['entidadRepresentanteId']	= 'Identificación representante';
 				$dataReporte[0]['entidadDireccion']			= 'Dirección';
+				$dataReporte[0]['entidadDepartamento']		= 'Departamento';
 				$dataReporte[0]['entidadCiudad']			= 'Municipio';
 				$dataReporte[0]['entidadTelefono']			= 'Teléfono';
 				$dataReporte[0]['entidadEmail']				= 'Correo electrónico';
@@ -67,7 +68,8 @@ class ReporteController extends Controller{
 				$dataReporte[0]['reporteFundacion'] 		= 'Año de fundación';
 				$dataReporte[0]['reporteDescripcion'] 		= 'Descripción';
 				$dataReporte[0]['reporteDireccion'] 		= 'Dirección de la colección';
-				$dataReporte[0]['reporteCiudad'] 			= 'Ciudad';
+				$dataReporte[0]['reporteDepartamento']		= 'Departamento';
+				$dataReporte[0]['reporteCiudad'] 			= 'Municipio';
 				$dataReporte[0]['reporteTelefono'] 			= 'Teléfono';
 				$dataReporte[0]['reporteEmail'] 			= 'Correo electrónico';
 				$dataReporte[0]['coberturaTaxonomica'] 		= 'Cobertura taxonómica';
@@ -76,8 +78,8 @@ class ReporteController extends Controller{
 				$dataReporte[0]['tamanoTipo']		 		= 'Tipo de preservación';
 				$dataReporte[0]['tamanoUnidad']		 		= 'Unidad de medida';
 				//$dataReporte[0]['tamanoCantidad']	 		= 'Cantidad de ejemplares';
-				$dataReporte[0]['nivelGrupo']		 		= 'Grupo taxonómico o biológico';
-				$dataReporte[0]['nivelSubgrupo']	 		= 'Subgrupo taxonómico o biológico';
+				$dataReporte[0]['nivelGrupo']		 		= 'Grupo biológico';
+				$dataReporte[0]['nivelSubgrupo']	 		= 'Subgrupo biológico';
 				$dataReporte[0]['nivelEjemplares']	 		= 'No. Ejemplares';
 				$dataReporte[0]['nivelCatalogados']	 		= 'Ejemplares catalogados';
 				$dataReporte[0]['nivelSistematizados'] 		= 'Ejemplares sistematizados';
@@ -99,7 +101,8 @@ class ReporteController extends Controller{
 				$dataReporte[0]['contactoCargo']		 	= 'Cargo';
 				$dataReporte[0]['contactoDependencia']	 	= 'Dependencia';
 				$dataReporte[0]['contactoDireccion']	 	= 'Dirección de correspondencia';
-				$dataReporte[0]['contactoCiudad']		 	= 'Ciudad';
+				$dataReporte[0]['contactoDepartamento']	 	= 'Departamento';
+				$dataReporte[0]['contactoCiudad']		 	= 'Municipio';
 				$dataReporte[0]['contactoTelefono']		 	= 'Teléfono(s)';
 				$dataReporte[0]['contactoEmail']		 	= 'Correo electrónico';
 				$dataReporte[0]['dilegenciadorNombre']	 	= 'Nombre dilegenciador';
@@ -133,7 +136,8 @@ class ReporteController extends Controller{
 						$dataReporte[$cont]['entidadRepresentante']		= $data->registros->entidad->representante_legal;
 						$dataReporte[$cont]['entidadRepresentanteId']	= $data->registros->entidad->representante_id;
 						$dataReporte[$cont]['entidadDireccion']			= $data->registros->entidad->direccion;
-						$dataReporte[$cont]['entidadCiudad']			= $data->registros->entidad->county->county_name;
+						$dataReporte[$cont]['entidadDepartamento']		= isset($data->registros->entidad->county->department->department_name) ? $data->registros->entidad->county->department->department_name : "";
+						$dataReporte[$cont]['entidadCiudad']			= isset($data->registros->entidad->county->county_name) ? $data->registros->entidad->county->county_name : "";
 						$dataReporte[$cont]['entidadTelefono']			= $data->registros->entidad->telefono;
 						$dataReporte[$cont]['entidadEmail']				= $data->registros->entidad->email;
 						$dataReporte[$cont]['coleccionNumero'] 			= $data->registros->numero_registro;
@@ -143,6 +147,7 @@ class ReporteController extends Controller{
 						$dataReporte[$cont]['reporteFundacion'] 		= $data->fecha_fund;
 						$dataReporte[$cont]['reporteDescripcion'] 		= $data->descripcion;
 						$dataReporte[$cont]['reporteDireccion'] 		= $data->direccion;
+						$dataReporte[$cont]['reporteDepartamento']		= isset($data->county->department->department_name) ? $data->county->department->department_name : "";
 						$dataReporte[$cont]['reporteCiudad'] 			= isset($data->county->county_name) ? $data->county->county_name : "";
 						$dataReporte[$cont]['reporteTelefono'] 			= $data->telefono;
 						$dataReporte[$cont]['reporteEmail'] 			= $data->email;
@@ -203,6 +208,7 @@ class ReporteController extends Controller{
 						$dataReporte[$cont]['contactoCargo']			= $data->contactos->cargo;
 						$dataReporte[$cont]['contactoDependencia']		= $data->contactos->dependencia;
 						$dataReporte[$cont]['contactoDireccion']		= $data->contactos->direccion;
+						$dataReporte[$cont]['contactoDepartamento']		= isset($data->contactos->county->department->department_name) ? $data->contactos->county->department->department_name : '-';
 						$dataReporte[$cont]['contactoCiudad']			= isset($data->contactos->county->county_name) ? $data->contactos->county->county_name : '-';
 						$dataReporte[$cont]['contactoTelefono']			= $data->contactos->telefono;
 						$dataReporte[$cont]['contactoEmail']			= $data->contactos->email;
@@ -247,25 +253,28 @@ class ReporteController extends Controller{
 				
 				$dataExcel = array();
 				
+				
 				foreach ($dataReporte as $k => $value){
 					$abc = 65;
+					$abc_aux = 64;
 					$mayor = false;
 					foreach ($value as $j => $valueData){
 						if($_POST['Reporte'][$j] == 1){//echo $abc."/";
 							$alfa = chr($abc);
+							
 							if($abc > 90){
 								$abc = 65;
+								$abc_aux++;
 								$mayor = true;
-								$alfa = chr(65).chr($abc);
+								$alfa = chr($abc_aux).chr($abc);
 							}else if($mayor){
-								$alfa = chr(65).chr($abc);
+								$alfa = chr($abc_aux).chr($abc);
 							}
 							$objPhpExcel->setActiveSheetIndex(0) -> setCellValue($alfa.($k + 1), $valueData);
 							$abc++;
 						}
 					}
 				}
-				
 				//print_r($objPhpExcel);
 				//Yii::app()->end();
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

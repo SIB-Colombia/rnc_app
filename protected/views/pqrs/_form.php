@@ -133,8 +133,24 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		<div id = "adjFile">
 		</div>
 		<label class="control-label inlineLabel2" style="clear: left;margin-left: 220px;width: auto">Formatos válidos: PDF (*.pdf), World  (*.doc,*.docx) e Imágenes (*.jpg). Tamaño máximo 20MB.</label>
+		
+		
+		
 	</fieldset>
 	
+	<?php if(CCaptcha::checkRequirements() && Yii::app()->user->getId() === null): ?>
+		<div style="padding-left: 220px">
+			<?php echo $form->labelEx($model,'codigoVerificacion'); ?>
+			<?php echo $form->textField($model,'codigoVerificacion', array('class'=>'field','style'=>'width:200px')); ?>
+			<?php $this->widget('CCaptcha'); ?>
+			<div class="hint">
+				Digite las letras que se muestran en el código de verificación.
+				<br/>Puede escribirlas en mayúscula o minúscula.
+			</div>
+			<?php //echo $form->error($model,'codigoVerificacion'); ?>
+		</div>
+	<?php endif; ?>
+		
 	<div id="catalogouser-botones-internos" class="form-actions pull-right">
 		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Enviar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
 	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>

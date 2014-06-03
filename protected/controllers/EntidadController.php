@@ -1,6 +1,18 @@
 <?php
 class EntidadController extends Controller{
 	
+	public function actions()
+	{
+		return array(
+				// captcha action renders the CAPTCHA image displayed on the contact page
+				'captcha'=>array(
+						'class'=>'CCaptchaAction',
+						'backColor'=>0xFFFFFF,
+				),
+	
+		);
+	}
+	
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -471,8 +483,8 @@ class EntidadController extends Controller{
 							$usuario->save();
 						}
 						
-						//$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
-						$mails = array(0 => 'hescobar@humboldt.org.co');
+						$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
+						//$mails = array(0 => 'hescobar@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "aprobarEntidad";
 						$params				= array('data' => $model,'user' => $user,'pass' => $password);

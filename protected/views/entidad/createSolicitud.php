@@ -1,4 +1,4 @@
-<?php
+<div style="width:730px; margin:0 auto"><?php
 /* @var $this UsuarioController */
 /* @var $model Usuario */
 
@@ -14,9 +14,9 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 ?>
 
 <fieldset>
-<legend style="border-bottom: 0px">Formulario de solicitud de usuario y contraseña</legend>
+<h1>Formulario de solicitud de usuario y contraseña</h1>
 
 <div id="content-front">
 <?php echo $this->renderPartial('_form_solicitud', array('model'=>$model)); ?>
 </div>
-</fieldset>
+</fieldset></div>

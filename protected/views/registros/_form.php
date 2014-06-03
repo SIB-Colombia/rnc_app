@@ -364,7 +364,7 @@ function actSelectCiudad(dato,id){
 <style>
 <!--
 .area-contenido{
-	min-width: 970px
+	min-width: 920px
 }
 -->
 </style>
@@ -422,7 +422,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					
 				?>
 			</fieldset>
-			<fieldset>
+			<fieldset style="width: 800px">
 				<legend class="form_legend">TITULAR DE LA COLECCIÓN</legend>
 				<?php 
 					echo $form->textFieldRow($model->entidad, 'titular', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
@@ -434,7 +434,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						echo $form->textFieldRow($model->entidad, 'representante_id', array('size'=>32,'maxlength'=>64, 'class'=>'textareaA'));
 					}
 					echo $form->textFieldRow($model->entidad, 'direccion', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
-					echo '<div style="float: left;width:640px">';
+					echo '<div>';
 					echo $form->dropDownListRow($model->entidad, 'departamento_id', $model->entidad->ListarDepartamentos(),array('prompt' => 'Seleccione...','onChange' => 'actSelectCiudad(this,"Entidad_ciudad_id")'));
 					echo $form->dropDownListRow($model->entidad, 'ciudad_id', $model->entidad->ListarCiudades($model->entidad->departamento_id,$model->entidad->ciudad_id),array('prompt' => 'Seleccionar...'));
 					echo '</div>';
@@ -445,7 +445,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		</div>
 		
 		<div class="tab-pane fade" id="tab2">
-			<fieldset style="padding-top: 40px">
+			<fieldset style="padding-top: 40px;width: 800px">
 				<legend class="form_legend">INFORMACIÓN BÁSICA DE LA COLECCIÓN</legend>
 				<?php 
 					echo $form->textFieldRow($model->registros_update, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
@@ -462,7 +462,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Texto que describe la colección y que incluye características sobresalientes de la misma, está orientado al público en general. Se sugiere incluir la misión y visión de la colección."></i>';
 					echo $form->textFieldRow($model->registros_update, 'direccion', array('size'=>32,'maxlength'=>2000, 'class'=>'textareaA'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Dirección donde se localiza físicamente la colección."></i>';
-					echo '<div style="float: left;width:640px">';
+					echo '<div>';
 					echo $form->dropDownListRow($model->registros_update, 'departamento_id', $model->entidad->ListarDepartamentos(),array('prompt' => 'Seleccione...','onChange' => 'actSelectCiudad(this,"Registros_update_ciudad_id")'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Departamento donde se encuentra la colección."></i>';
 					echo $form->dropDownListRow($model->registros_update, 'ciudad_id', $model->entidad->ListarCiudades($model->registros_update->departamento_id,$model->registros_update->ciudad_id),array('prompt' => 'Seleccionar...'));
@@ -827,7 +827,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		</div>
 	
 		<div class="tab-pane fade" id="tab3">
-			<fieldset style="padding-top: 80px">
+			<fieldset style="padding-top: 80px;width: 800px">
 				<legend class="form_legend">DATOS DE CONTACTO</legend>
 				<?php 
 					echo $form->textFieldRow($model->registros_update->contactos, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
@@ -837,7 +837,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					echo $form->textFieldRow($model->registros_update->contactos, 'dependencia', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
 					echo $form->textFieldRow($model->registros_update->contactos, 'direccion', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Dirección para el envío de correspondencia."></i>';
-					echo '<div style="float: left;width:640px">';
+					echo '<div>';
 					echo $form->dropDownListRow($model->registros_update->contactos, 'departamento_id', $model->entidad->ListarDepartamentos(),array('prompt' => 'Seleccione...','onChange' => 'actSelectCiudad(this,"Contactos_ciudad_id")'));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Departamento donde se encuentra el titular de la colección."></i>';
 					echo $form->dropDownListRow($model->registros_update->contactos, 'ciudad_id', $model->entidad->ListarCiudades($model->registros_update->contactos->departamento_id,$model->registros_update->contactos->ciudad_id),array('prompt' => 'Seleccionar...'));

@@ -114,8 +114,8 @@ class VisitasController extends Controller{
 								$dataFiles_ar = explode(",", $_POST['Visitas']['nombreArchivo']);
 								foreach ($dataFiles_ar as $value){
 									$dataFiles = explode("/", $value);
-									if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-										if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+										if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
 												
 											$archivoModel = new Archivos_Pqrs();
 											$archivoModel->nombre	= $dataFiles[0];
@@ -253,8 +253,8 @@ class VisitasController extends Controller{
 								$dataFiles_ar = explode(",", $_POST['Visitas']['nombreArchivo']);
 								foreach ($dataFiles_ar as $value){
 									$dataFiles = explode("/", $value);
-									if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-										if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+										if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
 												
 											$archivoModel = new Archivos_Pqrs();
 											$archivoModel->nombre	= $dataFiles[0];
@@ -355,7 +355,7 @@ class VisitasController extends Controller{
 					echo 0;
 				}
 			}else if(isset($_POST['name'])){
-				if(unlink("tmp".DIRECTORY_SEPARATOR.$_POST['name'])){
+				if(unlink("temp_rnc".DIRECTORY_SEPARATOR.$_POST['name'])){
 					echo 1;
 				}else {
 					echo 0;
