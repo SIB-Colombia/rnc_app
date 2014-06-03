@@ -65,7 +65,7 @@ class Tipos_En_Coleccion extends CActiveRecord
 	{
 		return array(
 				'informacion_ejemplar' 	=> 'Ejemplar tipo',
-				'cantidad'				=> 'Cantidad de ejemplares',
+				'cantidad'				=> 'Cantidad de ejemplares tipo',
 				'grupo'					=> 'Grupo biológico',
 				'nombre_cientifico'		=> 'Nombre Científico'
 		);

@@ -113,7 +113,7 @@ class Registros extends CActiveRecord
 		}
 		
 		if($this->titular_search != ''){
-			$criteria->compare('entidad.titular',$this->titular_search);
+			$criteria->compare('entidad.titular',$this->titular_search,true);
 		}
 		
 		$criteria->with = array('entidad','registros_update');
@@ -127,10 +127,10 @@ class Registros extends CActiveRecord
 				$where = "WHERE LOWER(registros_update.acronimo) LIKE '".strtolower($this->acronimo_search)."'";
 			}else if($this->acronimo_search == '' && $this->ciudad_search != ''){
 				$sql .= "INNER JOIN county ON registros_update.ciudad_id = county.iso_county_code ";
-				$where = "WHERE LOWER(county.county_name) LIKE '".strtolower($this->ciudad_search)."'";
+				$where = "WHERE LOWER(county.county_name) LIKE '%".strtolower($this->ciudad_search)."%'";
 			}else if($this->acronimo_search != '' && $this->ciudad_search != ''){
 				$sql .= "INNER JOIN county ON registros_update.ciudad_id = county.iso_county_code ";
-				$where = "WHERE LOWER(registros_update.acronimo) LIKE '".strtolower($this->acronimo_search)."' AND LOWER(county.county_name) LIKE '".strtolower($this->ciudad_search)."'";
+				$where = "WHERE LOWER(registros_update.acronimo) LIKE '".strtolower($this->acronimo_search)."' AND LOWER(county.county_name) LIKE '%".strtolower($this->ciudad_search)."%'";
 			}
 			$sql .= " ".$where;
 			$criteria->addCondition('t.id IN ('.$sql.')');
@@ -142,7 +142,7 @@ class Registros extends CActiveRecord
 			$sql = "SELECT registros_update.registros_id FROM department ";
 			$sql .= "INNER JOIN county ON  department.id = county.department_id ";
 			$sql .= "INNER JOIN registros_update ON  county.iso_county_code = registros_update.ciudad_id ";
-			$where = "WHERE LOWER(department.department_name) LIKE '".strtolower($this->departamento_search)."'";
+			$where = "WHERE LOWER(department.department_name) LIKE '%".strtolower($this->departamento_search)."%'";
 			
 			$sql .= " ".$where;
 			$criteria->addCondition('t.id IN ('.$sql.')');
@@ -227,6 +227,8 @@ class Registros extends CActiveRecord
 	public function listarFolderHistoricos($folder = ""){
 		$datos = array();
 		$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos";
+
+		//$dirPath        = "..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."disk2".DIRECTORY_SEPARATOR."rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
 		$dir = "";
 		$cols = array();
 		if($folder != ""){
@@ -276,8 +278,27 @@ class Registros extends CActiveRecord
 			}
 		}
 		
+		function cmp($a, $b){
+			return strcmp($a['nombre'], $b['nombre']);
+		}
+		usort($datos, "cmp");
 		$gridDataProvider = new CArrayDataProvider($datos);
 		return $gridDataProvider;
+	}
+	
+		
+	public function listarColecciones($arrg){
+		
+		$datos = array();
+		
+		for ($i = 1; $i <= count($arrg); $i++) {
+			//$datos[] = array('id' => $i,'numero' => $arrg[$i]['A'],'titular' => $arrg[$i]['B'],'nombre' => $arrg[$i]['C'],'acronimo' => $arrg[$i]['D'],'fundacion' => $arrg[$i]['E'],'departamento' => $arrg[$i]['F'],'ciudad' => $arrg[$i]['G'],'fecha' => $arrg[$i]['H'],'tipo' => $arrg[$i]['I'],'contacto' => $arrg[$i]['J'],'cargo' => $arrg[$i]['K'],'email' => $arrg[$i]['L'],'telefono' => $arrg[$i]['M']);
+			$datos[] = array($i,$arrg[$i]['A'],$arrg[$i]['B'],$arrg[$i]['C'],$arrg[$i]['D'],$arrg[$i]['E'],$arrg[$i]['F'],$arrg[$i]['G'],$arrg[$i]['H'],$arrg[$i]['I'],$arrg[$i]['J'],$arrg[$i]['K'],$arrg[$i]['L'],$arrg[$i]['M']);
+		}
+		
+		/*$gridDataProvider = new CArrayDataProvider($datos);
+		return $gridDataProvider;*/
+		json_encode($datos);
 	}
 	
 }

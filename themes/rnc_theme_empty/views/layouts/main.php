@@ -21,7 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/fancybox/jquery.fancybox.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap-wysihtml5-0.0.2.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/speciesGlobal.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/panes.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/speciesSpecial.css" />
 	
 	<!-- Stylesheet for jquery-fineuploader library -->
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jquery-fineuploader/fineuploader-3.6.3.css" />
@@ -40,16 +40,45 @@
 	
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 	
+	<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-1418857-10']);
+		  _gaq.push(['_setDomainName', 'sibcolombia.net']);
+		  _gaq.push(['_setAllowLinker', true]);
+		  _gaq.push(['_trackPageview']);
+
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+	</script>
+	
 </head>
 
 <body>
 		 	
 	<header class="sib">
 		<div class="ribbon-wrapper-green"><div class="ribbon-green">BETA</div></div>
-		<a class="logo" href= "http://www.humboldt.org.co" title="Portal de datos SiB Colombia"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png"></a>
+		<a class="logo" href= "<?=Yii::app()->createUrl("site/index");?>" title="Registro Único Nacional de Colecciones Biológicas"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logo_rnc.png"></a>
+		<!--h1><?php echo CHtml::encode(Yii::app()->name);  ?></h1-->
+
+			<?php 
+			$this->widget('bootstrap.widgets.TbMenu', array(
+				'type' => 'pills',
+				'stacked'=>false,
+				'items' => array(
+					array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
+					array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
+					array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
+					array('label' => 'Solicitar usuario', 'url' => array('entidad/solicitud')),
+					array('label' => 'Ingresar', 'url' => array('admin/index')),
+				)
+			));
+			?>
+
+
 	</header> <!-- Fin header -->
-	
-	<div id="cocoon" >
 		<div id="container">
 			<div id="content">
 				<div id="panes">
@@ -59,17 +88,29 @@
 				</div>
 			</div>
 		</div>
-		
-		<footer>
+	<footer>
 			<section>
-			  <div>
-				<p>
-					Sede Principal: Calle28A#15-09 Bogotá, D.C., Colombia | PBX: (57)(1) 3202767 | NIT 820000142-2 | Horario de atención 8:30 a.m. - 5:30 p.m.<br>
-					Prohibida su reproducción total o parcial, asi como su traducción a otro idioma - Todos los derechos reservados 2013.
-				</p>
+				<div>
+				<?php 
+			$this->widget('bootstrap.widgets.TbMenu', array(
+				'type' => 'pills',
+				'stacked'=>false,
+				'items' => array(
+					array('label' => 'Solicitar usuario', 'url' => array('entidad/solicitud')),
+					array('label' => 'Ingresar', 'url' => array('admin/index')),
+					array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
+					array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
+					array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
+				)
+			));
+		?>
+		<p>2014 · Instituto de investigación de recursos biológicos Alexander von Humboldt · Ministerio de Medio Ambiente de Colombia · SiB Colombia</p>
+			
 			</div>
+			<div>
+				<a href="http://www.minambiente.gov.co/" target="_blank" title="Ministerio de Medio Ambiente"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/logoMinAmbiente.png" width="350px"></a>
+				<a href="http://www.humboldt.org.co" target="_blank" title="Instituto Alexander von Humboldt"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png" width="120px"></a>
 			</section>
 		</footer>
-	</div>
 </body>
 </html>

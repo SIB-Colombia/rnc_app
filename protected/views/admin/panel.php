@@ -1,6 +1,6 @@
 <?php
 Yii::app()->theme = 'rnc_theme_panel';
-Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
+//Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
 ?>
 

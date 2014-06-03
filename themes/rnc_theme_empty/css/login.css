@@ -3,9 +3,8 @@
   
 }
 #registro-formulario {
-    background: none repeat scroll 0 0;
+    background: rgb(250,243,220) repeat scroll 0 0;
     border: 0 solid #EEEEEE;
-    border-radius: 5px 5px 5px 5px;
     box-shadow: 0 0 40px #555555;
     position: relative;
     text-align: left;
@@ -15,13 +14,11 @@
     margin: 0px auto;
 }
 #registro-formulario h1 {
-    background: none repeat scroll 0 0 rgba(17, 131, 85, 0.75);
-    border-bottom: 1px solid rgba(17, 131, 85, 0.75);
-    color: #FFFFFF;
+    background: none repeat scroll 0 0 rgba(92, 81, 52,1);
+    color: #FFFFFF !important;
     font-size: 16px;
     margin: 0 0 1em;
     padding: 10px 23px;
-    text-shadow: 0 1px 0 #007DAB;
 }
 #registro-formulario div {
     border-radius: 3px 3px 3px 3px;
@@ -73,17 +70,14 @@
     text-align: right;
 }
 #registro-formulario .boton {
-    background: none repeat scroll 0 0 #698C3E !important;
+    background: none repeat scroll 0 0 rgba(161,134,63,1) !important;
     border: 0 none;
-    border-radius: 50px 50px 50px 50px;
+    border-radius: 4px;
     color: #FFFFFF;
     cursor: pointer;
-    font-size: 16px;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 30px;
+    font-size: 13px;
+    padding: 4px 12px;
     text-align: center;
-    text-shadow: 0 1px 0 #007DAB;
 }
 #registro-formulario .btn-rememberme {
 	float: left;

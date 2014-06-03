@@ -34,6 +34,7 @@ class Pqrs extends CActiveRecord
 	public $numero_registro_search;
 	public $estado_search;
 	public $tipoSol_search;
+	public $codigoVerificacion;
 	
 	public static function model($className=__CLASS__)
 	{
@@ -63,6 +64,7 @@ class Pqrs extends CActiveRecord
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				array('numero_registro_search,estado_search,tipoSol_search,fecha,entidad_search', 'safe', 'on'=>'search'),
+				array('codigoVerificacion', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
 		);
 	}
 	
@@ -101,7 +103,8 @@ class Pqrs extends CActiveRecord
 				'tipoSol_search'	=> 'Tipo de solicitud',
 				'entidad_search'	=> 'Titular',
 				'fecha_respuesta'	=> 'Fecha de respuesta',
-				'entidad_otra'		=> 'Otra Entidad'
+				'entidad_otra'		=> 'Otra Entidad',
+				'codigoVerificacion'=>'Código de verificación',
 			);
 	}
 	

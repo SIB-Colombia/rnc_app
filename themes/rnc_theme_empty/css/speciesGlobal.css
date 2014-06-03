@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Economica:400,700,400italic);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700);
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700,400italic);
 
 
@@ -9,14 +9,15 @@
       padding: 0;  
       border: 0;  
       font-size: 100%;  
-      font: inherit;  
+      font: inherit;
+      font-family: 'Open Sans', Helvetica, Arial, sans-serif !important;
       vertical-align: baselinebaseline;  
       outline: none;  
       -webkit-box-sizing: border-box;  
       -moz-box-sizing: border-box;  
       box-sizing: border-box;  
     }  
-    html { height: 101%; }  
+    html, body { height: 100%; }  
       
     article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }  
     ol, ul { list-style: none; }  
@@ -36,7 +37,7 @@
 body {
 	font-size: 80%;
 	color: #333;
-	background: #fffef3 url("images/bg_new.jpg") repeat 0 0;
+	background: rgba(255, 251, 237, 0.5) url("../images/bg_ramas.png") repeat center center fixed !important;
 	font-family: 'Open sans', Helvetica, Verdana, Helvetica, Arial;
 	text-align: left;
 	padding: 0;
@@ -45,13 +46,12 @@ body {
 	line-height: 1;
 }
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'Economica', Helvetica, Arial, sans-serif;
 	/*text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);*/
 }
 
 /* -- The Generic Defs --*/
 a {
-	color: #007FC9;
+	color: #00a026;
 	text-decoration: none;
 	border-bottom: 0px dashed transparent;
 	-webkit-transition: all 0.5s ease-in-out;
@@ -89,8 +89,13 @@ a img {
 textarea {
 	font: 0.9em 'Open sans',Verdana, Arial, Helvetica, sans-serif;
 }
-h1 {
-	font-size: 2.2em;
+h1,
+#content fieldset legend{
+	font-size: 1.8em !important;
+	margin: 20px 0 0 0;
+	font-weight: 300 !important;
+	color: #5c5134 !important;
+	text-transform: uppercase;
 }
 h2 {
 	font-size: 1.9em;
@@ -117,15 +122,7 @@ p.standalone {
 p.standalone img {
 	display: inline;
 }
-#content fieldset{
-	margin: 0px 0 10px 0;
-	padding:20px;
-	min-height: 80px;
-	background:rgba(250,249,243, 1);
-	-webkit-border-radius: 20px;
-    border-radius: 20px;
-	position:relative;
-}
+
 fieldset {
 	padding-left: 0px;
 }
@@ -144,7 +141,6 @@ ul, ol {
 ul li,
 ol li{
 	text-align: left;
-	padding:2px 0;
 	line-height:1.3em;
 }
 pre, code {
@@ -194,42 +190,38 @@ img.standalone {
 }
 /* -- END The Generic Defs --*/
 
-#cocoon {
-	padding-top: 60px;
-
-}
 #container {
-	margin:0px;
-	padding:0px;
 	max-width:1200px;
-	min-width:1024px;
-	min-height: 740px;
+	min-width:900px;
 	margin:0 auto;
+
+	padding-top: 20px;
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -120px;
 }
+#container:after {
+  content: "";
+  display: block;
+}
+
 /* ---- Top Header ---- */
 
-header.sib { background: rgba(17, 131, 85, 0.75); height:53px; color:white; text-transform:uppercase; min-width: 1050px; position: fixed; width: 100%; z-index: 10000; top: 0px}
+header.sib {background: rgb(92, 81, 52); height:50px; color:white; text-transform:uppercase; min-width: 1050px; position: fixed; width: 100%; z-index: 10000; top: 0px}
 header.sib a{ color:white; padding:0px; display:inline-block; vertical-align:top; margin:0 10px; padding-right: 4%; }
-header.sib  nav {vertical-align:top; text-align:center; line-height:1em; width: 100%; max-width: 1400px; min-width: 1100px; position: relative; right: 0px; height: 50px; padding-right: 20px; margin: 0 auto;}
-header.sib  nav a{ max-width:130px; padding:12px; margin:0px; height: 53px;}
-header.sib  nav a:hover{ background-color: rgba(255,255,255,0.3); color: #fff !important;}
-
 header.sib .top_menu {width: 550px; margin: 0 auto; display: inline;}
 header.sib .logo{
-	-webkit-border-radius: 0px 0px 15px 15px;
-        border-radius: 0px 0px 15px 15px;
-		background-color:#fffef3;
-		padding:10px 13px 13px 13px;
 		float: left;
 		position: absolute;
 		z-index:15000;
 		margin-left: 100px
 		}
 		header.sib .logo:hover{
-			filter: alpha(opacity=100);
-			-khtml-opacity:1; 
-			-moz-opacity: 1;
-			opacity: 1;
+			filter: alpha(opacity=70);
+			-khtml-opacity:0.7; 
+			-moz-opacity: 0.7;
+			opacity: 0.7;
 			-webkit-box-shadow:  0px 0px 5px 0px rgba(0, 0, 0, 0.2);
         	box-shadow:  0px 0px 5px 0px rgba(0, 0, 0, 0.2);
 		}
@@ -239,31 +231,42 @@ header.sib .logo{
 			height:20px;
 			width:100%;
 			background: url(images/shadow_top.png) no-repeat top center;
-			margin-top: 3px;
+			position: absolute;
+			margin-top: 50px;
 			}
 		header > div{
 			max-width: 1500px;
 			margin: 0 auto;
 		}
-		
-		header.sib .logo img{
-			width: 135px;
-			height: 150px
-		}
-		
-.share_icons { float: right; display: inline-block; position: absolute; right: 12px; width: 320px; top: 0px;}
-.share_icons a{ vertical-align:middle !important; margin: 0; padding: 12px 7px;}
-.share_icons span{
-	width:0px;
-	border-left:#9bc2de 1px solid;
-	display:inline-block;
-	height:20px;
-	vertical-align:middle;
-	margin: 0 4px;
-}
-.share_icons span:first-child{
+header h1{font-family: 'Open Sans Condensed' !important; font-weight: 400; font-size: 1.7em !important; display: block; margin: 4px auto 0; text-align: center; color: white !important;}
+header .nav-pills { float: right; display: inline-block; position: absolute; right: 12px; top: 0px;}
+header .nav-pills a{
+	font-weight: 700;
+	font-size: 0.8em;
+	line-height: 1.05em !important;
+	vertical-align:middle !important;
+	margin: 0 1px !important;
+	padding: 13px 7px !important;
+	color: white;
+	height: 50px;
+	width: 100px;
+	text-align: center;
+	-webkit-border-radius: 0px !important;
+    border-radius: 0px !important;
+    background-color: rgba(255,255,255,0.3);
+    }
+header .nav-pills span:first-child{
 	margin-left: 70px;
-	}
+}
+header .nav-pills  li:first-child a,
+header .nav-pills  li:nth-child(2) a,
+header .nav-pills  li:nth-child(3) a{
+	color: white;
+    background-color:rgba(161,134,63,0.7) ;
+}
+header .nav-pills  li:nth-child(3){
+	margin-right: 0px;
+}
 /* ---- END Top Header ---- */
 
 
@@ -372,54 +375,49 @@ small {padding:10px 0 15px 0; display:block; }
 /* Footer
 ---------------------------------------------------*/
 footer {
-	font-size: 0.9em;
+	font-size: 0.8em;
 	clear: both;
 	margin: 0;
 	color: #515254 !important;
-	background: rgba(255,255,255,0.6) url("images/shadow_top_clear.png") no-repeat top center;
+	background: #69665d url("images/shadow_top.png") no-repeat top center;
 	line-height: 1.5em;
+	position: relative;
+	bottom: 0px;
+	display: block;
+	width: 100%;
+	
 }
-footer h5{
-	font-family: 'Open Sans';
-	font-size: 1.03em;
-	padding: 0px;
-	margin: 0px;
-	font-weight: bold;
+#container:after, footer {
+	min-height: 120px;
 }
-footer aside{
-	float: left;
-	background: rgba(255,255,255,0.6);
-	-webkit-border-radius: 15px;
-    border-radius: 15px;
-    padding: 7px;
-    -webkit-box-shadow:  0px 0px 3px 0px rgba(0, 0, 0, 0.2);
-     box-shadow:  0px 0px 3px 0px rgba(0, 0, 0, 0.2);
-}
-footer section{ margin: 0 auto; max-width: 1100px; padding: 30px 0 !important;}
-footer section div{ display: inline-block; vertical-align: top;}
-footer section div:nth-child(3) div{ width: 24%;}
-footer section div:nth-child(3) div:nth-child(1){ width: 31%;}
-footer section div:nth-child(3) div:nth-child(3){ width: 19%;}
-footer section a{
-	color: #515254 !important;
-}
-footer section div a{ display: block; vertical-align: top} 
-footer section:nth-child(1){background: url("images/shadow_bottom_clear.png") no-repeat bottom center;}
-footer section > div:nth-child(2) { width: 26%; padding: 0px 20px 0px 20px;}
- footer .redes{ width: 26%; padding: 0 20px 0px 20px; margin: 20px 0 0 70px; }
 
-footer section > div:nth-child(3), footer nav{ width: 66%; padding: 0 20px 0px 20px !important; display: inline-block; border-left: 1px #cfcfcf solid;}
- footer nav  { border:none; font-weight: bold; vertical-align: top; margin-top: 20px; padding: 0px; font-size: 1.1em;}
-  footer nav a { margin: 0 30px 0 3px;}
- footer section:nth-child(2) span p{ display: block; font-weight: 700; font-size: 0.8em; margin-top: 12px;}
- footer section:nth-child(2) span{ margin: 0 10px; position: relative; padding:  0 10px;}
- footer section:nth-child(2) span:last-child{ margin-right: 0px; padding-right: 0px;}
- footer section:nth-child(2) span:first-child{ margin-left: 0px; padding-left: 0px;}
- footer section:nth-child(2) span:after{ content:" "; border-right: 1px #cfcfcf solid; position: absolute; top:20px; height: 30px; right: -10px; }
-  footer section:nth-child(2) span:last-child:after{ content: none; border-right: none; display: none;}
-  footer .redes a{ float: left; margin: 0 4px 0 0;}
- footer section img{ margin: 0 3px; display: inline-block; vertical-align: top;}
- footer section span { display: inline-block; text-align: center; vertical-align: top;}
+footer section{ margin: 0 auto; max-width: 1100px; padding: 20px 0 !important;}
+footer section div{ display: inline-block; vertical-align: top;}
+footer section div:nth-child(1){ width: 60%; text-align: left;}
+footer section div:nth-child(2){ width: 33%; padding-top: 10px; min-width: 325px;}
+footer section div img{
+	height: 70px;
+	width: auto;
+	margin: -5px 0 0 10px;
+	background-color: rgba(255,255,255,0.4);
+	padding: 5px;
+	-webkit-border-radius: 7px;
+    border-radius: 7px;}
+footer section a{
+	color: white !important;
+	text-transform: uppercase;
+	font-weight: 700;
+	display: inline-block;
+}
+footer section a:hover{
+	color: black !important;
+}
+footer  p{
+	color: white;
+	font-size: 0.8em;
+	display: block;
+	padding-left: 10px;
+}
 
 #skipNav {
 	position: absolute;
@@ -540,7 +538,7 @@ ol {
 	margin-left: 10px;
 }
 div#warnings {
-	font-family:'Economica';
+	font-family:'Open Sans Condensed';
 	min-width: 250px;
 	vertical-align: top;
 	padding:10px 10px 10px 55px;
@@ -726,7 +724,7 @@ div.subcontainer {
 	background: rgba(53, 188, 224, 0.4);
 	-webkit-border-radius: 20px;
     border-radius: 20px;
-	font-family: 'Economica', Helvetica, Arial, sans-serif;
+	font-family: 'Open Sans Condensed', Helvetica, Arial, sans-serif;
 	margin-top: 0px;
 }
 #quickConceptSearch h2,
@@ -791,17 +789,24 @@ div:empty {
 	display: none;
 }
 */
-.caja_amarilla {
+.caja_amarilla,
+#content fieldset{
 	margin-bottom: 10px;
-	background:rgba(255, 224, 113, 0.7);
-	-webkit-border-radius: 20px;
-    border-radius: 20px;
-	padding:8px 30px;
+	background-color: rgb(250,243,220);
+	padding:15px 25px;
 	display:block;
-	font-weight:bold;
 	text-align:left;
-	font-family:'Economica'
+	font-weight: 300;
 }
+fieldset fieldset{
+	padding: 0 !important;
+}
+.form-actions{
+	background-color: transparent !important;
+	border-color: transparent !important;
+	margin-top: 0px !important;
+}
+
 .caja_amarilla h5{
 	margin:10px 5px;
 }
@@ -819,7 +824,7 @@ div:empty {
 	display:block !important;
 	font-weight:bold;
 	text-align:center;
-	font-family:'Economica'
+	font-family:'Open Sans Condensed'
 }
 .menu_amarillo p{
 	background:url('../../images/icons/planeta.png') no-repeat center left;
@@ -942,6 +947,22 @@ h2 .twitter-share-button{
 	}
 }
 
+.nav-list > .active > a, .nav-list > .active > a:hover {
+	
+	color: #fff !important;
+	background-color: rgba(17, 131, 85, 0.75) !important;
+}
+
+.nav-pills > .active > a, .nav-list > .active > a:hover {
+	
+	color: #fff !important;
+	background-color: rgba(161, 134, 63, 1) !important;
+}
+
+.btn-success{
+	color: #fff !important;
+}
+
 footer section div {
 	text-align: center;
 	margin: 0 auto;
@@ -973,8 +994,4 @@ footer section div {
 	width: 120px;
 	background-color: #bfdc7a;
 	background-image: -webkit-linear-gradient(top,#bfdc7a,#8ebf45)
-}
-
-.add-on{
-	height: 30px !important
 }

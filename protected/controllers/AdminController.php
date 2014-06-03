@@ -110,16 +110,16 @@ class AdminController extends Controller{
 	
 	public function cleanFileTmp(){
 	
-		$dirPath	= "tmp/";
+		$dirPath	= "temp_rnc/";
 		$directorio = opendir($dirPath);
 	
 		while ($archivo = readdir($directorio)){
 			$path		= $dirPath.$archivo;
-			if (is_file($path)) {
+			if (is_file($path) && ($archivo != "." || $archivo != "..") ) {
 				$op_file = pathinfo($path);
 				
 				$filetime = time() - filemtime($path);
-				if($filetime >= (60*60*1)){
+				if($filetime >= (60*1*1)){
 					unlink($path);
 				}
 				

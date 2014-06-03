@@ -1,4 +1,4 @@
-<?php
+<div  style="width:650px; margin:0 auto"><?php
 /* @var $this UsuarioController */
 /* @var $model Usuario */
 
@@ -27,9 +27,10 @@ if(Yii::app()->user->getId() !== null){
 	</div>
 <?php }else{?>
 	<fieldset>
-	<legend style="border-bottom: 0px">Formulario de Contacto</legend>
+	<h1>Formulario de Contacto</h1>
 	<div id="content-front">
 	<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 	</div>
 </fieldset>
 <?php }?>
+</div>

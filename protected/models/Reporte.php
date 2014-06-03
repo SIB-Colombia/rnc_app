@@ -9,6 +9,7 @@ class Reporte extends CFormModel
 	public $entidadRepresentanteTipo;
 	public $entidadRepresentanteId;
 	public $entidadDireccion;
+	public $entidadDepartamento;
 	public $entidadCiudad;
 	public $entidadTelefono;
 	public $entidadEmail;
@@ -19,6 +20,7 @@ class Reporte extends CFormModel
 	public $reporteFundacion;
 	public $reporteDescripcion;
 	public $reporteDireccion;
+	public $reporteDepartamento;
 	public $reporteCiudad;
 	public $reporteTelefono;
 	public $reporteEmail;
@@ -51,6 +53,7 @@ class Reporte extends CFormModel
 	public $contactoCargo;
 	public $contactoDependencia;
 	public $contactoDireccion;
+	public $contactoDepartamento;
 	public $contactoCiudad;
 	public $contactoTelefono;
 	public $contactoEmail;
@@ -87,6 +90,7 @@ class Reporte extends CFormModel
 				'entidadRepresentante'		=> 'Representante legal',
 				'entidadRepresentanteId'	=> 'Identificación representante',
 				'entidadDireccion'			=> 'Dirección',
+				'entidadDepartamento'		=> 'Departamento',
 				'entidadCiudad'				=> 'Municipio',
 				'entidadTelefono'			=> 'Teléfono',
 				'entidadEmail'				=> 'Correo electrónico',
@@ -97,6 +101,7 @@ class Reporte extends CFormModel
 				'reporteFundacion'			=> 'Año de fundación',
 				'reporteDescripcion'		=> 'Descripción',
 				'reporteDireccion'			=> 'Dirección de la colección',
+				'reporteDepartamento'		=> 'Departamento',
 				'reporteCiudad'				=> 'Municipio',
 				'reporteTelefono'			=> 'Teléfono',
 				'reporteEmail'				=> 'Correo electrónico',
@@ -113,8 +118,8 @@ class Reporte extends CFormModel
 				'tipoEjemplar'				=> 'Información sobre el ejemplar tipo',
 				'tipoNombreCientifico'		=> 'Nombre científico',
 				'tipoCantidad'				=> 'Cantidad de ejemplares',
-				'nivelGrupo'				=> 'Grupo taxonómico o biológico',
-				'nivelSubgrupo'				=> 'Subgrupo taxonómico o biológico',
+				'nivelGrupo'				=> 'Grupo biológico',
+				'nivelSubgrupo'				=> 'Subgrupo biológico',
 				'nivelEjemplares'			=> 'No. ejemplares',
 				'nivelCatalogados'			=> 'Ejemplares catalogados',
 				'nivelSistematizados'		=> 'Ejemplares sistematizados',
@@ -127,7 +132,8 @@ class Reporte extends CFormModel
 				'contactoCargo'				=> 'Cargo',
 				'contactoDependencia'		=> 'Dependencia',
 				'contactoDireccion'			=> 'Dirección de correspondencia',
-				'contactoCiudad'			=> 'Ciudad',
+				'contactoDepartamento'		=> 'Departamento',
+				'contactoCiudad'			=> 'Municipio',
 				'contactoTelefono'			=> 'Teléfono(s)',
 				'contactoEmail'				=> 'Correo electrónico',
 				'dilegenciadorNombre'		=> 'Nombre dilegenciador',

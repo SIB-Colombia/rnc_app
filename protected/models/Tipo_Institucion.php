@@ -56,7 +56,7 @@ class Tipo_Institucion extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-				'nombre' => 'Tipo de Institución',
+				'nombre' => 'Tipo de institución',
 		);
 	}
 	

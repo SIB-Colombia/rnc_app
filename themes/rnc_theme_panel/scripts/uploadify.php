@@ -6,7 +6,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 */
 
 // Define a destination
-$targetFolder = DIRECTORY_SEPARATOR.'rnc_app'.DIRECTORY_SEPARATOR.'tmp'; // Relative to the root
+$targetFolder = DIRECTORY_SEPARATOR.'rnc_app'.DIRECTORY_SEPARATOR.'temp_rnc'; // Relative to the root
 
 if (!empty($_FILES)) {
 	$tempFile = $_FILES['Filedata']['tmp_name'];

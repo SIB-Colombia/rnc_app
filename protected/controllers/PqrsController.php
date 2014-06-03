@@ -1,6 +1,18 @@
 <?php
 class PqrsController extends Controller{
 	
+	public function actions()
+	{
+		return array(
+				// captcha action renders the CAPTCHA image displayed on the contact page
+				'captcha'=>array(
+						'class'=>'CCaptchaAction',
+						'backColor'=>0xFFFFFF,
+				),
+
+		);
+	}
+	
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -81,8 +93,8 @@ class PqrsController extends Controller{
 							$dataFiles_ar = explode(",", $_POST['Pqrs']['nombreArchivo']);
 							foreach ($dataFiles_ar as $value){
 								$dataFiles = explode("/", $value);
-								if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-									if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
 										
 										$archivoModel = new Archivos_Pqrs();
 										$archivoModel->nombre	= $dataFiles[0];
@@ -112,7 +124,7 @@ class PqrsController extends Controller{
 				
 				if($success_saving_all){
 					
-					$mails = array(0 => $model->email,1 => 'ksoacha@humboldt.org.co');
+					$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
 					
 					$message 			= new YiiMailMessage;
 					$message->view 		= "responderContacto";
@@ -206,8 +218,8 @@ class PqrsController extends Controller{
 						$dataFiles_ar = explode(",", $_POST['Pqrs']['nombreArchivo']);
 						foreach ($dataFiles_ar as $value){
 							$dataFiles = explode("/", $value);
-							if(file_exists("tmp".DIRECTORY_SEPARATOR.$dataFiles[0])){
-								if(rename("tmp".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
+							if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+								if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$dataFiles[0])){
 									
 									$archivoModel = new Archivos_Pqrs();
 									$archivoModel->nombre	= $dataFiles[0];
@@ -350,7 +362,7 @@ class PqrsController extends Controller{
 					}
 				}
 			}else if(isset($_POST['name'])){
-				if(unlink("tmp".DIRECTORY_SEPARATOR.$_POST['name'])){
+				if(unlink("temp_rnc".DIRECTORY_SEPARATOR.$_POST['name'])){
 					echo 1;
 				}else {
 					echo 0;

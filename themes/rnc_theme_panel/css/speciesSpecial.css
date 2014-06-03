@@ -2,7 +2,6 @@
 	margin: 0px 0 20px 0;
 	padding:20px 20px 20px 85px;
 	min-height: 80px;
-	background:rgba(250,249,243, 1) url('../standard/images/esp_ico.png') no-repeat 20px 20px ;
 	-webkit-border-radius: 20px;
     border-radius: 20px;
 	position:relative;
@@ -47,7 +46,7 @@ input#search {
 	margin: 0 0 0 18px;
 }
 thead {
-	color: #007947;
+	color: #34BCE0;
 }
 table.results th {
 }
@@ -145,9 +144,6 @@ h4#addSearchFilter, h4#currentSearch {
 	color:white;
 	font-size:1.6em;
 }
-input[type="submit"], button{
-	background-color:#34BCE0 !important;
-}
 table.actionsList tr:nth-child(even) td,
 table.actionsList tr:nth-child(even) th{
 	background:rgba(53, 188, 224, 0.4);
@@ -159,8 +155,7 @@ table.actionsList tr:nth-child(odd) th{
 table.actionsList {
 	border-top:rgba(53, 188, 224, 0.2) 10px solid;
 }
-
-.panel-der {
+panel-der {
 	float: right;
 	background-color: #fff;
 	padding: 5px 10px;
@@ -325,12 +320,6 @@ b{
 	font-size: 12px
 }
 
-footer section div {
-	text-align: center;
-	margin: 0 auto;
-	width: 100%;
-	color: #868686
-}
 
 .printR{
 	float: right;

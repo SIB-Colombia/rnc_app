@@ -8,7 +8,8 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 			'numero_registro',
 			array('name' => 'registros_update.nombre','value' => 'CHtml::encode(isset($data->registros_update[0]->nombre) ? $data->registros_update[0]->nombre : "" )'),
 			'fecha_dil',
-			'fecha_prox',
+			array('name' => 'registros_update.fecha_act','value' => 'CHtml::encode(isset($data->registros_update[0]->fecha_act) ? $data->registros_update[0]->fecha_act : "" )'),
+			//'fecha_prox',
 			array(
 				'class'=>'bootstrap.widgets.TbButtonColumn',
 				'template'=>'{val}',

@@ -56,7 +56,7 @@ contUp = 0;
 $(function() {
     $('#Visitas_archivo').uploadify({
     	'auto'     		: true,
-    	'fileSizeLimit' : '20MB',
+    	'fileSizeLimit' : '500MB',
     	'buttonText'	: 'Seleccionar archivo',
     	'width'         : 140,
     	'fileTypeExts'  : '*.pdf;*.doc;*.docx;*.jpg;*.mp3;*.mp4',

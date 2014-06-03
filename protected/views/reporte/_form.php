@@ -56,7 +56,7 @@ function seleccionaParcial(clase){
 
 	<p class="note">Seleccione los campos deseados para generar el reporte.</p>
 	<fieldset>
-		<legend class="form_legend"> Información Básica Del Titular <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'titular\')'))); ?></legend>
+		<legend class="form_legend"> Información básica del titular <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'titular\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'entidadTitular',array('class' => 'titular'));
 			echo $form->checkBoxRow($model, 'entidadTipoTitular',array('class' => 'titular'));
@@ -64,13 +64,14 @@ function seleccionaParcial(clase){
 			echo $form->checkBoxRow($model, 'entidadRepresentante',array('class' => 'titular'));
 			echo $form->checkBoxRow($model, 'entidadRepresentanteId',array('class' => 'titular'));
 			echo $form->checkBoxRow($model, 'entidadDireccion',array('class' => 'titular'));
+			echo $form->checkBoxRow($model, 'entidadDepartamento',array('class' => 'titular'));
 			echo $form->checkBoxRow($model, 'entidadCiudad',array('class' => 'titular'));
 			echo $form->checkBoxRow($model, 'entidadTelefono',array('class' => 'titular'));
 			echo $form->checkBoxRow($model, 'entidadEmail',array('class' => 'titular'));
 		?>
 	</fieldset>
 	<fieldset>
-		<legend class="form_legend"> Información Básica De La Colección <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'basica\')'))); ?></legend>
+		<legend class="form_legend"> Información básica de la colección <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'basica\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'coleccionNumero',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'coleccionFecha',array('class' => 'basica'));
@@ -79,6 +80,7 @@ function seleccionaParcial(clase){
 			echo $form->checkBoxRow($model, 'reporteFundacion',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'reporteDescripcion',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'reporteDireccion',array('class' => 'basica'));
+			echo $form->checkBoxRow($model, 'reporteDepartamento',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'reporteCiudad',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'reporteTelefono',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'reporteEmail',array('class' => 'basica'));
@@ -95,7 +97,7 @@ function seleccionaParcial(clase){
 	</fieldset>
 	
 	<fieldset>
-		<legend class="form_legend">Tipos De Preservación <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'tiposcol\')'))); ?></legend>
+		<legend class="form_legend">Tipos de preservación <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'tiposcol\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'tamanoTipo',array('class' => 'tiposcol'));
 			echo $form->checkBoxRow($model, 'tamanoUnidad',array('class' => 'tiposcol'));
@@ -104,7 +106,7 @@ function seleccionaParcial(clase){
 	</fieldset>
 	
 	<fieldset>
-		<legend class="form_legend">Nivel De Catalogación, Sistematización e Identificación <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'nivel\')'))); ?></legend>
+		<legend class="form_legend">Nivel de catalogación, sistematización e identificación <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'nivel\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'nivelGrupo',array('class' => 'nivel'));
 			echo $form->checkBoxRow($model, 'nivelSubgrupo',array('class' => 'nivel'));
@@ -120,7 +122,7 @@ function seleccionaParcial(clase){
 	</fieldset>
 	
 	<fieldset>
-		<legend class="form_legend">Tipos En La Colección <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'tipos\')'))); ?></legend>
+		<legend class="form_legend">Tipos en la colección <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'tipos\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'tipoEjemplarTipo',array('class' => 'tipos'));
 			echo $form->checkBoxRow($model, 'tipoEjemplarTipoCant',array('class' => 'tipos'));
@@ -132,7 +134,7 @@ function seleccionaParcial(clase){
 	</fieldset>
 	
 	<fieldset>
-		<legend class="form_legend">Información Complementaria <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'infocompl\')'))); ?></legend>
+		<legend class="form_legend">Información complementaria <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'infocompl\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'documentoAnexos',array('class' => 'infocompl'));
 			echo $form->checkBoxRow($model, 'informacionAdicional',array('class' => 'infocompl'));
@@ -141,12 +143,13 @@ function seleccionaParcial(clase){
 	</fieldset>
 	
 	<fieldset>
-		<legend class="form_legend">Información De Contacto <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'infocont\')'))); ?></legend>
+		<legend class="form_legend">Información de contacto <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'infocont\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'contactoNombre',array('class' => 'infocont'));
 			echo $form->checkBoxRow($model, 'contactoCargo',array('class' => 'infocont'));
 			echo $form->checkBoxRow($model, 'contactoDependencia',array('class' => 'infocont'));
 			echo $form->checkBoxRow($model, 'contactoDireccion',array('class' => 'infocont'));
+			echo $form->checkBoxRow($model, 'contactoDepartamento',array('class' => 'infocont'));
 			echo $form->checkBoxRow($model, 'contactoCiudad',array('class' => 'infocont'));
 			echo $form->checkBoxRow($model, 'contactoTelefono',array('class' => 'infocont'));
 			echo $form->checkBoxRow($model, 'contactoEmail',array('class' => 'infocont'));
@@ -154,7 +157,7 @@ function seleccionaParcial(clase){
 	</fieldset>
 	
 	<fieldset>
-		<legend class="form_legend">Información Del Dilegenciador <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'infodil\')'))); ?></legend>
+		<legend class="form_legend">Información del dilegenciador <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'infodil\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'dilegenciadorNombre',array('class' => 'infodil'));
 			echo $form->checkBoxRow($model, 'dilegenciadorDependencia',array('class' => 'infodil'));

@@ -145,7 +145,7 @@ function enviarData(){
 contUp = 0;
 randWord = Math.floor((Math.random()*1000)+1);
 $(function() {
-    $('#Registros_Update_archivoCertificado').uploadify({
+    $('#Registros_update_archivoCertificado').uploadify({
     	'auto'     		: true,
     	'fileSizeLimit' : '20MB',
     	'buttonText'	: 'Seleccionar archivo',
@@ -160,13 +160,13 @@ $(function() {
 		'onUploadComplete' : function(file){
 			
 			dataFile = randWord+'_'+file.name+'/'+file.type+'/'+file.size;
-			val_aux	 = $('#Registros_Update_archivoCertificados').val();
+			val_aux	 = $('#Registros_update_archivoCertificados').val();
 
 			if(val_aux.trim() == ''){
-				$('#Registros_Update_archivoCertificados').val(dataFile);
+				$('#Registros_update_archivoCertificados').val(dataFile);
 			}else{
 				val_aux	+= ','+dataFile;
-				$('#Registros_Update_archivoCertificados').val(val_aux);
+				$('#Registros_update_archivoCertificados').val(val_aux);
 			}
 
 			html = '<div id="flup_'+contUp+'" class="uploadify-queue-item" style="margin-left:220px">';
@@ -194,10 +194,11 @@ function deleteFileUpAjax(divId,name){
 
 function generarCertificado(id){
 
-	fecha = $("#Registros_Update_fecha_act").val();
+	fecha = $("#Registros_update_fecha_act").val();
 	numero = $("#Registros_numero_registro").val();
 	$.post("../generarCertificado",{id: id,opt: 0,fechaAct: fecha,numCol: numero},function(data){
-		window.open("http://<?=$_SERVER['SERVER_NAME'];?>/rnc_app/"+data, "_blank");	
+		window.open("http://<?=$_SERVER['SERVER_NAME'];?>/rnc_app/"+data, "_blank");
+		//window.open("http:////$_SERVER['SERVER_NAME'];///"+data, "_blank");	
 	});
 	
 }
@@ -272,7 +273,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		</div><!-- tab1 -->
 		
 		<div class="tab-pane fade" id="tab2">
-			<fieldset>
+			<fieldset style="width: 800px">
 				<legend class="form_legend">INFORMACIÓN BÁSICA DE LA COLECCIÓN</legend>
 				<?php 
 					echo $form->textFieldRow($model->registros_update, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
