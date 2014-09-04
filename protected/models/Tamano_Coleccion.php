@@ -43,7 +43,7 @@ class Tamano_Coleccion extends CActiveRecord
 				array('tipo_preservacion_id,unidad_medida','required'),
 				//array('tipo_preservacion','length','max'=>150),
 				//array('cantidad','numerical','integerOnly'=>true),
-				array('unidad_medida','length','max'=>45),
+				array('unidad_medida','length','max'=>4000),
 				);
 	}
 	

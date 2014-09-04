@@ -9,7 +9,7 @@ p{
     <td><h3 style="font-size: 14px">Número de certificado: <?=$idCert;?></h3></td>
   </tr>
   <tr>
-	<td><h2 style="text-align: center;font-size: 16px">Registro Nacional de Colecciones (RNC)<br> Certificado de registro</h2></td>
+	<td><h2 style="text-align: center;font-size: 16px">Registro Único Nacional de Colecciones (RNC)<br> Certificado de registro</h2></td>
   </tr>
   <tr>
   	<td>

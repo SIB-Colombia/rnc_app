@@ -70,7 +70,9 @@ class PqrsController extends Controller{
 	{
 		if(Yii::app()->user->getId() !== null)
 		{
+			
 			if(isset($_POST['Pqrs'])){
+				
 				$model = $this->loadModel($id);
 				
 				$model->estado = ($_REQUEST['Pqrs']['aprobado'] == 0) ? 1 : 0;
@@ -84,6 +86,8 @@ class PqrsController extends Controller{
 				try {
 					$archivos = array();
 					if($model->save()){
+						//print_r($model);
+						//Yii::app()->end();
 						if(isset($_POST['Pqrs']['nombreArchivo']) && $_POST['Pqrs']['nombreArchivo'] != ''){
 							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR."pqrs".DIRECTORY_SEPARATOR.$model->id;
 							if(!file_exists($pathDir)){
@@ -125,6 +129,7 @@ class PqrsController extends Controller{
 				if($success_saving_all){
 					
 					$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
+					//$mails = array(0 => 'hescobar@humboldt.org.co');
 					
 					$message 			= new YiiMailMessage;
 					$message->view 		= "responderContacto";
@@ -369,6 +374,14 @@ class PqrsController extends Controller{
 				}
 			}
 		
+	}
+	
+	public function actionUploadFile(){
+		
+		error_reporting(E_ALL | E_STRICT);
+		require('themes/rnc_theme/server/php/UploadHandler.php');
+		$upload_handler = new UploadHandler();
+		print_r($upload_handler->options);
 	}
 }
 ?>

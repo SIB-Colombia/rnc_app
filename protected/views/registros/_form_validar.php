@@ -197,8 +197,8 @@ function generarCertificado(id){
 	fecha = $("#Registros_update_fecha_act").val();
 	numero = $("#Registros_numero_registro").val();
 	$.post("../generarCertificado",{id: id,opt: 0,fechaAct: fecha,numCol: numero},function(data){
-		window.open("http://<?=$_SERVER['SERVER_NAME'];?>/rnc_app/"+data, "_blank");
-		//window.open("http:////$_SERVER['SERVER_NAME'];///"+data, "_blank");	
+		//window.open("http://<?=$_SERVER['SERVER_NAME'];?>/rnc_app/"+data, "_blank");
+		window.open("http://<?=$_SERVER['SERVER_NAME'];?>/"+data, "_blank");	
 	});
 	
 }
@@ -293,9 +293,9 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<legend class="form_legend">Cobertura</legend>
 				
 				<?php 
-					echo $form->textFieldRow($model->registros_update, 'cobertura_tax', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-					echo $form->textFieldRow($model->registros_update, 'cobertura_geog', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-					echo $form->textFieldRow($model->registros_update, 'cobertura_temp', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
+					echo $form->textAreaRow($model->registros_update, 'cobertura_tax', array('class'=>'span4', 'rows'=>2,'disabled'=>true));
+					echo $form->textAreaRow($model->registros_update, 'cobertura_geog', array('class'=>'span4', 'rows'=>2,'disabled'=>true));
+					echo $form->textAreaRow($model->registros_update, 'cobertura_temp', array('class'=>'span4', 'rows'=>2,'disabled'=>true));
 				?>
 			</fieldset>
 			

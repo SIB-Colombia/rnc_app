@@ -8,6 +8,8 @@ $userRole  = Yii::app()->user->getState("roles");
 
 Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/jquery.uploadify.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploadify.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/css-fileupload/jquery.fileupload.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/css-fileupload/jquery.fileupload-ui.css');
 
 ?>
 
@@ -138,7 +140,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		
 	</fieldset>
 	
-	<?php if(CCaptcha::checkRequirements() && Yii::app()->user->getId() === null): ?>
+	<?php /*if(CCaptcha::checkRequirements() && Yii::app()->user->getId() === null): ?>
 		<div style="padding-left: 220px">
 			<?php echo $form->labelEx($model,'codigoVerificacion'); ?>
 			<?php echo $form->textField($model,'codigoVerificacion', array('class'=>'field','style'=>'width:200px')); ?>
@@ -149,7 +151,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 			</div>
 			<?php //echo $form->error($model,'codigoVerificacion'); ?>
 		</div>
-	<?php endif; ?>
+	<?php endif; */?>
 		
 	<div id="catalogouser-botones-internos" class="form-actions pull-right">
 		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Enviar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>

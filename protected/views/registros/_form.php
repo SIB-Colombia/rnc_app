@@ -478,12 +478,12 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 			<fieldset>
 				<legend class="form_legend">Cobertura</legend>
 				
-				<?php 
-					echo $form->textFieldRow($model->registros_update, 'cobertura_tax', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+				<?php
+					echo $form->textAreaRow($model->registros_update, 'cobertura_tax', array('class'=>'span4', 'rows'=>2));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Descripción de los grandes grupos de organismos de la colección, así como grupos taxonómicos específicos representados en la colección."></i>';
-					echo $form->textFieldRow($model->registros_update, 'cobertura_geog', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					echo $form->textAreaRow($model->registros_update, 'cobertura_geog', array('class'=>'span4', 'rows'=>2));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Áreas, regiones y localidades que están representadas en los ejemplares de la colección."></i>';
-					echo $form->textFieldRow($model->registros_update, 'cobertura_temp', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					echo $form->textAreaRow($model->registros_update, 'cobertura_temp', array('class'=>'span4', 'rows'=>2));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Período de tiempo que abarca la colección."></i>';
 				?>
 			</fieldset>

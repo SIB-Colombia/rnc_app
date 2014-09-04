@@ -5,8 +5,21 @@ $userRole  = Yii::app()->user->getState("roles");
 ?>
 
 <script type="text/javascript">
+
+function preloadStart(){
+	$("#preloader").show();
+}
+
+function preloadStop(){
+	$("#preloader").hide();
+}
 function enviarForm(){
-	$("#bitacora-form").submit();
+	
+	preloadStart();
+	$.post( "create", $("#bitacora-form").serialize(),function( data ) {
+		preloadStop();
+	    alert("EL reporte se envió con éxito"+data);
+	  });
 }
 
 function resetForm(id) {
@@ -43,7 +56,15 @@ function seleccionaParcial(clase){
 	margin-right : 20px;
 	width: 200px
 }
+
+.isloading-wrapper.isloading-right{margin-left:10px;}
+.isloading-overlay{position:relative;text-align:center;display: none;}
+.isloading-overlay .isloading-wrapper{background:#FFFFFF;-webkit-border-radius:7px;-webkit-background-clip:padding-box;-moz-border-radius:7px;-moz-background-clip:padding;border-radius:7px;background-clip:padding-box;display:inline-block;margin:0 auto;padding:10px 20px;top:10%;z-index:9000;}
 </style>
+
+<div id="preloader" class="isloading-overlay" style="position:fixed; left:0; top:0; z-index: 10000; background: rgba(0,0,0,0.5); width: 100%; height: 3559px;">
+	<span class="isloading-wrapper  isloading-show  isloading-overlay">Enviando reporte <img width="16px" alt="" src="../../themes/rnc_theme_panel/images/preload.gif"></span>
+</div>
 
 <div class="form">
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(

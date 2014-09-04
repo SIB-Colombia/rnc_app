@@ -42,7 +42,7 @@ class ReporteController extends Controller{
 			$fechaReporte = Yii::app()->Date->now();
 			if(isset($_POST['Reporte'])){
 				
-				
+				try{
 				$criteria = new CDbCriteria;
 				//$criteria->compare("t.estado", 2);
 				$criteria->condition = "t.estado != 0";
@@ -156,7 +156,7 @@ class ReporteController extends Controller{
 						$dataReporte[$cont]['coberturaTemporal'] 		= $data->cobertura_temp;
 						
 						if(isset($data->tamano_coleccion[$k])){
-							$dataReporte[$cont]['tamanoTipo'] 			= ($data->tamano_coleccion[$k]->tipo_preservacion_id == 22) ? $data->tamano_coleccion[$k]->otro : $data->tamano_coleccion[$k]->tipo_preservacion->nombre;
+							$dataReporte[$cont]['tamanoTipo'] 			= "-";//($data->tamano_coleccion[$k]->tipo_preservacion_id == 22) ? $data->tamano_coleccion[$k]->otro : $data->tamano_coleccion[$k]->tipo_preservacion->nombre;
 							$dataReporte[$cont]['tamanoUnidad'] 		= $data->tamano_coleccion[$k]->unidad_medida;
 							//$dataReporte[$cont]['tamanoCantidad']		= $data->tamano_coleccion[$k]->cantidad;
 						}else {
@@ -282,9 +282,35 @@ class ReporteController extends Controller{
 				header('Cache-control: max-age=1');
 				
 				$objWriter = PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel2007');
-				$objWriter->save('php://output');
-				Yii::app()->end();
+				//$objWriter->save('php://output');
+				$filename = rand(1, 100)."_ReporteRnc.xlsx";
+				$objWriter->save("temp_rnc".DIRECTORY_SEPARATOR.$filename);
 				
+				$mails = array(0 => 'hescobar@humboldt.org.co');
+					
+				$message 			= new YiiMailMessage;
+				$message->view 		= "bitacoraArchivo";
+				//$data 			= "Mensaje prueba";
+				//$params				= array('data' => $model);
+				$message->subject	= 'Sistema RNC - Bitácora ';
+				$message->from		= 'hescobar@humboldt.org';
+				$message->setBody("",'text/html');
+				$message->setTo($mails);
+					
+				$message->attach(Swift_Attachment::fromPath("temp_rnc".DIRECTORY_SEPARATOR.$filename,'multipart/mixed')->setFilename($filename));
+				
+				Yii::app()->mail->send($message);
+				
+				//unlink("temp_rnc".DIRECTORY_SEPARATOR.$filename);
+				
+				Yii::app()->end();
+				}catch (Exception $e) {
+					$transaction->rollback();
+					print_r($e->getMessage());
+					Yii::log("Ocurrió un error al enviar la informacion de registro: " . $e->getMessage(), 'error');
+					$success_saving_all = false;
+					Yii::app()->end();
+				}
 			}
 			$this->render('create',array(
 					'model'=>$model,

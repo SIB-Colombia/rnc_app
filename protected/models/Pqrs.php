@@ -64,7 +64,7 @@ class Pqrs extends CActiveRecord
 				// The following rule is used by search().
 				// Please remove those attributes that should not be searched.
 				array('numero_registro_search,estado_search,tipoSol_search,fecha,entidad_search', 'safe', 'on'=>'search'),
-				array('codigoVerificacion', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
+				//array('codigoVerificacion', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
 		);
 	}
 	

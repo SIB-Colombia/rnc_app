@@ -202,7 +202,7 @@ class RegistrosController extends Controller{
 						if($model->entidad->colecciones == ""){
 							$model->entidad->colecciones = "-";
 						}			
-						$model->entidad->save();
+						$model->entidad->save(false);
 						
 					}
 					
@@ -394,7 +394,7 @@ class RegistrosController extends Controller{
 					if($model->registros_update->estado == 1){
 						
 						//$mails = array(0 => $model->entidad->email,1 => 'rnc@humboldt.org.co');
-						$mails = array(0 => 'rnc@humboldt.org.co');
+						$mails = array(0 => 'hescobar@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "crearRegistro";
 						$params				= array('data' => $model);
@@ -465,18 +465,24 @@ class RegistrosController extends Controller{
 				$transaction = Yii::app()->db->beginTransaction();
 				
 				try{
+					
+					if(isset($_POST['Entidad'])){
+					
+						$model->entidad->attributes = $_POST['Entidad'];
+					
+						if($model->entidad->colecciones == ""){
+							$model->entidad->colecciones = "-";
+						}
+						$model->entidad->save(false);
+						//print_r($model->registros_update->registros->entidad->attributes);
+						//Yii::app()->end();
+					}
+					
 					if($model->save()){
 						$success_saving_all = true;
 					}
 					
-					if(isset($_POST['Entidad'])){
-						$model->entidad->attributes = $_POST['Entidad'];
-						if($model->entidad->colecciones == ""){
-							$model->entidad->colecciones = "-";
-						}			
-						$model->entidad->save();
-						
-					}
+					
 											
 					$model->registros_update->attributes 			= $_POST['Registros_update'];
 					$model->registros_update->contactos_id 			= 0;
@@ -487,24 +493,35 @@ class RegistrosController extends Controller{
 					if(isset($_POST['Contactos'])){
 						$model->registros_update->contactos->attributes = $_POST['Contactos'];
 							
-						$model->registros_update->contactos->validate();
-						$model->registros_update->contactos->save();
-						$model->registros_update->contactos_id = $model->registros_update->contactos->id;
+						//$model->registros_update->contactos->validate();
+						if($model->registros_update->contactos->save()){
+							$success_saving_all = true;
+							$model->registros_update->contactos_id = $model->registros_update->contactos->id;
+						}else {
+							$success_saving_all = false;
+						}
+						
 					}
 			
 					if(isset($_POST['Dilegenciadores'])){
 						$model->registros_update->dilegenciadores->attributes = $_POST['Dilegenciadores'];
-							
-						$model->registros_update->dilegenciadores->validate();
-						$model->registros_update->dilegenciadores->save();
-						$model->registros_update->dilegenciadores_id = $model->registros_update->dilegenciadores->id;
-					}
-			
-			
-					$model->registros_update->validate();
-					if(!$model->registros_update->save()){
+
+						if($model->registros_update->dilegenciadores->save() && $success_saving_all){
+							$success_saving_all = true;
+							$model->registros_update->dilegenciadores_id = $model->registros_update->dilegenciadores->id;
+						}else {
 							$success_saving_all = false;
 						}
+						
+						
+					}
+			
+					if($success_saving_all){
+						$model->registros_update->validate();
+						if(!$model->registros_update->save()){
+							$success_saving_all = false;
+						}
+					}
 									
 					if($model->registros_update->validate()){
 							
@@ -677,7 +694,7 @@ class RegistrosController extends Controller{
 				
 						
 					$transaction->commit();
-						
+					
 				}catch (Exception $e) {
 					$transaction->rollback();
 					print_r($e->getMessage());
@@ -703,7 +720,7 @@ class RegistrosController extends Controller{
 					$message->from		= 'hescobar@humboldt.org';
 					$message->setBody($params,'text/html');
 					$message->setTo($mails);
-					Yii::app()->mail->send($message);
+					//Yii::app()->mail->send($message);
 					
 					$this->redirect(array('view','id'=>$model->id));
 				}else{
@@ -785,7 +802,7 @@ class RegistrosController extends Controller{
 					}else{
 						$model->save();
 						if($estReg == 0){
-							if(isset($_POST['Registros_update']['archivoCertificados'])){
+							if(isset($_POST['Registros_update']['archivoCertificados']) && $_POST['Registros_update']['archivoCertificados'] != ""){
 								$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Certificados'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo;
 								//$pathDir = 'Certificados'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo;
 								if(!file_exists($pathDir)){
@@ -845,7 +862,7 @@ class RegistrosController extends Controller{
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 					
 					if($model->registros_update->estado != 1){
-						//$mails = array(0 => $model->entidad->email,1 => 'rnc@humboldt.org.co');
+						//$mails = array(0 => $model->registros_update->contacto->email,1 => 'rnc@humboldt.org.co');
 						$mails = array(0 => 'rnc@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "aprobarRegistro";
@@ -934,7 +951,7 @@ class RegistrosController extends Controller{
 						if($model->entidad->colecciones == ""){
 							$model->entidad->colecciones = "-";
 						}
-						$model->entidad->save();
+						$model->entidad->save(false);
 					
 					}
 						
@@ -948,25 +965,34 @@ class RegistrosController extends Controller{
 					if(isset($_POST['Contactos'])){
 						$modelRegistroUpdate->contactos->attributes = $_POST['Contactos'];
 				
-						$modelRegistroUpdate->contactos->validate();
-						$modelRegistroUpdate->contactos->save();
-						$modelRegistroUpdate->contactos_id = $modelRegistroUpdate->contactos->id;
+						//$modelRegistroUpdate->contactos->validate();
+						if($modelRegistroUpdate->contactos->save()){
+							$success_saving_all = true;
+							$modelRegistroUpdate->contactos_id = $modelRegistroUpdate->contactos->id;
+						}
 					}
 						
 					if(isset($_POST['Dilegenciadores'])){
 						$modelRegistroUpdate->dilegenciadores->attributes = $_POST['Dilegenciadores'];
 				
-						$modelRegistroUpdate->dilegenciadores->validate();
-						$modelRegistroUpdate->dilegenciadores->save();
-						$modelRegistroUpdate->dilegenciadores_id = $modelRegistroUpdate->dilegenciadores->id;
+						//$modelRegistroUpdate->dilegenciadores->validate();
+						if($modelRegistroUpdate->dilegenciadores->save() && $success_saving_all){
+							$success_saving_all = true;
+							$modelRegistroUpdate->dilegenciadores_id = $modelRegistroUpdate->dilegenciadores->id;
+						}else {
+							$success_saving_all = false;
+						}
 					}
 						
-					if(!$modelRegistroUpdate->save()){
-						$success_saving_all = false;
-					}else{
-						$success_saving_all = true;
-					}
+					if($success_saving_all){
 						
+						if(!$modelRegistroUpdate->save()){
+							$success_saving_all = false;
+						}else{
+							$success_saving_all = true;
+						}
+					}
+					
 					if($success_saving_all){
 				
 						if(isset($_POST['Tamano_Coleccion'])){
