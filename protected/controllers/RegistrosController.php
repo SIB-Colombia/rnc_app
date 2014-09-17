@@ -394,7 +394,7 @@ class RegistrosController extends Controller{
 					if($model->registros_update->estado == 1){
 						
 						//$mails = array(0 => $model->entidad->email,1 => 'rnc@humboldt.org.co');
-						$mails = array(0 => 'hescobar@humboldt.org.co');
+						$mails = array(0 => 'rnc@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "crearRegistro";
 						$params				= array('data' => $model);
@@ -405,10 +405,10 @@ class RegistrosController extends Controller{
 						Yii::app()->mail->send($message);
 						
 						
-						$this->redirect(array('view','id'=>$model->id));
+						$this->redirect(array('view','id'=>$model->id,'status'=>'Ok'));
 						
 					}else{
-						$this->redirect(array('view','id'=>$model->id));
+						$this->redirect(array('view','id'=>$model->id,'status'=>'Ok'));
 						/*$this->render('index',array(
 								'model'=>$model
 						));
@@ -722,14 +722,14 @@ class RegistrosController extends Controller{
 					$message->setTo($mails);
 					//Yii::app()->mail->send($message);
 					
-					$this->redirect(array('view','id'=>$model->id));
+					$this->redirect(array('view','id'=>$model->id,'status'=>'Ok'));
 				}else{
 					/*
 					$this->render('index',array(
 							'model'=>$model
 					));
 					Yii::app()->end();*/
-					$this->redirect(array('view','id'=>$model->id));
+					$this->redirect(array('view','id'=>$model->id,'status'=>'Ok'));
 				}
 					
 			}
@@ -893,7 +893,7 @@ class RegistrosController extends Controller{
 							'registro' => $model
 					));
 					Yii::app()->end();*/
-					$this->redirect(array('view','id'=>$model->id));
+					$this->redirect(array('view','id'=>$model->id,'status'=>'Ok'));
 				
 				}
 			}
@@ -1142,13 +1142,13 @@ class RegistrosController extends Controller{
 						$message->setTo($mails);
 						Yii::app()->mail->send($message);
 						
-						$this->redirect(array('view','id'=>$model->id));
+						$this->redirect(array('view','id'=>$model->id,'status'=>'Ok'));
 					}else{
 						/*$this->render('index',array(
 								'model'=>$model
 						));
 						Yii::app()->end();*/
-						$this->redirect(array('view','id'=>$model->id));
+						$this->redirect(array('view','id'=>$model->id,'status'=>'Ok'));
 					}
 						
 				}
@@ -1397,9 +1397,9 @@ class RegistrosController extends Controller{
 	public function actionCancelarRegistro(){
 		if(Yii::app()->user->getId() !== null)
 		{
-			if(isset($_POST['Registros_Update'])){
-				$modelRegistroUpdate = Registros_update::model()->findByPk($_POST['Registros_Update']['id']);
-				$modelRegistroUpdate->comentario = $modelRegistroUpdate->comentario."\n Motivo de Cancelación: \n".$_POST['Registros_Update']['comentarioCancelar'];
+			if(isset($_POST['Registros_update'])){
+				$modelRegistroUpdate = Registros_update::model()->findByPk($_POST['Registros_update']['id']);
+				$modelRegistroUpdate->comentario = $modelRegistroUpdate->comentario."\n Motivo de Cancelación: \n".$_POST['Registros_update']['comentarioCancelar'];
 				$modelRegistroUpdate->estado = 5;
 				
 				if($modelRegistroUpdate->save()){
@@ -1408,7 +1408,7 @@ class RegistrosController extends Controller{
 					$mails = array(0 => 'rnc@humboldt.org.co');
 					$message 			= new YiiMailMessage;
 					$message->view 		= "cancelarRegistro";
-					$params				= array('data' => $modelRegistroUpdate,'comentario' => $_POST['Registros_Update']['comentarioCancelar']);
+					$params				= array('data' => $modelRegistroUpdate,'comentario' => $_POST['Registros_update']['comentarioCancelar']);
 					$message->subject	= 'Envío de Registro de Colección '.$modelRegistroUpdate->nombre.'- Sistema RNC';
 					$message->setFrom(array('rnc@humboldt.org.co'));
 					$message->setBody($params,'text/html');

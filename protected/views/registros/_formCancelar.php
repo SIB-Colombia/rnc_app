@@ -1,7 +1,7 @@
 <script type="text/javascript">
 function enviarFormAjax(){
-	
 	$.post("cancelarRegistro", $("#registroCancelar-form").serialize(),function(data){
+				
 		if(data.status == 'failure'){
 			alert("Ocurrió un problema y no se pudo cancelar el registro");
 			window.location.href ="<?=Yii::app()->request->requestUri;?>";

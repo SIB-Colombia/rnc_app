@@ -41,11 +41,14 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 		)
 	),
 )); ?>
-			
+
 <script>
 function cancelaRegistro(id){
 	
-	$("#Registros_Update_id").val(id);
+	$("#Registros_update_id").val(id);
+	$("#modalCancel").css("display","block");
+	$("#modalCancel").addClass("in");
+	
 	return false;
 }
 </script>

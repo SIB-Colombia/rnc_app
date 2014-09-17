@@ -75,10 +75,10 @@ class Composicion_General extends CActiveRecord
 				'numero_ejemplares' 	=> 'No. Ejemplares',
 				'numero_catalogados' 	=> 'Ejemplares catalogados',
 				'numero_sistematizados'	=> 'Ejemplares sistematizados',
-				'numero_nivel_orden'	=> 'Ejemplares identificados al nivel de orden',
-				'numero_nivel_familia'	=> 'Ejemplares identificados al nivel de familia',
-				'numero_nivel_genero'	=> 'Ejemplares identificados al nivel de género',
-				'numero_nivel_especie'	=> 'Ejemplares identificados al nivel de especie',
+				'numero_nivel_orden'	=> 'Ejemplares identificados solamente al nivel de orden',
+				'numero_nivel_familia'	=> 'Ejemplares identificados solamente al nivel de familia',
+				'numero_nivel_genero'	=> 'Ejemplares identificados solamente al nivel de género',
+				'numero_nivel_especie'	=> 'Ejemplares identificados solamente al nivel de especie',
 				'grupo_taxonomico_id'	=> 'Grupo biológico',
 				'subgrupo_taxonomico_id' => 'Subgrupo biológico'
 		);

@@ -5,8 +5,24 @@ Yii::app()->theme = 'rnc_theme_panel';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
 $userRole  = Yii::app()->user->getState("roles");
+$dataMsj = "";
 ?>
 
+<?php if(isset($_GET['status'])){
+		if($_GET['status'] == 'Ok')
+			$dataMsj = "El proceso se ha realizado con éxito";
+		else $dataMsj = "Ocurrió un error durante el proceso.";
+?>
+<script>
+	$(document).ready(function(){
+		$("#modalMsj").addClass("in");
+	});
+
+	function cerrarModal(){
+		$("#modalMsj").addClass("hide");
+	}
+</script>
+<?php }?>
 <div id="header-front">Colección número: <?php echo ($model->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->numero_registro); ?></div>
 
 <div id="content-front">
@@ -51,3 +67,17 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 	?>
 </div>
 </div>
+
+<?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'modalMsj','htmlOptions' => array('style'=>'padding:20px'))); ?>
+<div class="modal-header">
+    <a class="close" data-dismiss="modal" onclick = "cerrarModal();">&times;</a>
+    	<h3>Sistema RNC</h3>
+	</div>
+	
+	<br>
+	<p class="note"><?= $dataMsj;?></p>
+	
+	<?php 
+	$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'registro-cancel-form-submit', 'type'=>'success', 'label'=>'Cerrar', 'htmlOptions' => array('onclick' => 'cerrarModal()')));
+	?>
+<?php $this->endWidget(); ?>
