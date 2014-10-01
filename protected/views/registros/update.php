@@ -14,6 +14,7 @@ $userRole  = Yii::app()->user->getState("roles");
 <div id="header-front">Modificar registro: <?php echo $model->registros_update->nombre; ?></div>
 
 <div id="content-front">
+<i class="icon-print printR" onclick="print();"></i>
 <?php 
 	
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(

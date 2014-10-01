@@ -493,11 +493,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<div class="InlineFormDiv" id="tamCole">
 					
 					<?php 
-						if(!isset($model->registros_update->id) || !is_array($model->registros_update->tamano_coleccion)){
+						if(!isset($model->registros_update->id) || !is_array($model->registros_update->tamano_coleccion) || count($model->registros_update->tamano_coleccion) == 0){
 							echo "<div>";
-							echo $form->dropDownList($model->registros_update->tamano_coleccion, 'tipo_preservacion_id', Tipo_Preservacion::model()->listarTipoPreservacion(),array('onchange' => 'otroSelect(this)','prompt' => 'Tipo de Preservación...','name'=>'Tamano_Coleccion[0][tipo_preservacion_id]','class'=>'textareaA textInline','style' => 'width:180px !important;'));
-							echo $form->textField($model->registros_update->tamano_coleccion, 'otro', array('name'=>'Tamano_Coleccion[0][otro]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => 'Otro? Cual...','style' => 'display: none;'));
-							echo $form->textArea($model->registros_update->tamano_coleccion, 'unidad_medida', array('style'=>'line-height: 10px','class'=>'span4', 'rows'=>4,'name'=>'Tamano_Coleccion[0][unidad_medida]', 'placeholder' => $model->registros_update->tamano_coleccion->getAttributeLabel('unidad_medida')));
+							echo $form->dropDownList($tamano_coleccion, 'tipo_preservacion_id', Tipo_Preservacion::model()->listarTipoPreservacion(),array('onchange' => 'otroSelect(this)','prompt' => 'Tipo de Preservación...','name'=>'Tamano_Coleccion[0][tipo_preservacion_id]','class'=>'textareaA textInline','style' => 'width:180px !important;'));
+							echo $form->textField($tamano_coleccion, 'otro', array('name'=>'Tamano_Coleccion[0][otro]','size'=>32,'maxlength'=>150, 'class'=>'textareaA textInline', 'placeholder' => 'Otro? Cual...','style' => 'display: none;'));
+							echo $form->textArea($tamano_coleccion, 'unidad_medida', array('style'=>'line-height: 10px','class'=>'span4', 'rows'=>4,'name'=>'Tamano_Coleccion[0][unidad_medida]', 'placeholder' => $tamano_coleccion->getAttributeLabel('unidad_medida')));
 							
 							$this->widget('bootstrap.widgets.TbButton', array(
 									'label'=>'+',
@@ -872,6 +872,19 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<p class="noteTerm">El titular de la colección biológica (persona jurídica o su representante legal) manifiesta que la información consignada en este registro es fidedigna y se sujetará a las Leyes, Decretos y Actos Administrativos que reglamentan el uso, manejo y aprovechamiento de la diversidad biológica.</p>
 				<?php echo $form->checkBoxRow($model->registros_update, 'terminos');?>
 			</fieldset>
+			
+			<div id="catalogouser-botones-internos" class="form-actions pull-right">
+				<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>'Guardar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
+				<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-enviar', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Enviar' : 'Enviar','htmlOptions' => array('onclick'=>'{enviarData()}'))); ?>
+			    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
+				<?php 
+					$this->widget('bootstrap.widgets.TbButtonGroup', array(
+						'buttons'=>array(
+							array('label'=>'Cancel', 'url'=>array('admin/panel')),
+						),
+					));
+				?>    
+		    </div>
 		</div>
 		
 		<?php if($this->route == 'registros/validar'){?>
@@ -883,22 +896,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					echo $form->textAreaRow($model->registros_update, 'comentario', array('class'=>'span4', 'rows'=>5));
 				?>
 			</fieldset>
+			
 		</div><!-- tab5 -->
 		<?php }?>
 		
-	</div>			
-	<div id="catalogouser-botones-internos" class="form-actions pull-right">
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>'Guardar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-enviar', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Enviar' : 'Enviar','htmlOptions' => array('onclick'=>'{enviarData()}'))); ?>
-	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
-		<?php 
-			$this->widget('bootstrap.widgets.TbButtonGroup', array(
-				'buttons'=>array(
-					array('label'=>'Cancel', 'url'=>array('admin/panel')),
-				),
-			));
-		?>    
-    </div>
+	</div>
 
 <?php $this->endWidget(); ?>
 

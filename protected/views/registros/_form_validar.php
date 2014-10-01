@@ -652,21 +652,21 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				</div>
 				<?php }?>
 			</fieldset>
+			
+			<div id="catalogouser-botones-internos" class="form-actions pull-right">
+				<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>'Enviar')); ?>
+			    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
+			    <?php 
+					$this->widget('bootstrap.widgets.TbButtonGroup', array(
+						'buttons'=>array(
+							array('label'=>'Cancel', 'url'=>array('admin/panel')),
+						),
+					));
+				?>
+		    </div>
 		</div><!-- tab5 -->
 		
 	</div>
 	
-	<div id="catalogouser-botones-internos" class="form-actions pull-right">
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>'Enviar')); ?>
-	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
-	    <?php 
-			$this->widget('bootstrap.widgets.TbButtonGroup', array(
-				'buttons'=>array(
-					array('label'=>'Cancel', 'url'=>array('admin/panel')),
-				),
-			));
-		?>
-    </div>
-  	
 <?php $this->endWidget(); ?>
 </div><!-- form -->

@@ -12,6 +12,7 @@ $userRole  = Yii::app()->user->getState("roles");
 <div id="header-front">Actualizar colección No. <?php echo $model->numero_registro; ?></div>
 
 <div id="content-front">
+<i class="icon-print printR" onclick="print();"></i>
 <?php 
 	
 	$this->widget('bootstrap.widgets.TbButtonGroup', array(

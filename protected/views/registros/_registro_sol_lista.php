@@ -7,7 +7,7 @@
 		array('name' => CHtml::encode('Numero de Registro'),'value' => '($data->registros->numero_registro == 0) ? "Sin Definir" : CHtml::encode($data->registros->numero_registro)'),
     	array('name' => 'acronimo','value' => 'CHtml::encode($data->acronimo)'),
 		array('name' => 'titular','value' => 'CHtml::encode($data->registros->entidad->titular)'),
-		'fecha_act',
+		'fecha_env',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{val}',

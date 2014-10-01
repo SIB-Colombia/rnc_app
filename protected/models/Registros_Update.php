@@ -6,6 +6,7 @@
  * @property int 	$id
  * @property date 	$fecha_act
  * @property date 	$fecha_rev
+ * @property date	$fecha_env
  * @property string $nombre
  * @property string $acronimo
  * @property int 	$fecha_fund
@@ -129,6 +130,7 @@ class Registros_update extends CActiveRecord
 		return array(
 				'fecha_act'					=> 'Fecha de la última actualización',
 				'fecha_rev'					=> 'Última fecha de revisión',
+				'fecha_env'					=> 'Fecha de envío de la solicitud',
 				'nombre'					=> 'Nombre de la colección',
 				'acronimo'					=> 'Acrónimo',
 				'fecha_fund'				=> 'Año de fundación',

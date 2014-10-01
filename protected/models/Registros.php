@@ -184,7 +184,7 @@ class Registros extends CActiveRecord
 		$criteria = new CDbCriteria;
 		
 		$criteria->compare('t.estado', 1);
-		$criteria->order = 'fecha_act DESC';
+		$criteria->order = 'fecha_env DESC, t.id DESC';
 				
 		$criteria->with = array('registros.entidad','registros');
 		

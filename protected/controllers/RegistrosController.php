@@ -210,6 +210,7 @@ class RegistrosController extends Controller{
 					$model->registros_update->contactos_id 			= 0;
 					$model->registros_update->dilegenciadores_id 	= 0;
 					//$model->registros_update->fecha_act				= $_POST['Registros']['fecha_dil'];
+					$model->registros_update->fecha_env				= Yii::app()->Date->now();
 					$model->registros_update->registros_id			= 0;
 					$model->registros_update->registros				= $model;
 					$model->registros_update->ejemplar_tipo		 	= $_POST['Registros_update']['ejemplar_tipo'];
@@ -488,6 +489,7 @@ class RegistrosController extends Controller{
 					$model->registros_update->contactos_id 			= 0;
 					$model->registros_update->dilegenciadores_id 	= 0;
 					//$model->registros_update->fecha_act				= Yii::app()->Date->now();
+					$model->registros_update->fecha_env				= Yii::app()->Date->now();
 					$model->registros_update->ejemplar_tipo		 	= $_POST['Registros_update']['ejemplar_tipo'];
 			
 					if(isset($_POST['Contactos'])){
@@ -959,6 +961,7 @@ class RegistrosController extends Controller{
 					$modelRegistroUpdate->contactos_id 			= 0;
 					$modelRegistroUpdate->dilegenciadores_id 	= 0;
 					//$modelRegistroUpdate->fecha_act				= Yii::app()->Date->now();
+					$modelRegistroUpdate->fecha_env				= Yii::app()->Date->now();
 					$modelRegistroUpdate->registros_id			= $id;
 					$modelRegistroUpdate->registros				= $model;
 						
