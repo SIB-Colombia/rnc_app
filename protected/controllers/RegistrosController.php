@@ -1332,11 +1332,14 @@ class RegistrosController extends Controller{
 				$name = "";
 			}
 			
-			$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
+			//$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
 
-			//$dirPath        = "..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."disk2".DIRECTORY_SEPARATOR."rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
+			$dirPath    = "..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."disk2".DIRECTORY_SEPARATOR."rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR.$name;
+			
 			if(is_dir($dirPath)){
+				
 				$model = Registros::model();
+				
 				$this->render('listarHistoricosFolder',array(
 						'model' => $model,
 						'folder' => $name,
@@ -1548,7 +1551,7 @@ class RegistrosController extends Controller{
 		}
 	}
 	
-	public function actionColecciones(){
+	public function actionColeccionesdos(){
 		
 		$pathDir = 'rnc_files/colecciones.xls';
 		
@@ -1578,14 +1581,53 @@ class RegistrosController extends Controller{
 		}
 		
 		
-				$this->render('colecciones',array(
-						'model' => $model,
-						'datos' => json_encode($datos),
-				));
+		$this->render('colecciones',array(
+				'model' => $model,
+				'datos' => json_encode($datos),
+		));
 	}
 	
-	public function actionColeccionesData(){
+	public function actionColecciones(){
 		
+		$datos = array();
+		$model = Registros_update::model();
+		
+		$criteria=new CDbCriteria;
+		$criteria->compare('t.estado', 2);
+		$criteria->with = array('registros','county','contactos');
+		
+		$dataRegitros = $model->findAll($criteria);
+		
+		foreach ($dataRegitros as $registro){
+			$datos[] = array($registro->registros->numero_registro,$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->fecha_fund,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "j F Y"),$registro->registros->tipo_coleccion->nombre,$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono);
+		}
+			
+		$this->render('colecciones',array(
+				'model' => $model,
+				'datos' => json_encode($datos),
+		));
+	}
+	
+	public function actionValidarActualizar(){
+		if(isset($_POST['id'])){
+			$modelRegUp = Registros_update::model();
+			
+			$criteria = new CDbCriteria;
+			$criteria->compare('Registros.id',$_POST['id']);
+			$criteria->compare('t.estado',1);
+			$criteria->with = array('registros','county','contactos');
+			
+			$dataRegitros = $modelRegUp->findAll($criteria);
+			
+			if(count($dataRegitros) > 0){
+				echo "Ok";
+			}else{
+				echo -1;
+			}
+			
+		}else{
+			echo -1;
+		}
 	}
 	
 }

@@ -62,6 +62,7 @@ class ReporteController extends Controller{
 				$dataReporte[0]['entidadTelefono']			= 'Teléfono';
 				$dataReporte[0]['entidadEmail']				= 'Correo electrónico';
 				$dataReporte[0]['coleccionNumero'] 			= 'No. Colección';
+				$dataReporte[0]['coleccionFechaReg']		= 'Fecha de registro';
 				$dataReporte[0]['coleccionFecha'] 			= 'Última actualización';
 				$dataReporte[0]['reporteNombre'] 			= 'Nombre de la colección';
 				$dataReporte[0]['reporteAcronimo'] 			= 'Acrónimo';
@@ -141,7 +142,8 @@ class ReporteController extends Controller{
 						$dataReporte[$cont]['entidadTelefono']			= $data->registros->entidad->telefono;
 						$dataReporte[$cont]['entidadEmail']				= $data->registros->entidad->email;
 						$dataReporte[$cont]['coleccionNumero'] 			= $data->registros->numero_registro;
-						$dataReporte[$cont]['coleccionFecha'] 			= $data->registros->fecha_dil;
+						$dataReporte[$cont]['coleccionFechaReg']		= $data->registros->fecha_dil;
+						$dataReporte[$cont]['coleccionFecha']			= $data->fecha_act;
 						$dataReporte[$cont]['reporteNombre'] 			= $data->nombre;
 						$dataReporte[$cont]['reporteAcronimo'] 			= $data->acronimo;
 						$dataReporte[$cont]['reporteFundacion'] 		= $data->fecha_fund;
@@ -286,7 +288,7 @@ class ReporteController extends Controller{
 				$filename = rand(1, 100)."_ReporteRnc.xlsx";
 				$objWriter->save("temp_rnc".DIRECTORY_SEPARATOR.$filename);
 				
-				$mails = array(0 => 'hescobar@humboldt.org.co');
+				$mails = array(0 => 'rnc@humboldt.org.co');
 					
 				$message 			= new YiiMailMessage;
 				$message->view 		= "bitacoraArchivo";

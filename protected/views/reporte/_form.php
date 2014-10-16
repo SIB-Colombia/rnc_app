@@ -95,6 +95,7 @@ function seleccionaParcial(clase){
 		<legend class="form_legend"> Información básica de la colección <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'', 'type'=>'success','size' => 'mini', 'label'=>'Seleccionar', 'htmlOptions' => array('onclick' => 'seleccionaParcial(\'basica\')'))); ?></legend>
 		<?php 
 			echo $form->checkBoxRow($model, 'coleccionNumero',array('class' => 'basica'));
+			echo $form->checkBoxRow($model, 'coleccionFechaReg',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'coleccionFecha',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'reporteNombre',array('class' => 'basica'));
 			echo $form->checkBoxRow($model, 'reporteAcronimo',array('class' => 'basica'));

@@ -21,6 +21,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 						'url'=>'Yii::app()->createUrl("registros/actualizar", array("id"=>$data->id))',
 						'options'=>array(
 								'class'=>'btn btn-success btn-small',
+								'onclick' => 'validarActualizar($(this).attr("href"))'
 								),
 					)
 				),

@@ -364,5 +364,20 @@ class Registros_update extends CActiveRecord
 		$this->archivosDivulgativos = $value;
 	}
 	
+	public function listarColecciones()
+	{
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
+	
+		$criteria=new CDbCriteria;
+		
+		$criteria->compare('t.estado', 2);
+				
+		$criteria->with = array('registros','county','contactos');
+	
+			
+		return $criteria;
+	}
+	
 }
 ?>

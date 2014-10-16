@@ -14,6 +14,7 @@ class Reporte extends CFormModel
 	public $entidadTelefono;
 	public $entidadEmail;
 	public $coleccionNumero;
+	public $coleccionFechaReg;
 	public $coleccionFecha;
 	public $reporteNombre;
 	public $reporteAcronimo;
@@ -95,6 +96,7 @@ class Reporte extends CFormModel
 				'entidadTelefono'			=> 'Teléfono',
 				'entidadEmail'				=> 'Correo electrónico',
 				'coleccionNumero' 			=> 'No. colección',
+				'coleccionFechaReg'			=> 'Fecha de registro',
 				'coleccionFecha' 			=> 'Última actualización',
 				'reporteNombre' 			=> 'Nombre de la colección',
 				'reporteAcronimo'			=> 'Acrónimo',
