@@ -302,6 +302,65 @@ class Registros extends CActiveRecord
 	}
 	
 	
+	public function listarFolderCertificados($folder = ""){
+		$datos = array();
+		$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Certificados";
 	
+		$dir = "";
+		$cols = array();
+		if($folder != ""){
+			$dirPath = $dirPath.DIRECTORY_SEPARATOR.$folder;
+			$dir = $folder.DIRECTORY_SEPARATOR;
+				
+		}else{
+			if(Yii::app()->user->getState("roles") == "entidad"){
+				$criteriaEntidad = new CDbCriteria;
+				$criteriaEntidad->compare('usuario_id',Yii::app()->user->getId());
+				$entidad = Entidad::model()->find($criteriaEntidad);
+					
+				$criteriaRegistro = new CDbCriteria;
+				$criteriaRegistro->compare('entidad_id', $entidad->id);
+				$criteriaRegistro->with = array('registros_update');
+				$modelRegistros = Registros::model()->findAll($criteriaRegistro);
+	
+				foreach ($modelRegistros as $registro){
+					foreach ($registro->registros_update as $reg_update){
+						$cols[] = $reg_update->acronimo;
+					}
+				}
+			}
+		}
+		$directorio = opendir($dirPath);
+		$cont = 1;
+		while ($archivo = readdir($directorio)){
+			$isDir = 1;
+			$arch_aux = explode("_", $archivo);
+				
+			if(Yii::app()->user->getState("roles") == "entidad"){
+				if(($archivo != "." && $archivo != "..") && (in_array($arch_aux[1], $cols) || $folder != "")){
+					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
+						$isDir = 0;
+					}
+					$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					$cont++;
+				}
+			}else {
+				if($archivo != "." && $archivo != ".."){
+					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
+						$isDir = 0;
+					}
+					$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					$cont++;
+				}
+			}
+		}
+	
+		function cmp($a, $b){
+			return strcmp($a['nombre'], $b['nombre']);
+		}
+		usort($datos, "cmp");
+		$gridDataProvider = new CArrayDataProvider($datos);
+		return $gridDataProvider;
+	}
 }
 ?>

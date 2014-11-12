@@ -109,6 +109,7 @@
 											array('label' => 'Consultar', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
 											array('label' => 'Validar', 'icon' => 'icon-ok', 'url' => array('registros/listarValidar')),
 											array('label' => 'Históricos', 'icon' => 'icon-folder-close', 'url' => array('registros/listarHistoricosFolder')),
+											array('label' => 'Certificados', 'icon' => 'icon-file', 'url' => array('registros/listarCertificados')),
 										)),
 										
 										/*array('label' => 'Contenido'),

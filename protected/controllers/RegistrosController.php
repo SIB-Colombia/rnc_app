@@ -1599,7 +1599,7 @@ class RegistrosController extends Controller{
 		$dataRegitros = $model->findAll($criteria);
 		
 		foreach ($dataRegitros as $registro){
-			$datos[] = array($registro->registros->numero_registro,$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->fecha_fund,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "j F Y"),$registro->registros->tipo_coleccion->nombre,$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono);
+			$datos[] = array($registro->registros->numero_registro,$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->fecha_fund,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "Y-m-d"),$registro->registros->tipo_coleccion->nombre,$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono);
 		}
 			
 		$this->render('colecciones',array(
@@ -1627,6 +1627,50 @@ class RegistrosController extends Controller{
 			
 		}else{
 			echo -1;
+		}
+	}
+	
+	public function actionListarCertificados(){
+		
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_GET['name'])){
+				$name = $_GET['name'];
+			}else {
+				$name = "";
+			}
+			
+			
+			$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Certificados".DIRECTORY_SEPARATOR.$name;
+			
+			if(is_dir($dirPath)){
+			
+				$model = Registros::model();
+				
+				$this->render('certificados',array(
+						'model' => $model,
+						'folder' => $name,
+				));
+			
+			}else{
+				$filename = $dirPath;
+				header("Expires: -1");
+				header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+				header("Content-type: application/pdf;\n"); //or yours?
+				header("Content-Transfer-Encoding: binary");
+				header("Cache-Control: no-store, no-cache, must-revalidate");
+				header("Cache-Control: post-check=0, pre-check=0");
+				header("Pragma: no-cache");
+				$len = filesize($filename);
+				header("Content-Length: $len;\n");
+				$outname=$name;
+				header("Content-Disposition: attachment; filename=".$outname.";\n\n");
+				readfile($filename);
+			
+				//$this->redirect(Yii::app()->createUrl("..".DIRECTORY_SEPARATOR.$dirPath));
+			}
+		}else{
+			$this->redirect(array("admin/login"));
 		}
 	}
 	
