@@ -145,6 +145,7 @@
 											array('label' => 'Consultas', 'items' => array(
 												array('label' => 'Coleccion', 'icon' => 'icon-th-list', 'url' => array('registros/index')),
 												array('label' => 'Históricos', 'icon' => 'icon-folder-close', 'url' => array('registros/listarHistoricosFolder')),
+												array('label' => 'Certificados', 'icon' => 'icon-file', 'url' => array('registros/listarCertificados')),
 												//array('label' => 'Bitácora Colección', 'icon' => 'icon-plus', 'url' => array('visita/create')),
 											)),
 											array('label' => 'Contáctenos', 'items' => array(

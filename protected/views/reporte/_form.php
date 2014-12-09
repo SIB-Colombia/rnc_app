@@ -17,8 +17,11 @@ function enviarForm(){
 	
 	preloadStart();
 	$.post( "create", $("#bitacora-form").serialize(),function( data ) {
-		preloadStop();
-	    alert("EL reporte se envió con éxito"+data);
+ 		$.post("enviaReporte", {'dataJson[]':data},function( data ){
+ 			
+ 	 		});
+ 		preloadStop();
+		alert("EL reporte se envió con éxito");
 	  });
 }
 

@@ -45,7 +45,7 @@ class ReporteController extends Controller{
 				try{
 				$criteria = new CDbCriteria;
 				//$criteria->compare("t.estado", 2);
-				$criteria->condition = "t.estado != 0";
+				$criteria->condition = "t.estado = 2";
 				$_POST['Reporte']['estado'] = 1;
 				$criteria->with = array('registros','registros.entidad','county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos');
 				$registros_update = Registros_update::model()->findAll($criteria);
@@ -229,6 +229,7 @@ class ReporteController extends Controller{
 				}
 				
 				
+				/*
 				// get a reference to the path of PHPExcel classes
 				$phpExcelPath = Yii::getPathOfAlias('ext.phpexcel.Classes');
 				
@@ -305,6 +306,29 @@ class ReporteController extends Controller{
 				
 				//unlink("temp_rnc".DIRECTORY_SEPARATOR.$filename);
 				
+				Yii::app()->end();*/
+				
+				/*$this->render('_reporte_table',array(
+						'model' => $model,
+						'datos' => json_encode($dataReporte),
+				));*/
+				
+				$js_aux = array();
+				
+				foreach ($dataReporte as $k => $value){
+					$a = 1;
+					$js_aux_2 = array();
+					foreach ($value as $j => $valueData){
+						if($_POST['Reporte'][$j] == 1){//echo $abc."/";
+							$js_aux_2[] = $valueData;
+							$a++;
+						}
+						
+					}
+					$js_aux[] = $js_aux_2;
+				}
+				//echo count($js_aux);
+				echo json_encode($js_aux);
 				Yii::app()->end();
 				}catch (Exception $e) {
 					$transaction->rollback();
@@ -319,6 +343,95 @@ class ReporteController extends Controller{
 			));
 		}else{
 			$this->redirect(array("admin/login"));
+		}
+	}
+	
+	public function actionEnviaReporte(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_POST['dataJson'])){
+				
+				$data = json_decode($_POST['dataJson'][0]);
+				
+				//Yii::app()->end();
+				// get a reference to the path of PHPExcel classes
+				$phpExcelPath = Yii::getPathOfAlias('ext.phpexcel.Classes');
+				
+				// Turn off our amazing library autoload
+				spl_autoload_unregister(array('YiiBase','autoload'));
+				
+				// making use of our reference, include the main class
+				// when we do this, phpExcel has its own autoload registration
+				// procedure (PHPExcel_Autoloader::Register();)
+				include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel.php');
+				
+				$objPhpExcel = new PHPExcel();
+				
+				// Once we have finished using the library, give back the
+				// power to Yii...
+				spl_autoload_register(array('YiiBase','autoload'));
+				
+				$objPhpExcel->getProperties()->setCreator("Instituto Alexander Von Humboldt")
+				->setTitle("Bitácora Colecciones")
+				->setSubject("Bitácora Colecciones")
+				->setDescription("Reporte detallado de las Colecciones Existentes");
+				
+				$objPhpExcel->getActiveSheet()->setTitle('Reporte RNC');
+				
+				$dataExcel = array();
+				
+				
+				foreach ($data as $k => $value){
+					$abc = 65;
+					$abc_aux = 64;
+					$mayor = false;
+					foreach ($value as $j => $valueData){
+						
+							$alfa = chr($abc);
+								
+							if($abc > 90){
+								$abc = 65;
+								$abc_aux++;
+								$mayor = true;
+								$alfa = chr($abc_aux).chr($abc);
+							}else if($mayor){
+								$alfa = chr($abc_aux).chr($abc);
+							}
+							$objPhpExcel->setActiveSheetIndex(0) -> setCellValue($alfa.($k + 1), $valueData);
+							$abc++;
+						}
+					
+				}
+				//print_r($objPhpExcel);
+				//Yii::app()->end();
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				header('Content-Disposition: attachment;filename="ReporteRnc.xlsx"');
+				header('Cache-control: max-age=1');
+				
+				$objWriter = PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel2007');
+				//$objWriter->save('php://output');
+				$filename = rand(1, 100)."_ReporteRnc.xlsx";
+				$objWriter->save("temp_rnc".DIRECTORY_SEPARATOR.$filename);
+				
+				$mails = array(0 => 'rnc@humboldt.org.co');
+					
+				$message 			= new YiiMailMessage;
+				$message->view 		= "bitacoraArchivo";
+				//$data 			= "Mensaje prueba";
+				//$params				= array('data' => $model);
+				$message->subject	= 'Sistema RNC - Bitácora ';
+				$message->from		= 'hescobar@humboldt.org';
+				$message->setBody("",'text/html');
+				$message->setTo($mails);
+					
+				$message->attach(Swift_Attachment::fromPath("temp_rnc".DIRECTORY_SEPARATOR.$filename,'multipart/mixed')->setFilename($filename));
+				
+				Yii::app()->mail->send($message);
+				
+				//unlink("temp_rnc".DIRECTORY_SEPARATOR.$filename);
+				echo "Ok";
+				Yii::app()->end();
+			}
 		}
 	}
 }

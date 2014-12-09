@@ -91,7 +91,7 @@ class Registros_update extends CActiveRecord
 				array('ej_tipo_cantidad','numerical','integerOnly'=>true,'message' => 'El dato solo puede ser numérico'),
 				array('deorreferenciados','numerical','min' => 0,'max' => 100,'message' => 'El dato solo puede ser numérico'),
 				array('cobertura_tax,cobertura_geog,cobertura_temp,redes_social,info_adicional','length','max'=>4000),
-				array('sistematizacion,direccion,comentario','length','max'=>2000),
+				array('sistematizacion,direccion,comentario','length','max'=>4000),
 				array('email', 'email'),
 				array('acronimo', 'safe', 'on'=>'search'),
 				
