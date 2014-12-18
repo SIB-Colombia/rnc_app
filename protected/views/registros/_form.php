@@ -364,7 +364,7 @@ function actSelectCiudad(dato,id){
 <style>
 <!--
 .area-contenido{
-	min-width: 920px
+	min-width: 990px
 }
 -->
 </style>
@@ -552,10 +552,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<div style="padding-top: 10px;float: left;">
 					<label class="control-label required inlineLabel2" ><b>1.</b> <?=$composicion_general->getAttributeLabel('numero_catalogados');?></label>
 					<label class="control-label required inlineLabel2" ><b>2.</b> <?=$composicion_general->getAttributeLabel('numero_sistematizados');?></label>
-					<label class="control-label required inlineLabel2" ><b>3.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_orden');?></label>
-					<label class="control-label required inlineLabel2" ><b>4.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_familia');?></label>
-					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_genero');?></label>
-					<label class="control-label required inlineLabel2" ><b>6.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_especie');?></label>
+					<label class="control-label required inlineLabel2" ><b>3.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_filum');?></label>
+					<label class="control-label required inlineLabel2" ><b>4.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_orden');?></label>
+					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_familia');?></label>
+					<label class="control-label required inlineLabel2" ><b>6.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_genero');?></label>
+					<label class="control-label required inlineLabel2" ><b>7.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_especie');?></label>
 				</div>
 				
 				<?php echo '<i style="float:right;" class="icon-info-sign" rel="tooltip" title = "Incluya tantas filas como sean necesarias para relacionar cada uno de los grupos biológicos representados en la colección."></i>';?>
@@ -567,6 +568,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					<label class="control-label required inlineLabel" style="width:63px !important">4.</label>
 					<label class="control-label required inlineLabel" style="width:63px !important">5.</label>
 					<label class="control-label required inlineLabel" style="width:63px !important">6.</label>
+					<label class="control-label required inlineLabel" style="width:63px !important">7.</label>
 				</div>
 				<div style="clear: both;margin-bottom: 10px" id="nivelCat">
 					<?php if(!isset($model->registros_update->id) || !is_array($model->registros_update->composicion_general)){?>
@@ -583,6 +585,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						</div>
 						<div class="input-append">
 							<?= $form->textField($model->registros_update->composicion_general, 'numero_sistematizados', array('style' => 'width:30px !important','name'=>'Composicion_General[0][numero_sistematizados]','size'=>32,'maxlength'=>150, 'class'=>'textareaA valNumP', 'placeholder' => 0));?>
+							<span class="add-on">%</span>
+						</div>
+						<div class="input-append">
+							<?= $form->textField($model->registros_update->composicion_general, 'numero_nivel_filum', array('style' => 'width:30px !important','name'=>'Composicion_General[0][numero_nivel_filum]','size'=>32,'maxlength'=>150, 'class'=>'textareaA valNumP', 'placeholder' => 0));?>
 							<span class="add-on">%</span>
 						</div>
 						<div class="input-append">
@@ -635,6 +641,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						</div>
 						<div class="input-append">
 							<?= $form->textField($value, 'numero_sistematizados', array('value' => $value->numero_sistematizados,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_sistematizados]','size'=>32,'maxlength'=>150, 'class'=>'textareaA valNumP', 'placeholder' => 0));?>
+							<span class="add-on">%</span>
+						</div>
+						<div class="input-append">
+							<?= $form->textField($value, 'numero_nivel_filum', array('value' => $value->numero_nivel_filum,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_nivel_orden]','size'=>32,'maxlength'=>150, 'class'=>'textareaA valNumP', 'placeholder' => 0));?>
 							<span class="add-on">%</span>
 						</div>
 						<div class="input-append">

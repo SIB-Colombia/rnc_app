@@ -12,6 +12,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 		'numero_ejemplares',
 		array('name' => 'numero_catalogados','value' => '$data->numero_catalogados." %"'),
 		array('name' => 'numero_sistematizados','value' => '$data->numero_sistematizados." %"'),
+		array('name' => 'numero_nivel_filum','value' => '$data->numero_nivel_filum." %"'),
 		array('name' => 'numero_nivel_orden','value' => '$data->numero_nivel_orden." %"'),
 		array('name' => 'numero_nivel_familia','value' => '$data->numero_nivel_familia." %"'),
 		array('name' => 'numero_nivel_genero','value' => '$data->numero_nivel_genero." %"'),

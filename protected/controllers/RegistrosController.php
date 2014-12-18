@@ -293,6 +293,7 @@ class RegistrosController extends Controller{
 								$model->registros_update->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
 								$model->registros_update->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
 								$model->registros_update->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+								$model->registros_update->composicion_general->numero_nivel_filum		= $valor_comp['numero_nivel_filum'];
 								$model->registros_update->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
 								$model->registros_update->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
 								$model->registros_update->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
@@ -596,6 +597,7 @@ class RegistrosController extends Controller{
 									$model->registros_update->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
 									$model->registros_update->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
 									$model->registros_update->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+									$model->registros_update->composicion_general->numero_nivel_filum		= $valor_comp['numero_nivel_filum'];
 									$model->registros_update->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
 									$model->registros_update->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
 									$model->registros_update->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
@@ -613,6 +615,7 @@ class RegistrosController extends Controller{
 									$model->registros_update->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
 									$model->registros_update->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
 									$model->registros_update->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+									$model->registros_update->composicion_general->numero_nivel_filum		= $valor_comp['numero_nivel_filum'];
 									$model->registros_update->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
 									$model->registros_update->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
 									$model->registros_update->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
@@ -1037,6 +1040,7 @@ class RegistrosController extends Controller{
 								$modelRegistroUpdate->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
 								$modelRegistroUpdate->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
 								$modelRegistroUpdate->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+								$modelRegistroUpdate->composicion_general->numero_nivel_filum		= $valor_comp['numero_nivel_filum'];
 								$modelRegistroUpdate->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
 								$modelRegistroUpdate->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
 								$modelRegistroUpdate->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];

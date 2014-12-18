@@ -346,10 +346,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<div style="padding-top: 10px;float: left;">
 					<label class="control-label required inlineLabel2" ><b>1.</b> <?=$composicion_general->getAttributeLabel('numero_catalogados');?></label>
 					<label class="control-label required inlineLabel2" ><b>2.</b> <?=$composicion_general->getAttributeLabel('numero_sistematizados');?></label>
-					<label class="control-label required inlineLabel2" ><b>3.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_orden');?></label>
-					<label class="control-label required inlineLabel2" ><b>4.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_familia');?></label>
-					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_genero');?></label>
-					<label class="control-label required inlineLabel2" ><b>6.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_especie');?></label>
+					<label class="control-label required inlineLabel2" ><b>3.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_filum');?></label>
+					<label class="control-label required inlineLabel2" ><b>4.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_orden');?></label>
+					<label class="control-label required inlineLabel2" ><b>5.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_familia');?></label>
+					<label class="control-label required inlineLabel2" ><b>6.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_genero');?></label>
+					<label class="control-label required inlineLabel2" ><b>7.</b> <?=$composicion_general->getAttributeLabel('numero_nivel_especie');?></label>
 				</div>
 				
 				<div style="padding-left: 340px">
@@ -360,6 +361,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 					<label class="control-label required inlineLabel" style="width:63px !important">4.</label>
 					<label class="control-label required inlineLabel" style="width:63px !important">5.</label>
 					<label class="control-label required inlineLabel" style="width:63px !important">6.</label>
+					<label class="control-label required inlineLabel" style="width:63px !important">7.</label>
 				</div>
 				<div style="clear: both;;margin-bottom: 10px" id="nivelCat">
 					
@@ -376,6 +378,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						</div>
 						<div class="input-append">
 							<?= $form->textField($model->registros_update->composicion_general, 'numero_sistematizados', array('style' => 'width:30px !important','name'=>'Composicion_General[0][numero_sistematizados]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
+							<span class="add-on">%</span>
+						</div>
+						<div class="input-append">
+							<?= $form->textField($model->registros_update->composicion_general, 'numero_nivel_filum', array('style' => 'width:30px !important','name'=>'Composicion_General[0][filum]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
 							<span class="add-on">%</span>
 						</div>
 						<div class="input-append">
@@ -418,6 +424,10 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 							<?= $form->textField($value, 'numero_sistematizados', array('value' => $value->numero_sistematizados,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_sistematizados]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
 							<span class="add-on">%</span>
 						</div>
+						<div class="input-append">
+							<?= $form->textField($value, 'numero_nivel_filum', array('value' => $value->numero_nivel_filum,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_nivel_filum]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
+							<span class="add-on">%</span>
+						</div>				
 						<div class="input-append">
 							<?= $form->textField($value, 'numero_nivel_orden', array('value' => $value->numero_nivel_orden,'style' => 'width:30px !important','name'=>'Composicion_General['.$cont.'][numero_nivel_orden]','size'=>32,'maxlength'=>150, 'class'=>'textareaA ', 'placeholder' => 0,'disabled'=>true));?>
 							<span class="add-on">%</span>

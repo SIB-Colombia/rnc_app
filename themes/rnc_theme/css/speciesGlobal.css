@@ -192,7 +192,7 @@ img.standalone {
 
 #container {
 	max-width:1200px;
-	min-width:900px;
+	min-width:500px;
 	margin:0 auto;
 
 	padding-top: 60px;
@@ -208,7 +208,7 @@ img.standalone {
 
 /* ---- Top Header ---- */
 
-header.sib {background: rgb(92, 81, 52); height:50px; color:white; text-transform:uppercase; min-width: 1050px; position: fixed; width: 100%; z-index: 10000; top: 0px}
+header.sib {background: rgb(92, 81, 52); height:50px; color:white; text-transform:uppercase; min-width: 770px; position: fixed; width: 100%; z-index: 10000; top: 0px}
 header.sib a{ color:white; padding:0px; display:inline-block; vertical-align:top; margin:0 10px; padding-right: 4%; }
 header.sib .top_menu {width: 550px; margin: 0 auto; display: inline;}
 header.sib .logo{

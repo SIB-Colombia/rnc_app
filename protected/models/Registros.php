@@ -334,10 +334,9 @@ class Registros extends CActiveRecord
 		$cont = 1;
 		while ($archivo = readdir($directorio)){
 			$isDir = 1;
-			$arch_aux = explode("_", $archivo);
 				
 			if(Yii::app()->user->getState("roles") == "entidad"){
-				if(($archivo != "." && $archivo != "..") && (in_array($arch_aux[1], $cols) || $folder != "")){
+				if(($archivo != "." && $archivo != "..") && (in_array($archivo, $cols) || $folder != "")){
 					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
 						$isDir = 0;
 					}
