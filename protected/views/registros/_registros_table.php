@@ -13,7 +13,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 		array('name' => 'titular_search','value' => 'CHtml::encode($data->entidad->titular)'),
 		array('name' => 'departamento_search','value' => 'CHtml::encode(isset($data->registros_update[0]->county->department->department_name) ? $data->registros_update[0]->county->department->department_name : "No Asignado")'),
 		array('name' => 'ciudad_search','value' => 'CHtml::encode(isset($data->registros_update[0]->county->county_name) ? $data->registros_update[0]->county->county_name : "No Asignado")'),
-		array('name' => 'estado_search','value' => '($data->estado == 0) ? "Sin Aprobar" : "Aprobado"'),
+		array('name' => 'estado_search','value' => '($data->estado == 0) ? "Sin Aprobar" : (($data->estado == 2) ? "Cancelada" : "Aprobado")'),
 		'fecha_dil',
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',

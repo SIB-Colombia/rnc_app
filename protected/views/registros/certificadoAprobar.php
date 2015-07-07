@@ -1,9 +1,9 @@
 <style>
 p{
-	font-size: 12px
+	font-size: 11px
 }
 </style>
-<table style="padding-top: 20px;">
+<table style="padding-top: 10px;">
   <tr><td></td> </tr>
   <tr>
     <td><h3 style="font-size: 14px">Número de certificado: <?=$idCert;?></h3></td>
@@ -43,6 +43,12 @@ p{
   	<td>
   		<p >La veracidad de esta notificación se puede corroborar en la siguiente dirección web:</p>
   		<p style="text-align: center;"><a href="<?=$ruta;?>" style="color: #000;font-size: 10px"><?=$ruta?></a></p>
+  	</td>
+  </tr>
+  <tr>
+  	<td>
+  		<p ><b>Elaborado por: </b><?=$elaborado;?></p>
+  		<p ><b>Aprobado por : </b><?=$aprobado;?></p>
   	</td>
   </tr>
   

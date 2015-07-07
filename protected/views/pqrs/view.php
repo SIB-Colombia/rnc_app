@@ -29,7 +29,7 @@ $(function() {
     	'fileSizeLimit' : '20MB',
     	'buttonText'	: 'Seleccionar archivo',
     	'width'         : 140,
-    	'fileTypeExts'  : '*.pdf;*.doc;*.docx;*.jpg',
+    	'fileTypeExts'  : '*.pdf;*.doc;*.docx;*.jpg;*.xls;*.xlsx',
     	'multi'			: true,
     	'formData'		: {'randWord' : randWord},
     	'swf'      		: '<?=Yii::app()->theme->baseUrl;?>/scripts/uploadify.swf',

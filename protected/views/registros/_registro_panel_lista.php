@@ -18,7 +18,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 					'val' => array
 					(
 						'label'=>'Actualizar',
-						'url'=>'Yii::app()->createUrl("registros/actualizar", array("id"=>$data->id))',
+						'url'=>'"#".$data->id',
 						'options'=>array(
 								'class'=>'btn btn-success btn-small',
 								'onclick' => 'validarActualizar($(this).attr("href"))'
@@ -26,7 +26,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 					)
 				),
 				'htmlOptions'=>array('style'=>'width: 50px'),
-			),
+			),/*
 			array(
 				'class'=>'bootstrap.widgets.TbButtonColumn',
 				'template'=>'{val}',
@@ -42,6 +42,6 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
 						)
 				),
 				'htmlOptions'=>array('style'=>'width: 50px'),
-			)
+			)*/
 		),
 )); ?>

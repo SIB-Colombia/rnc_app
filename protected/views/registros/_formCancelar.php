@@ -26,7 +26,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php 
 	echo $form->hiddenField($model, 'id');
-	echo $form->textAreaRow($model, 'comentarioCancelar', array('class'=>'span4', 'rows'=>4));
+	echo $form->textAreaRow($modelUp, 'comentarioCancelar', array('class'=>'span4', 'rows'=>4));
 ?>
 <div id="catalogouser-botones-internos" class="form-actions pull-right">
 <?php 

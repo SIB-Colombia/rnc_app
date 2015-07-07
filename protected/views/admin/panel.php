@@ -62,15 +62,15 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 ?>
 	<script type="text/javascript">
 
-		function validarActualizar(url){
-			var urlStr  = url.split("/");
-			var id 		= urlStr[urlStr.length - 1];
-	
+		function validarActualizar(id){
+			var idStr  = id.split("#");
+			var id 		= idStr[idStr.length - 1];
 			$.post('../registros/validarActualizar',{id: id},function(data){
 				if(data == "Ok"){
 					alert("La colección no puede actualizarce porque tiene un formulario en estado de Revisión");
-					window.stop();
-				}
+				}else{
+					window.location.href ="<?=Yii::app()->createUrl("registros/view", array());?>/"+id;
+					}
 				
 			});
 		}

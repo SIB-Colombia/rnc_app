@@ -395,8 +395,8 @@ class RegistrosController extends Controller{
 					
 					if($model->registros_update->estado == 1){
 						
-						//$mails = array(0 => $model->entidad->email,1 => 'rnc@humboldt.org.co');
-						$mails = array(0 => 'rnc@humboldt.org.co');
+						$mails = array(0 => $model->entidad->email,1 => 'rnc@humboldt.org.co');
+						//$mails = array(0 => 'rnc@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "crearRegistro";
 						$params				= array('data' => $model);
@@ -716,8 +716,8 @@ class RegistrosController extends Controller{
 					
 				if($model->registros_update->estado == 1){
 					
-					//$mails = array(0 => $model->entidad->email,1 => 'rnc@humboldt.org.co');
-					$mails = array(0 => 'rnc@humboldt.org.co');
+					$mails = array(0 => $model->entidad->email,1 => 'rnc@humboldt.org.co');
+					//$mails = array(0 => 'rnc@humboldt.org.co');
 					$message 			= new YiiMailMessage;
 					$message->view 		= "crearRegistro";
 					$params				= array('data' => $model);
@@ -773,39 +773,255 @@ class RegistrosController extends Controller{
 				
 				try{
 					
+					if(isset($_POST['Entidad'])){
+							
+						$model->entidad->attributes = $_POST['Entidad'];
+							
+						if($model->entidad->colecciones == ""){
+							$model->entidad->colecciones = "-";
+						}
+						$model->entidad->save(false);
+						//print_r($model->registros_update->registros->entidad->attributes);
+						//Yii::app()->end();
+					}
+					
 					$criteria2 = new CDbCriteria;
 					$criteria2->compare("estado", 2);
 					$criteria2->compare("registros_id",$model->id);
 					$registros_update_ant = Registros_Update::model()->find($criteria2);
 					
+					$model->tipo_coleccion_id = $_POST['Registros']['tipo_coleccion_id'];
 					$model->fecha_dil = $_POST['Registros']['fecha_dil'];
 					$model->numero_registro	= $_POST['Registros']['numero_registro'];
-					$model->registros_update->fecha_act	 = $_POST['Registros_update']['fecha_act'];
-					$model->registros_update->comentario = $_POST['Registros_update']['comentario'];
-					$model->registros_update->aprobado = $_POST['Registros_update']['aprobado'];
+										
+					$model->registros_update->attributes 			= $_POST['Registros_update'];
+					$model->registros_update->contactos_id 			= 0;
+					$model->registros_update->dilegenciadores_id 	= 0;
+					//$model->registros_update->fecha_act				= Yii::app()->Date->now();
+					$model->registros_update->fecha_env				= Yii::app()->Date->now();
+					$model->registros_update->ejemplar_tipo		 	= $_POST['Registros_update']['ejemplar_tipo'];
+					$model->registros_update->fecha_act	 			= $_POST['Registros_update']['fecha_act'];
+					$model->registros_update->comentario 			= $_POST['Registros_update']['comentario'];
+					$model->registros_update->aprobado 				= $_POST['Registros_update']['aprobado'];
 					
 					$estReg = $model->estado;
 					
-					if($_POST['Registros_update']['aprobado'] == 0){
-						if(isset($registros_update_ant->id)){
-							$registros_update_ant->estado = 4;
-							$registros_update_ant->save();
+					if($_POST['Registros_update']['estado'] == 2){
+						if($_POST['Registros_update']['aprobado'] == 0){
+							if(isset($registros_update_ant->id)){
+								$registros_update_ant->estado = 4;
+								$registros_update_ant->save();
+							}
+							$model->registros_update->estado = 2;
+							$model->estado = 1;
+							//$model->fecha_dil = Yii::app()->Date->now();
+							$model->fecha_prox = Yii::app()->Date->toMysql(Yii::app()->Date->timestamp() + 63072000);
+						}else {
+							$model->registros_update->estado = 3;
 						}
-						$model->registros_update->estado = 2;
-						$model->estado = 1;
-						//$model->fecha_dil = Yii::app()->Date->now();
-						$model->fecha_prox = Yii::app()->Date->toMysql(Yii::app()->Date->timestamp() + 63072000);
 					}else {
-						$model->registros_update->estado = 3;
+						$model->registros_update->estado = 1;
 					}
 					
 					$model->registros_update->fecha_rev = Yii::app()->Date->now();
 					
+					if(isset($_POST['Contactos'])){
+						$model->registros_update->contactos->attributes = $_POST['Contactos'];
+							
+						//$model->registros_update->contactos->validate();
+						if($model->registros_update->contactos->save()){
+							$success_saving_all = true;
+							$model->registros_update->contactos_id = $model->registros_update->contactos->id;
+						}else {
+							$success_saving_all = false;
+						}
+					
+					}
+						
+					if(isset($_POST['Dilegenciadores'])){
+						$model->registros_update->dilegenciadores->attributes = $_POST['Dilegenciadores'];
+					
+						if($model->registros_update->dilegenciadores->save() && $success_saving_all){
+							$success_saving_all = true;
+							$model->registros_update->dilegenciadores_id = $model->registros_update->dilegenciadores->id;
+						}else {
+							$success_saving_all = false;
+						}
+					
+					
+					}
 					
 					if(!$model->registros_update->save()){
 						$success_saving_all = false;
 					}else{
 						$model->save();
+						
+						if(isset($_POST['Tamano_Coleccion'])){
+								
+							foreach ($_POST['Tamano_Coleccion'] as $valor_col){
+						
+								if(isset($valor_col['id'])){
+									$dataTamano	= Tamano_Coleccion::model()->findByPk($valor_col['id']);
+									$model->registros_update->tamano_coleccion = $dataTamano;
+									$model->registros_update->tamano_coleccion->tipo_preservacion_id = $valor_col['tipo_preservacion_id'];
+									$model->registros_update->tamano_coleccion->unidad_medida		 = $valor_col['unidad_medida'];
+										
+									if($model->registros_update->tamano_coleccion->tipo_preservacion_id == 22){
+										$model->registros_update->tamano_coleccion->otro = $valor_col['otro'];
+									}
+									//$model->registros_update->tamano_coleccion->cantidad			= $valor_col['cantidad'];
+										
+									$model->registros_update->tamano_coleccion->save();
+								}else{
+									$model->registros_update->tamano_coleccion	= new Tamano_Coleccion();
+										
+									$model->registros_update->tamano_coleccion->tipo_preservacion_id 	= $valor_col['tipo_preservacion_id'];
+									$model->registros_update->tamano_coleccion->unidad_medida			= $valor_col['unidad_medida'];
+									//$model->registros_update->tamano_coleccion->cantidad			= $valor_col['cantidad'];
+									$model->registros_update->tamano_coleccion->Registros_update_id = $model->registros_update->id;
+										
+									if($model->registros_update->tamano_coleccion->tipo_preservacion_id == 22){
+										$model->registros_update->tamano_coleccion->otro = $valor_col['otro'];
+									}
+										
+									$model->registros_update->tamano_coleccion->save();
+								}
+							}
+						}
+							
+						if(isset($_POST['Tipos_En_Coleccion'])){
+							foreach ($_POST['Tipos_En_Coleccion'] as $valor_tipo){
+						
+								if(isset($valor_tipo['id'])){
+									$dataTamano	= Tipos_En_Coleccion::model()->findByPk($valor_tipo['id']);
+									$model->registros_update->tipos_en_coleccion = $dataTamano;
+									//$model->registros_update->tipos_en_coleccion->informacion_ejemplar	= $valor_tipo['informacion_ejemplar'];
+									$model->registros_update->tipos_en_coleccion->grupo					= $valor_tipo['grupo'];
+									$model->registros_update->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
+						
+									$model->registros_update->tipos_en_coleccion->save();
+								}else{
+									$model->registros_update->tipos_en_coleccion	= new Tipos_En_Coleccion();
+										
+									//$model->registros_update->tipos_en_coleccion->informacion_ejemplar	= $valor_tipo['informacion_ejemplar'];
+									$model->registros_update->tipos_en_coleccion->grupo					= $valor_tipo['grupo'];
+									$model->registros_update->tipos_en_coleccion->cantidad				= $valor_tipo['cantidad'];
+									$model->registros_update->tipos_en_coleccion->Registros_update_id	= $model->registros_update->id;
+										
+									$model->registros_update->tipos_en_coleccion->save();
+								}
+							}
+						}
+							
+						if(isset($_POST['Composicion_General'])){
+								
+							foreach ($_POST['Composicion_General'] as $valor_comp){
+						
+								if(isset($valor_comp['id'])){
+									$dataTamano	= Composicion_General::model()->findByPk($valor_comp['id']);
+									$model->registros_update->composicion_general = $dataTamano;
+									$model->registros_update->composicion_general->grupo_taxonomico_id 		= ($valor_comp['grupo_taxonomico_id'] != '') ? $valor_comp['grupo_taxonomico_id'] : 0;
+									$model->registros_update->composicion_general->subgrupo_taxonomico_id	= ($valor_comp['subgrupo_taxonomico_id'] != '') ? $valor_comp['subgrupo_taxonomico_id'] : 0;
+									$model->registros_update->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
+									$model->registros_update->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
+									$model->registros_update->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+									$model->registros_update->composicion_general->numero_nivel_filum		= $valor_comp['numero_nivel_filum'];
+									$model->registros_update->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
+									$model->registros_update->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
+									$model->registros_update->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
+									$model->registros_update->composicion_general->numero_nivel_especie		= $valor_comp['numero_nivel_especie'];
+										
+									if($model->registros_update->composicion_general->subgrupo_taxonomico_id == 2){
+										$model->registros_update->composicion_general->subgrupo_otro = $valor_comp['subgrupo_otro'];
+									}
+									$model->registros_update->composicion_general->save();
+								}else{
+									$model->registros_update->composicion_general	= new Composicion_General();
+										
+									$model->registros_update->composicion_general->grupo_taxonomico_id 		= ($valor_comp['grupo_taxonomico_id'] != '') ? $valor_comp['grupo_taxonomico_id'] : 0;
+									$model->registros_update->composicion_general->subgrupo_taxonomico_id	= ($valor_comp['subgrupo_taxonomico_id'] != '') ? $valor_comp['subgrupo_taxonomico_id'] : 0;
+									$model->registros_update->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
+									$model->registros_update->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
+									$model->registros_update->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
+									$model->registros_update->composicion_general->numero_nivel_filum		= $valor_comp['numero_nivel_filum'];
+									$model->registros_update->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
+									$model->registros_update->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
+									$model->registros_update->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
+									$model->registros_update->composicion_general->numero_nivel_especie		= $valor_comp['numero_nivel_especie'];
+									$model->registros_update->composicion_general->Registros_update_id		= $model->registros_update->id;
+										
+									if($model->registros_update->composicion_general->subgrupo_taxonomico_id == 2){
+										$model->registros_update->composicion_general->subgrupo_otro = $valor_comp['subgrupo_otro'];
+									}
+										
+									$model->registros_update->composicion_general->save();
+								}
+						
+							}
+						}
+							
+						if(isset($_POST['Registros_update']['archivosAnexos'])  && $_POST['Registros_update']['archivosAnexos'] != ''){
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
+							if(!file_exists($pathDir)){
+								mkdir($pathDir);
+							}
+							$pathFile = "archivosAnexos";
+							if(!file_exists($pathDir.DIRECTORY_SEPARATOR.$pathFile)){
+								mkdir($pathDir.DIRECTORY_SEPARATOR.$pathFile);
+							}
+								
+							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosAnexos']);
+							foreach ($dataFiles_ar as $value){
+								$dataFiles = explode("/", $value);
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
+											
+										$archivoModel = new Archivos();
+										$archivoModel->nombre 				= $dataFiles[0];
+										$archivoModel->tipo					= $dataFiles[1];
+										$archivoModel->size					= $dataFiles[2];
+										$archivoModel->ruta					= $pathDir.DIRECTORY_SEPARATOR.$pathFile;
+										$archivoModel->clase				= 1;
+										$archivoModel->Registros_update_id 	= $model->registros_update->id;
+											
+										$archivoModel->save();
+									}
+								}
+							}
+								
+						}
+							
+						if(isset($_POST['Registros_update']['archivosColecciones'])  && $_POST['Registros_update']['archivosColecciones'] != ''){
+							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
+							if(!file_exists($pathDir)){
+								mkdir($pathDir);
+							}
+								
+							$pathFile = "archivosColecciones";
+							if(!file_exists($pathDir.DIRECTORY_SEPARATOR.$pathFile)){
+								mkdir($pathDir.DIRECTORY_SEPARATOR.$pathFile);
+							}
+								
+							$dataFiles_ar = explode(",", $_POST['Registros_update']['archivosColecciones']);
+							foreach ($dataFiles_ar as $value){
+								$dataFiles = explode("/", $value);
+								if(file_exists("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0])){
+									if(rename("temp_rnc".DIRECTORY_SEPARATOR.$dataFiles[0], $pathDir.DIRECTORY_SEPARATOR.$pathFile.DIRECTORY_SEPARATOR.$dataFiles[0])){
+											
+										$archivoModel = new Archivos();
+										$archivoModel->nombre 				= $dataFiles[0];
+										$archivoModel->tipo					= $dataFiles[1];
+										$archivoModel->size					= $dataFiles[2];
+										$archivoModel->ruta					= $pathDir.DIRECTORY_SEPARATOR.$pathFile;
+										$archivoModel->clase				= 2;
+										$archivoModel->Registros_update_id 	= $model->registros_update->id;
+											
+										$archivoModel->save();
+									}
+								}
+							}
+						}
+						
 						if($estReg == 0){
 							if(isset($_POST['Registros_update']['archivoCertificados']) && $_POST['Registros_update']['archivoCertificados'] != ""){
 								$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Certificados'.DIRECTORY_SEPARATOR.$model->registros_update->acronimo;
@@ -867,8 +1083,12 @@ class RegistrosController extends Controller{
 					$mensaje->setMensaje("La solicitud fué enviada con éxito, en los próximos días el administrador verificará y hará la respectiva aprobación para el envío de su usuario y contraseña.");
 					
 					if($model->registros_update->estado != 1){
-						//$mails = array(0 => $model->registros_update->contacto->email,1 => 'rnc@humboldt.org.co');
-						$mails = array(0 => 'rnc@humboldt.org.co');
+						if($_POST['Registros_update']['notificar'] == 1){
+							$mails = array(0 => $model->registros_update->contactos->email,1 => 'rnc@humboldt.org.co',2=>$model->registros_update->dilegenciadores->email);
+						}else {
+							$mails = array(0 => 'rnc@humboldt.org.co');
+						}
+						
 						$message 			= new YiiMailMessage;
 						$message->view 		= "aprobarRegistro";
 						$params				= array('data' => $model);
@@ -920,7 +1140,9 @@ class RegistrosController extends Controller{
 		if(Yii::app()->user->getId() !== null)
 		{
 			$criteria = new CDbCriteria;
-			$criteria->compare("estado", 2);
+			//$criteria->compare("estado", 2);
+			$criteria->condition = "estado = 2 OR estado = 3";
+			$criteria->order = "fecha_act DESC";
 			$criteria->compare("Registros_id", $id);
 			$criteria->with = array('county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos');
 			$registros_update = Registros_update::model()->find($criteria);
@@ -1037,14 +1259,14 @@ class RegistrosController extends Controller{
 
 								$modelRegistroUpdate->composicion_general->grupo_taxonomico_id 		= ($valor_comp['grupo_taxonomico_id'] != '') ? $valor_comp['grupo_taxonomico_id'] : 0;
 								$modelRegistroUpdate->composicion_general->subgrupo_taxonomico_id	= ($valor_comp['subgrupo_taxonomico_id'] != '') ? $valor_comp['subgrupo_taxonomico_id'] : 0;
-								$modelRegistroUpdate->composicion_general->numero_ejemplares		= $valor_comp['numero_ejemplares'];
-								$modelRegistroUpdate->composicion_general->numero_catalogados		= $valor_comp['numero_catalogados'];
-								$modelRegistroUpdate->composicion_general->numero_sistematizados	= $valor_comp['numero_sistematizados'];
-								$modelRegistroUpdate->composicion_general->numero_nivel_filum		= $valor_comp['numero_nivel_filum'];
-								$modelRegistroUpdate->composicion_general->numero_nivel_orden		= $valor_comp['numero_nivel_orden'];
-								$modelRegistroUpdate->composicion_general->numero_nivel_familia		= $valor_comp['numero_nivel_familia'];
-								$modelRegistroUpdate->composicion_general->numero_nivel_genero		= $valor_comp['numero_nivel_genero'];
-								$modelRegistroUpdate->composicion_general->numero_nivel_especie		= $valor_comp['numero_nivel_especie'];
+								$modelRegistroUpdate->composicion_general->numero_ejemplares		= ($valor_comp['numero_ejemplares'] != '') ? $valor_comp['numero_ejemplares'] : 0;
+								$modelRegistroUpdate->composicion_general->numero_catalogados		= ($valor_comp['numero_catalogados'] != '') ? $valor_comp['numero_catalogados'] : 0;
+								$modelRegistroUpdate->composicion_general->numero_sistematizados	= ($valor_comp['numero_sistematizados'] != '') ? $valor_comp['numero_sistematizados'] : 0;
+								$modelRegistroUpdate->composicion_general->numero_nivel_filum		= ($valor_comp['numero_nivel_filum'] != '') ? $valor_comp['numero_nivel_filum'] : 0;
+								$modelRegistroUpdate->composicion_general->numero_nivel_orden		= ($valor_comp['numero_nivel_orden'] != '') ? $valor_comp['numero_nivel_orden'] : 0;
+								$modelRegistroUpdate->composicion_general->numero_nivel_familia		= ($valor_comp['numero_nivel_familia'] != '') ? $valor_comp['numero_nivel_familia'] : 0;
+								$modelRegistroUpdate->composicion_general->numero_nivel_genero		= ($valor_comp['numero_nivel_genero'] != '') ? $valor_comp['numero_nivel_genero'] : 0;
+								$modelRegistroUpdate->composicion_general->numero_nivel_especie		= ($valor_comp['numero_nivel_especie'] != '') ? $valor_comp['numero_nivel_especie'] : 0;
 								$modelRegistroUpdate->composicion_general->Registros_update_id		= $modelRegistroUpdate->id;
 								
 								if($modelRegistroUpdate->composicion_general->subgrupo_taxonomico_id == 2){
@@ -1407,19 +1629,31 @@ class RegistrosController extends Controller{
 	public function actionCancelarRegistro(){
 		if(Yii::app()->user->getId() !== null)
 		{
-			if(isset($_POST['Registros_update'])){
-				$modelRegistroUpdate = Registros_update::model()->findByPk($_POST['Registros_update']['id']);
-				$modelRegistroUpdate->comentario = $modelRegistroUpdate->comentario."\n Motivo de Cancelación: \n".$_POST['Registros_update']['comentarioCancelar'];
-				$modelRegistroUpdate->estado = 5;
+			if(isset($_POST['Registros_update']) && $_POST['Registros']){
+				$modelRegistro = Registros::model()->findByPk($_POST['Registros']['id']);
+				$modelRegistro->estado = 2;
 				
-				if($modelRegistroUpdate->save()){
+				$criteria = new CDbCriteria;
+				$criteria->compare("registros_id",$modelRegistro->id);
+				
+				$modelRegistroUpdate = Registros_update::model()->findAll($criteria);
+				if(isset($modelRegistroUpdate)){
+					foreach ($modelRegistroUpdate as $dato){
+						$dato->comentario = $dato->comentario."\n Motivo de Cancelación: \n".$_POST['Registros_update']['comentarioCancelar'];
+						$dato->estado = 5;
+						$dato->save();
+					}
+				}
+				
+				
+				if($modelRegistro->save()){
 					
-					//$mails = array(0 => $modelRegistroUpdate->registros->entidad->email,1 => 'rnc@humboldt.org.co');
-					$mails = array(0 => 'rnc@humboldt.org.co');
+					$mails = array(0 => $modelRegistroUpdate[0]->registros->entidad->email,1 => 'rnc@humboldt.org.co');
+					//$mails = array(0 => 'hescobar@humboldt.org.co');
 					$message 			= new YiiMailMessage;
 					$message->view 		= "cancelarRegistro";
-					$params				= array('data' => $modelRegistroUpdate,'comentario' => $_POST['Registros_update']['comentarioCancelar']);
-					$message->subject	= 'Envío de Registro de Colección '.$modelRegistroUpdate->nombre.'- Sistema RNC';
+					$params				= array('data' => $modelRegistroUpdate[0],'comentario' => $_POST['Registros_update']['comentarioCancelar']);
+					$message->subject	= 'Envío de Registro de Colección '.$modelRegistroUpdate[0]->nombre.'- Sistema RNC';
 					$message->setFrom(array('rnc@humboldt.org.co'));
 					$message->setBody($params,'text/html');
 					$message->setTo($mails);
@@ -1444,6 +1678,7 @@ class RegistrosController extends Controller{
 		if(Yii::app()->user->getId() !== null)
 		{
 			$modelRegistros_update = "";
+			
 			if(isset($_POST['id']) && isset($_POST['opt'])){
 				$criteria = new CDbCriteria;
 				$criteria->with = array('registros','county');
@@ -1517,13 +1752,18 @@ class RegistrosController extends Controller{
 				$pdf->writeHTML('<br><br><br><img style="margin-top:150px" src="themes/rnc_theme_panel/images/footer.jpg" />');
 				$pdf->lastPage();
 			}else{
+				$elaborado = $_POST['elaborado'];
+				$aprobado = $_POST['aprobado'];
+				
 				$html = $this->renderPartial('certificadoAprobar',array(
 						'model' => $modelRegistros_update,
 						'idCert' => $modelCertificado->id,
 						'fecha'	 => $fechaCert,
 						'fechaAct' => $fechaAct,
 						'ruta'	 => "http://rnc.humboldt.org.co/".$pathDir."/".$modelCertificado->nombre,
-						'col'		=> $_POST['numCol']
+						'col'		=> $_POST['numCol'],
+						'aprobado' => $aprobado,
+						'elaborado' => $elaborado
 				),true);
 				//Convert the Html to a pdf document
 				$pdf->writeHTML($html);
@@ -1534,7 +1774,7 @@ class RegistrosController extends Controller{
 			//Close and output PDF document
 			if($id == 0){
 				$pdf->Output($pathDir.DIRECTORY_SEPARATOR.$modelCertificado->nombre, 'F');
-				echo $pathDir.DIRECTORY_SEPARATOR.$modelCertificado->nombre;
+				echo $pathDir."/".$modelCertificado->nombre;
 				Yii::app()->end();
 				//$pdf->Output("php://output", 'D');
 			}else{
@@ -1603,7 +1843,7 @@ class RegistrosController extends Controller{
 		$dataRegitros = $model->findAll($criteria);
 		
 		foreach ($dataRegitros as $registro){
-			$datos[] = array($registro->registros->numero_registro,$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->fecha_fund,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "Y-m-d"),$registro->registros->tipo_coleccion->nombre,$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono);
+			$datos[] = array($registro->registros->numero_registro,$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->fecha_fund,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "Y-m-d"),$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono);
 		}
 			
 		$this->render('colecciones',array(
@@ -1617,8 +1857,9 @@ class RegistrosController extends Controller{
 			$modelRegUp = Registros_update::model();
 			
 			$criteria = new CDbCriteria;
-			$criteria->compare('Registros.id',$_POST['id']);
+			//$criteria->compare('t.id',$_POST['id']);
 			$criteria->compare('t.estado',1);
+			$criteria->compare('registros.id',$_POST['id']);
 			$criteria->with = array('registros','county','contactos');
 			
 			$dataRegitros = $modelRegUp->findAll($criteria);
@@ -1675,6 +1916,43 @@ class RegistrosController extends Controller{
 			}
 		}else{
 			$this->redirect(array("admin/login"));
+		}
+	}
+	
+	public function actionActivarRegistro(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			if(isset($_POST['idRegistro'])){
+				$modelRegistroUpdate = Registros_update::model()->findByPk($_POST['idRegistro']);
+				
+				$criteria2 = new CDbCriteria;
+				$criteria2->compare("estado", 4);
+				$criteria2->compare("registros_id",$modelRegistroUpdate->registros_id);
+				$criteria2->order = "fecha_act DESC";
+				$registros_update_ant = Registros_Update::model()->findAll($criteria2);
+	
+				if(count($registros_update_ant) > 0){
+					$modelRegistroUpdate->estado = 1;
+					$registros_update_ant[0]->estado = 2;
+					$registros_update_ant[0]->save();
+				}else{
+					$modelRegistroUpdate->estado = 1;
+				}
+				
+				if($modelRegistroUpdate->save()){
+						
+					echo CJSON::encode(array(
+							'status'=>'ok',
+					));
+					exit;
+				}else {
+					echo CJSON::encode(array(
+							'status'=>'failure',
+					));
+					exit;
+				}
+	
+			}
 		}
 	}
 	

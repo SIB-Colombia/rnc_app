@@ -83,7 +83,7 @@ class Registros extends CActiveRecord
 			'ciudad_search'			=> 'Municipio',
 			'titular_search'		=> 'Titular',
 			'estado_search'			=> 'Estado de la colección',
-			'tipo_coleccion_id'		=> 'Tipo de colección'
+			'tipo_coleccion_id'		=> 'Tipo de colección',
 		);
 	}
 	
@@ -103,6 +103,8 @@ class Registros extends CActiveRecord
 		if($this->estado_search != ''){
 			if(strtolower($this->estado_search) == "aprobado"){
 				$this->estado = 1;
+			}else if(strtolower($this->estado_search) == "cancelada"){
+				$this->estado = 2;
 			}else{
 				$this->estado = 0;
 			}
@@ -231,6 +233,7 @@ class Registros extends CActiveRecord
 		$dirPath        = "..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."media".DIRECTORY_SEPARATOR."disk2".DIRECTORY_SEPARATOR."rnc_files".DIRECTORY_SEPARATOR."Registro_Colecciones_Biologicas_Historicos".DIRECTORY_SEPARATOR;
 		$dir = "";
 		$cols = array();
+		$dataAux = array();
 		if($folder != ""){
 			$dirPath = $dirPath.DIRECTORY_SEPARATOR.$folder;
 			$dir = $folder.DIRECTORY_SEPARATOR;
@@ -249,12 +252,25 @@ class Registros extends CActiveRecord
 				foreach ($modelRegistros as $registro){
 					foreach ($registro->registros_update as $reg_update){
 						$cols[] = $reg_update->acronimo;
+						$dataAux[$reg_update->acronimo] = array($registro->numero_registro,$reg_update->nombre,$entidad->titular);
+					}
+				}
+			}else {
+				$criteriaRegistro = new CDbCriteria;
+				$criteriaRegistro->compare('registros_update.estado', 2);
+				$criteriaRegistro->with = array('registros_update','entidad');
+				$modelRegistros = Registros::model()->findAll($criteriaRegistro);
+				
+				foreach ($modelRegistros as $registro){
+					foreach ($registro->registros_update as $reg_update){
+						$dataAux[$reg_update->acronimo] = array($registro->numero_registro,$reg_update->nombre,$registro->entidad->titular);
 					}
 				}
 			}
 		}
 		$directorio = opendir($dirPath);
 		$cont = 1;
+		//print_r($dataAux);Yii::app()->end();
 		while ($archivo = readdir($directorio)){
 			$isDir = 1;
 			$arch_aux = explode("_", $archivo);
@@ -264,7 +280,8 @@ class Registros extends CActiveRecord
 					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
 						$isDir = 0;
 					}
-					$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					//$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					$datos[] = array((isset($dataAux[$arch_aux[1]][0])) ? $dataAux[$arch_aux[1]][0] : "",(isset($dataAux[$arch_aux[1]][1])) ? $dataAux[$arch_aux[1]][1] : "",(isset($dataAux[$arch_aux[1]][2])) ? $dataAux[$arch_aux[1]][2] : "",utf8_encode($archivo),'<a href="'.Yii::app()->createUrl("registros/listarHistoricosFolder", array("name"=>$dir.$archivo)).'" class="btn btn-success btn-mini" id="" name="yt0" type="button">Seleccionar</a>',$isDir);
 					$cont++;
 				}
 			}else {
@@ -272,7 +289,8 @@ class Registros extends CActiveRecord
 					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
 						$isDir = 0;
 					}
-					$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					//$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					$datos[] = array((isset($dataAux[$arch_aux[1]][0])) ? $dataAux[$arch_aux[1]][0] : "",(isset($dataAux[$arch_aux[1]][1])) ? $dataAux[$arch_aux[1]][1] : "",(isset($dataAux[$arch_aux[1]][2])) ? $dataAux[$arch_aux[1]][2] : "",utf8_encode($archivo),'<a href="'.Yii::app()->createUrl("registros/listarHistoricosFolder", array("name"=>$dir.$archivo)).'" class="btn btn-success btn-mini" id="" name="yt0" type="button">Seleccionar</a>',$isDir);
 					$cont++;
 				}
 			}
@@ -281,33 +299,20 @@ class Registros extends CActiveRecord
 		function cmp($a, $b){
 			return strcmp($a['nombre'], $b['nombre']);
 		}
-		usort($datos, "cmp");
+		//usort($datos, "cmp");
 		$gridDataProvider = new CArrayDataProvider($datos);
-		return $gridDataProvider;
+		//return $gridDataProvider;
+		return $datos;
 	}
 	
 		
-	public function listarClecciones1($arrg){
-		
-		$datos = array();
-		
-		for ($i = 1; $i <= count($arrg); $i++) {
-			//$datos[] = array('id' => $i,'numero' => $arrg[$i]['A'],'titular' => $arrg[$i]['B'],'nombre' => $arrg[$i]['C'],'acronimo' => $arrg[$i]['D'],'fundacion' => $arrg[$i]['E'],'departamento' => $arrg[$i]['F'],'ciudad' => $arrg[$i]['G'],'fecha' => $arrg[$i]['H'],'tipo' => $arrg[$i]['I'],'contacto' => $arrg[$i]['J'],'cargo' => $arrg[$i]['K'],'email' => $arrg[$i]['L'],'telefono' => $arrg[$i]['M']);
-			$datos[] = array($i,$arrg[$i]['A'],$arrg[$i]['B'],$arrg[$i]['C'],$arrg[$i]['D'],$arrg[$i]['E'],$arrg[$i]['F'],$arrg[$i]['G'],$arrg[$i]['H'],$arrg[$i]['I'],$arrg[$i]['J'],$arrg[$i]['K'],$arrg[$i]['L'],$arrg[$i]['M']);
-		}
-		
-		/*$gridDataProvider = new CArrayDataProvider($datos);
-		return $gridDataProvider;*/
-		json_encode($datos);
-	}
-	
-	
 	public function listarFolderCertificados($folder = ""){
 		$datos = array();
 		$dirPath	= "rnc_files".DIRECTORY_SEPARATOR."Certificados";
 	
 		$dir = "";
 		$cols = array();
+		$dataAux = array();
 		if($folder != ""){
 			$dirPath = $dirPath.DIRECTORY_SEPARATOR.$folder;
 			$dir = $folder.DIRECTORY_SEPARATOR;
@@ -326,6 +331,18 @@ class Registros extends CActiveRecord
 				foreach ($modelRegistros as $registro){
 					foreach ($registro->registros_update as $reg_update){
 						$cols[] = $reg_update->acronimo;
+						$dataAux[$reg_update->acronimo] = array($registro->numero_registro,$reg_update->nombre,$entidad->titular);
+					}
+				}
+			}else {
+				$criteriaRegistro = new CDbCriteria;
+				$criteriaRegistro->compare('registros_update.estado', 2);
+				$criteriaRegistro->with = array('registros_update','entidad');
+				$modelRegistros = Registros::model()->findAll($criteriaRegistro);
+				
+				foreach ($modelRegistros as $registro){
+					foreach ($registro->registros_update as $reg_update){
+						$dataAux[$reg_update->acronimo] = array($registro->numero_registro,$reg_update->nombre,$registro->entidad->titular);
 					}
 				}
 			}
@@ -340,7 +357,8 @@ class Registros extends CActiveRecord
 					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
 						$isDir = 0;
 					}
-					$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					//$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					$datos[] = array((isset($dataAux[$archivo][0])) ? $dataAux[$archivo][0] : "",(isset($dataAux[$archivo][1])) ? $dataAux[$archivo][1] : "",(isset($dataAux[$archivo][2])) ? $dataAux[$archivo][2] : "",utf8_encode($archivo),'<a href="'.Yii::app()->createUrl("registros/listarCertificados", array("name"=>$dir.$archivo)).'" class="btn btn-success btn-mini" id="" name="yt0" type="button">Seleccionar</a>',$isDir);
 					$cont++;
 				}
 			}else {
@@ -348,7 +366,8 @@ class Registros extends CActiveRecord
 					if(!is_dir($dirPath.DIRECTORY_SEPARATOR.$archivo)){
 						$isDir = 0;
 					}
-					$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					//$datos[] = array('id'=> $cont,'nombre'=>utf8_encode($archivo),'dir'=>$dir.$archivo,'isDir' => $isDir);
+					$datos[] = array((isset($dataAux[$archivo][0])) ? $dataAux[$archivo][0] : "",(isset($dataAux[$archivo][1])) ? $dataAux[$archivo][1] : "",(isset($dataAux[$archivo][2])) ? $dataAux[$archivo][2] : "",utf8_encode($archivo),'<a href="'.Yii::app()->createUrl("registros/listarCertificados", array("name"=>$dir.$archivo)).'" class="btn btn-success btn-mini" id="" name="yt0" type="button">Seleccionar</a>',$isDir);
 					$cont++;
 				}
 			}
@@ -357,9 +376,10 @@ class Registros extends CActiveRecord
 		function cmp($a, $b){
 			return strcmp($a['nombre'], $b['nombre']);
 		}
-		usort($datos, "cmp");
-		$gridDataProvider = new CArrayDataProvider($datos);
-		return $gridDataProvider;
+		//usort($datos, "cmp");
+		//$gridDataProvider = new CArrayDataProvider($datos);
+		//return $gridDataProvider;
+		return $datos;
 	}
 }
 ?>

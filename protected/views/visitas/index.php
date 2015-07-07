@@ -43,6 +43,7 @@ $('.search-form form').submit(function(){
 	));
 	?>
 	  <i class="icon-print printR" onclick="print();"></i>
+	  <a href="<?=Yii::app()->createUrl("visitas/reporte", array());?>"><i class="icon-download printR"></i></a>
 	  <div class="tab-content">
 	       <?php echo $this->renderPartial('_visitas_table', array('listVisitas'=>$model->search(),'model' => $model)); ?>
 	  </div>

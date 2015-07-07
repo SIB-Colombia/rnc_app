@@ -10,6 +10,18 @@ function resetForm(id) {
 	        this.reset();
 	});
 }
+
+function modalOpen(){
+	$("#modalUser").removeClass("hide");
+	$("#modalUser").addClass("in");
+	
+	return false;
+}
+
+function cerrarModal(id){
+	$("#"+id).removeClass("in");
+	$("#"+id).addClass("hide");
+}
 </script>
 
 <div class="form">
@@ -30,29 +42,30 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 <fieldset>
 	<legend class="form_legend">Datos del titular de la colección</legend>
 	<?php 
-		echo $form->dropDownListRow($model, 'tipo_titular', $model->listarTipo(),array('prompt' => 'Seleccionar...','onchange' => 'activarTipo()','disabled'=>true));
-		echo $form->textFieldRow($model, 'titular', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-		echo $form->dropDownListRow($model, 'tipo_nit', $model->listarTipoIdTit(),array('prompt' => 'Seleccionar...','disabled'=>true));
-		echo $form->textFieldRow($model, 'nit', array('size'=>32,'maxlength'=>64, 'class'=>'textareaA','disabled'=>true));
-		echo $form->textFieldRow($model, 'representante_legal', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-		echo $form->dropDownListRow($model, 'tipo_id_rep', $model->listarTipoIdRep(),array('prompt' => 'Seleccionar...','disabled'=>true));
-		echo $form->textFieldRow($model, 'representante_id', array('size'=>32,'maxlength'=>64, 'class'=>'textareaA','disabled'=>true));
-		echo $form->dropDownListRow($model, 'ciudad_id', $model->ListarCiudades(),array('prompt' => 'Seleccionar...','disabled'=>true));
-		echo $form->textFieldRow($model, 'direccion', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-		echo $form->textFieldRow($model, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-		echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA','disabled'=>true));
-		echo $form->dropDownListRow($model, 'tipo_institucion_id', Tipo_Institucion::model()->listarTipoInstitucion(),array('prompt' => 'Seleccionar...','disabled'=>true));
+		echo $form->dropDownListRow($model, 'tipo_titular', $model->listarTipo(),array('prompt' => 'Seleccionar...','onchange' => 'activarTipo()','disabled'=>false));
+		echo $form->textFieldRow($model, 'titular', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
+		echo $form->dropDownListRow($model, 'tipo_nit', $model->listarTipoIdTit(),array('prompt' => 'Seleccionar...','disabled'=>false));
+		echo $form->textFieldRow($model, 'nit', array('size'=>32,'maxlength'=>64, 'class'=>'textareaA','disabled'=>false));
+		echo $form->textFieldRow($model, 'representante_legal', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
+		echo $form->dropDownListRow($model, 'tipo_id_rep', $model->listarTipoIdRep(),array('prompt' => 'Seleccionar...','disabled'=>false));
+		echo $form->textFieldRow($model, 'representante_id', array('size'=>32,'maxlength'=>64, 'class'=>'textareaA','disabled'=>false));
+		echo $form->dropDownListRow($model, 'departamento_id', $model->ListarDepartamentos(),array('prompt' => 'Seleccione...','onChange' => 'actSelectCiudad(this,"Entidad_ciudad_id")'));
+		echo $form->dropDownListRow($model, 'ciudad_id', $model->ListarCiudades($model->departamento_id),array('prompt' => 'Seleccionar...','disabled'=>false));
+		echo $form->textFieldRow($model, 'direccion', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
+		echo $form->textFieldRow($model, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
+		echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA','disabled'=>false));
+		echo $form->dropDownListRow($model, 'tipo_institucion_id', Tipo_Institucion::model()->listarTipoInstitucion(),array('prompt' => 'Seleccionar...','disabled'=>false));
 	?>
 </fieldset>
 
 <fieldset>
 	<legend class="form_legend">Datos de la persona que realiza la solicitud</legend>
 	<?php 
-		echo $form->textFieldRow($model->dilegenciadores, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-		echo $form->textFieldRow($model->dilegenciadores, 'dependencia', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-		echo $form->textFieldRow($model->dilegenciadores, 'cargo', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-		echo $form->textFieldRow($model->dilegenciadores, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>true));
-		echo $form->textFieldRow($model->dilegenciadores, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA','disabled'=>true));
+		echo $form->textFieldRow($model->dilegenciadores, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
+		echo $form->textFieldRow($model->dilegenciadores, 'dependencia', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
+		echo $form->textFieldRow($model->dilegenciadores, 'cargo', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
+		echo $form->textFieldRow($model->dilegenciadores, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
+		echo $form->textFieldRow($model->dilegenciadores, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA','disabled'=>false));
 	?>
 </fieldset>
 
@@ -69,7 +82,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				'htmlOptions'=>array(
 						'data-toggle'=>'modal',
 						'data-target'=>'#modalUser',
-						'style'	=> 'float:left;margin-left: 10px'
+						'style'	=> 'float:left;margin-left: 10px',
+						'onclick' => 'modalOpen()'
 				),
 		)); 
 		
@@ -93,7 +107,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'modalUser','htmlOptions' => array('style'=>'width:620px;padding:20px'))); ?>
 	<div class="modal-header">
-    <a class="close" data-dismiss="modal">&times;</a>
+    <a class="close" data-dismiss="modal"  onclick = "cerrarModal('modalUser');">&times;</a>
     	<h3>Crear Usuario</h3>
 	</div>
 <?php echo $this->renderPartial('../usuario/_form', array('model'=>$model->usuario,'ajaxMode' => true)); ?>

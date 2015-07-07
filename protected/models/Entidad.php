@@ -45,8 +45,7 @@ class Entidad extends CActiveRecord
 	private $usuario_id_s;
 	private $aprobado;
 	public 	$colecciones;
-	public $codigoVerificacion;
-	
+		
 	
 	public static function model($className=__CLASS__)
 	{
@@ -78,7 +77,6 @@ class Entidad extends CActiveRecord
 				// Please remove those attributes that should not be searched.
 				//array('titular,nit,representante_id,direccion,telefono,email,dependencia_d,cargo_d,telefono_d,', 'safe', 'on'=>'search'),
 				array('titular', 'safe', 'on'=>'searchDetail'),
-				array('codigoVerificacion', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
 		);
 	}
 	
@@ -132,7 +130,6 @@ class Entidad extends CActiveRecord
 				'colecciones' => 'Colecciones a registrar',
 				'tipo_institucion_id' => 'Tipo de institución',
 				'departamento_id' => 'Departamento',
-				'codigoVerificacion'=>'Código de verificación',
 		);
 	}
 	

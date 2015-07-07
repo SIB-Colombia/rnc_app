@@ -64,6 +64,11 @@ class Registros_update extends CActiveRecord
 	
 	public $comentarioCancelar;
 	
+	public $aprobadop;
+	public $elaborado;
+	
+	public $notificar;
+	
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -161,7 +166,10 @@ class Registros_update extends CActiveRecord
 				'ejemplar_tipo'				=> '¿La colección cuenta con ejemplares tipo?',
 				'ej_tipo_cantidad'			=> '¿Cuántos ejemplares tipo existen?',
 				'comentarioCancelar'		=> 'Motivo de la cancelación',
-				'aprobado'					=> 'Aprobado'
+				'aprobado'					=> 'Aprobado',
+				'aprobadop'					=> 'Aprobado por',
+				'elaborado'					=> 'Elaborado por',
+				'notificar'					=> 'Notificar al usuario'
 		);
 	}
 	

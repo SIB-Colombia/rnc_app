@@ -325,4 +325,5 @@ b{
 .printR{
 	float: right;
 	cursor: pointer;
+	margin-left: 10px;
 }

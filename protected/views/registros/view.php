@@ -18,11 +18,14 @@ $dataMsj = "";
 		$("#modalMsj").addClass("in");
 	});
 
-	function cerrarModal(){
-		$("#modalMsj").addClass("hide");
-	}
 </script>
 <?php }?>
+
+<script type="text/javascript">
+	function cerrarModal(id){
+		$("#"+id).addClass("hide");
+	}
+</script>
 <div id="header-front">Colección número: <?php echo ($model->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->numero_registro); ?></div>
 
 <div id="content-front">
@@ -30,6 +33,8 @@ $dataMsj = "";
 $this->widget('bootstrap.widgets.TbButtonGroup', array(
 		'buttons'=>array(
 				array('label'=>'Listar colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
+				array('label'=>'Actualizar Colección', 'icon'=>'icon-edit', 'url' => Yii::app()->createUrl("registros/actualizar", array("id"=>$model->id)),'visible' => ($userRole == "entidad") ? true : false),
+				array('label'=>'Cancelar Colección', 'icon'=>'icon-ban-circle','data-toggle' => 'modal','data-target' => '#modalCancel', 'url' => 'javascript:cancelaRegistro('.$model->id.')','visible' => ($model->estado != 2 && $userRole == "admin") ? true : false),
 		),
 ));
 ?>
@@ -46,7 +51,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 				array(
 					'name' => 'estado',
 					'type'	=> 'raw',
-					'value' => CHtml::encode(($model->estado == 0) ? "Sin Aprobar" : "Aprobada")
+					'value' => CHtml::encode(($model->estado == 0) ? "Sin Aprobar" : (($model->estado == 2) ? "Cancelada" : "Aprobada"))
 				),
 			)
 		));
@@ -70,7 +75,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 
 <?php $this->beginWidget('bootstrap.widgets.TbModal', array('id'=>'modalMsj','htmlOptions' => array('style'=>'padding:20px'))); ?>
 <div class="modal-header">
-    <a class="close" data-dismiss="modal" onclick = "cerrarModal();">&times;</a>
+    <a class="close" data-dismiss="modal" onclick = "cerrarModal('modalMsj');">&times;</a>
     	<h3>Sistema RNC</h3>
 	</div>
 	

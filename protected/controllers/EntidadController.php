@@ -390,7 +390,7 @@ class EntidadController extends Controller{
 				$message->setFrom(array('rnc@humboldt.org.co'));
 				$message->setBody($params,'text/html');
 				$message->setTo($mails);
-				Yii::app()->mail->send($message);
+				//Yii::app()->mail->send($message);
 				
 				$this->render('mensaje',array(
 						'model'=>$mensaje,
@@ -445,12 +445,19 @@ class EntidadController extends Controller{
 		{
 			$model=$this->loadModel($id);
 			$model->usuario = Usuario::model();
+			$modelEntidad = Entidad::model();
+			$modelEntidad->dilegenciadores = new Dilegenciadores('search');
+			$modelEntidad->dilegenciadores->unsetAttributes();
+
 			if(isset($_REQUEST['Entidad']['aprobado']))
 			{
 				$model->estado = ($_REQUEST['Entidad']['aprobado'] == 0) ? 2 : (($_REQUEST['Entidad']['aprobado'] == 1) ? 3 : 1);
 				$model->comentario = $_REQUEST['Entidad']['comentario'];
 				$model->usuario_id = $_REQUEST['Entidad']['usuario_id'];
 				$model->colecciones = "-";
+
+				$modelEntidad->attributes=$_POST['Entidad'];
+				$modelEntidad->dilegenciadores->attributes = $_POST['Dilegenciadores'];
 				$success_saving_all = true;
 				
 				$transaction = Yii::app()->db->beginTransaction();
@@ -458,6 +465,16 @@ class EntidadController extends Controller{
 				try {
 				
 					$model->save(false);
+					$modelEntidad->dilegenciadores->save();
+					
+					if($modelEntidad->tipo_titular == 1){
+						$modelEntidad->representante_legal = "-";
+						$modelEntidad->tipo_id_rep = 0;
+						$modelEntidad->representante_id = 0;
+					}
+
+					$modelEntidad->save();
+					$modelEntidad->dilegenciadores_id	= $modelEntidad->dilegenciadores->id;
 				
 					$transaction->commit();
 				
@@ -483,7 +500,7 @@ class EntidadController extends Controller{
 							$usuario->save();
 						}
 						
-						$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co');
+						$mails = array(0 => $model->email,1 => 'rnc@humboldt.org.co',2 => $model->dilegenciadores->email);
 						//$mails = array(0 => 'hescobar@humboldt.org.co');
 						$message 			= new YiiMailMessage;
 						$message->view 		= "aprobarEntidad";

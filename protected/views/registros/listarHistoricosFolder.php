@@ -2,6 +2,8 @@
 Yii::app()->theme = 'rnc_theme_panel';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/jquery.dataTables.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/jquery.dataTables.js', CClientScript::POS_HEAD);
 ?>
 
 <div id="header-front">Archivo histórico de colecciones biológicas</div>

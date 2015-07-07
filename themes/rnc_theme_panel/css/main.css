@@ -187,7 +187,7 @@ fieldset h2{
 .menu-izquierda li > a{ padding: 6px ;}
 .icon-info{height: 16px; width: 16px;}
 .area-contenido {
-	/*min-width: 750px;*/
+	width: 100%;
 	margin-top: 20px;
 	margin-right: 20px;
 	margin-bottom: 20px;

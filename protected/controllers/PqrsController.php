@@ -383,5 +383,113 @@ class PqrsController extends Controller{
 		$upload_handler = new UploadHandler();
 		print_r($upload_handler->options);
 	}
+	
+	public function actionReporte(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			$model = new Pqrs();
+			$fechaReporte = Yii::app()->Date->now();
+			
+			try{
+				$criteria = new CDbCriteria;
+				$criteria->with = array('registros','entidad');
+				$pqrs = Pqrs::model()->findAll($criteria);
+				
+				$dataReporte = array();
+				$dataReporte[0]['nombre'] 			= 'Nombre del solicitante';
+				$dataReporte[0]['email'] 			= 'Correo electrónico';
+				$dataReporte[0]['fecha'] 			= 'Fecha de solicitud';
+				$dataReporte[0]['tipo_solicitud']	= 'Tipo de solicitud';
+				$dataReporte[0]['descripcion']		= 'Descripción';
+				$dataReporte[0]['respuesta']		= 'Respuesta';
+				$dataReporte[0]['estado']			= 'Estado';
+				$dataReporte[0]['numero_registro']	= 'Colección No.';
+				$dataReporte[0]['entidad']			= 'Entidad';
+				$dataReporte[0]['fecha_respuesta']	= 'Fecha de respuesta';
+				$dataReporte[0]['entidad_otra']		= 'Otra Entidad';
+				
+				$cont = 1;
+					
+				foreach ($pqrs as $data){
+					
+					$dataReporte[$cont]['nombre'] 			= $data->nombre;
+					$dataReporte[$cont]['email'] 			= $data->email;
+					$dataReporte[$cont]['fecha'] 			= $data->fecha;
+					$dataReporte[$cont]['tipo_solicitud'] 	= $data->tipo_solicitud;
+					$dataReporte[$cont]['descripcion'] 		= $data->descripcion;
+					$dataReporte[$cont]['respuesta'] 		= $data->respuesta;
+					$dataReporte[$cont]['estado'] 			= ($data->estado == 0) ? "Pendiente" : "Cerrado";
+					$dataReporte[$cont]['numero_registro'] 	= (isset($data->registros->numero_registro)) ? $data->registros->numero_registro : "";
+					$dataReporte[$cont]['entidad'] 			= (isset($data->entidad->titular)) ? $data->entidad->titular : "";
+					$dataReporte[$cont]['fecha_respuesta']	= $data->fecha_respuesta;
+					$dataReporte[$cont]['entidad_otra']		= $data->entidad_otra;
+					
+					$cont++;
+				}
+				
+				$phpExcelPath = Yii::getPathOfAlias('ext.phpexcel.Classes');
+				
+				spl_autoload_unregister(array('YiiBase','autoload'));
+				
+				include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel.php');
+				
+				$objPhpExcel = new PHPExcel();
+				
+				spl_autoload_register(array('YiiBase','autoload'));
+				
+				$objPhpExcel->getProperties()->setCreator("Instituto Alexander Von Humboldt")
+				->setTitle("Reporte de Contactos")
+				->setSubject("Reporte de Contactos")
+				->setDescription("Reporte detallado de los contactos externos");
+				
+				$objPhpExcel->getActiveSheet()->setTitle('Reporte PQRS');
+				
+				$dataExcel = array();
+				
+				foreach ($dataReporte as $k => $value){
+					$abc = 65;
+					$abc_aux = 64;
+					$mayor = false;
+					foreach ($value as $j => $valueData){
+						//echo $abc."/";
+						$alfa = chr($abc);
+							
+						if($abc > 90){
+							$abc = 65;
+							$abc_aux++;
+							$mayor = true;
+							$alfa = chr($abc_aux).chr($abc);
+						}else if($mayor){
+							$alfa = chr($abc_aux).chr($abc);
+						}
+						$objPhpExcel->setActiveSheetIndex(0) -> setCellValue($alfa.($k + 1), $valueData);
+						$abc++;
+					}
+				}
+				
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				header('Content-Disposition: attachment;filename="ReportePQRS.xlsx"');
+				header('Cache-control: max-age=1');
+				
+				$objWriter = PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel2007');
+				$objWriter->save('php://output');
+				
+				$mensaje = new Mensaje();
+				$mensaje->setTitulo("Descarga exitosa");
+				$mensaje->setMensaje("La descarga del reporte fue realizada con éxito.");
+				
+				$this->render('mensaje',array(
+						'model'=>$mensaje,
+				));
+				
+			}catch (Exception $e) {
+				//$transaction->rollback();
+				print_r($e->getMessage());
+				Yii::log("Ocurrió un error al enviar la informacion de registro: " . $e->getMessage(), 'error');
+				$success_saving_all = false;
+				Yii::app()->end();
+			}
+		}
+	}
 }
 ?>

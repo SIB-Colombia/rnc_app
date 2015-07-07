@@ -35,7 +35,8 @@ $(document).ready(function() {
 				    "responsive": true,
 				    "language": {
 						   "info": "Página _PAGE_ de _PAGES_"
-						 }
+						 },
+						 
 				    }
 				 );
 
@@ -45,69 +46,27 @@ $(document).ready(function() {
         	.search( this.value )
         	.draw();
     } );
+
+	$("#content-front").width(($( window ).width())*0.92);
+
+	$( window ).resize(function() {
+		$("#content-front").width(($( window ).width())*0.92);
+		});
 } );
+
+
 
 </script>
 
 <style>
-<!--
 
--->
 
-@media 
-only screen and (max-width: 1120px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, th, td, tr { 
-		display: block; 
-	}
-	
-	/* Hide table headers (but not display: none;, for accessibility) */
-	thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
-	
-	tr { border: 1px solid #ccc; }
-	
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50% !important; 
-	}
-	
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-	}
-	
-	td:nth-of-type(1):before { content: "Número de registro"; }
-	td:nth-of-type(2):before { content: "Titular de la colección"; }
-	td:nth-of-type(3):before { content: "Nombre colección"; }
-	td:nth-of-type(4):before { content: "Acrónimo"; }
-	td:nth-of-type(5):before { content: "Año Fundación"; }
-	td:nth-of-type(6):before { content: "Departamento"; }
-	td:nth-of-type(7):before { content: "Municipio"; }
-	td:nth-of-type(8):before { content: "Fecha de última actualización"; }
-	td:nth-of-type(9):before { content: "Tipo de colección"; }
-	td:nth-of-type(10):before { content: "Nombre de contacto"; }
-	td:nth-of-type(11):before { content: "Cargo"; }
-	td:nth-of-type(12):before { content: "Correo electrónico"; }
-	td:nth-of-type(13):before { content: "Teléfono"; }
-}
+#content-front {overflow: auto !important}
 </style>
 
 <fieldset>
-	<h1 style="margin:0 0 -25px 0;">Listado de colecciones registradas</h1>
+	<h1 style="margin:0 0 -25px 0;">Lista de colecciones registradas</h1>
+	<?php $this->widget('bootstrap.widgets.TbButton', array('type'=>'info','label'=>'Descargar lista detallada','url' => Yii::app()->createUrl("reporte/reporte"),'htmlOptions' => array('style' => 'float:left;margin-top:25px')));?>
 <div id="content-front">
 
 <table id="registros_table" class="display" cellspacing="0" >
@@ -121,7 +80,6 @@ only screen and (max-width: 1120px),
             <th>Departamento</th>
             <th>Municipio</th>
             <th>Fecha de última actualización</th>
-            <th>Tipo de colección</th>
             <th>Nombre de contacto</th>
             <th>Cargo</th>
             <th>Correo electrónico</th>
@@ -136,7 +94,6 @@ only screen and (max-width: 1120px),
             <th>Departamento</th>
             <th>Municipio</th>
             <th>Fecha de última actualización</th>
-            <th>Tipo de colección</th>
             <th>Nombre de contacto</th>
             <th>Cargo</th>
             <th>Correo electrónico</th>

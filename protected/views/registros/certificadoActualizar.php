@@ -1,9 +1,9 @@
 <style>
 p{
-	font-size: 12px
+	font-size: 11px
 }
 </style>
-<table style="padding-top: 70px;">
+<table style="padding-top: 50px;">
   <tr>
     <td><h3 style="font-size: 14px">Número de certificado: <?=$idCert;?></h3></td>
   </tr>
@@ -28,5 +28,5 @@ p{
 		<p style="text-align: center;"><a href="<?=$ruta;?>" style="color: #000;font-size: 10px"><?=$ruta?></a></p>
   	</td>
   </tr>
-  
+
 </table>

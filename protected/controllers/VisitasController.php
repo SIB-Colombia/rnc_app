@@ -363,5 +363,111 @@ class VisitasController extends Controller{
 			}
 		}
 	}
+	
+	public function actionReporte(){
+		if(Yii::app()->user->getId() !== null)
+		{
+			$model = new Visitas();
+			$fechaReporte = Yii::app()->Date->now();
+				
+			try{
+				$criteria = new CDbCriteria;
+				$criteria->with = array('registros','dilegenciadores','county');
+				$pqrs = Visitas::model()->findAll($criteria);
+	
+				$dataReporte = array();
+				$dataReporte[0]['entidad']			= 'Entidad';
+				$dataReporte[0]['numero_registro']	= 'Colección No.';
+				$dataReporte[0]['titular'] 			= 'Titular';
+				$dataReporte[0]['departamento']		= 'Departamento';
+				$dataReporte[0]['municipio'] 		= 'Municipio';
+				$dataReporte[0]['fecha_visita']		= 'Fecha de la visita';
+				$dataReporte[0]['concepto']			= 'Concepto';
+				$dataReporte[0]['nombre']			= 'Diligenciador';
+				$dataReporte[0]['dependencia']		= 'Dependencia';
+				$dataReporte[0]['cargo']			= 'Cargo';
+					
+				$cont = 1;
+					
+				foreach ($pqrs as $data){
+
+					$dataReporte[$cont]['entidad'] 			= (isset($data->entidad)) ? $data->entidad : "";
+					$dataReporte[$cont]['numero_registro'] 	= (isset($data->registros->numero_registro)) ? $data->registros->numero_registro : "";
+					$dataReporte[$cont]['titular'] 			= (isset($data->registros->entidad->titular)) ? $data->registros->entidad->titular : "";;
+					$dataReporte[$cont]['departamento'] 	= (isset($data->county->department->department_name)) ? $data->county->department->department_name : "";
+					$dataReporte[$cont]['municipio'] 		= (isset($data->county->county_name)) ? $data->county->county_name : "";
+					$dataReporte[$cont]['fecha_visita'] 	= $data->fecha_visita;
+					$dataReporte[$cont]['concepto'] 		= $data->concepto;
+					$dataReporte[$cont]['nombre']			= $data->dilegenciadores->nombre;
+					$dataReporte[$cont]['dependencia']		= $data->dilegenciadores->dependencia;
+					$dataReporte[$cont]['cargo']			= $data->dilegenciadores->cargo;
+											
+					$cont++;
+				}
+	
+				$phpExcelPath = Yii::getPathOfAlias('ext.phpexcel.Classes');
+	
+				spl_autoload_unregister(array('YiiBase','autoload'));
+	
+				include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel.php');
+	
+				$objPhpExcel = new PHPExcel();
+	
+				spl_autoload_register(array('YiiBase','autoload'));
+	
+				$objPhpExcel->getProperties()->setCreator("Instituto Alexander Von Humboldt")
+				->setTitle("Reporte de visitas")
+				->setSubject("Reporte de visitas")
+				->setDescription("Reporte detallado de las visitas");
+	
+				$objPhpExcel->getActiveSheet()->setTitle('Reporte Visitas');
+	
+				$dataExcel = array();
+	
+				foreach ($dataReporte as $k => $value){
+					$abc = 65;
+					$abc_aux = 64;
+					$mayor = false;
+					foreach ($value as $j => $valueData){
+						//echo $abc."/";
+						$alfa = chr($abc);
+							
+						if($abc > 90){
+							$abc = 65;
+							$abc_aux++;
+							$mayor = true;
+							$alfa = chr($abc_aux).chr($abc);
+						}else if($mayor){
+							$alfa = chr($abc_aux).chr($abc);
+						}
+						$objPhpExcel->setActiveSheetIndex(0) -> setCellValue($alfa.($k + 1), $valueData);
+						$abc++;
+					}
+				}
+	
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				header('Content-Disposition: attachment;filename="ReporteVisitas.xlsx"');
+				header('Cache-control: max-age=1');
+	
+				$objWriter = PHPExcel_IOFactory::createWriter($objPhpExcel, 'Excel2007');
+				$objWriter->save('php://output');
+	
+				$mensaje = new Mensaje();
+				$mensaje->setTitulo("Descarga exitosa");
+				$mensaje->setMensaje("La descarga del reporte fue realizada con éxito.");
+	
+				$this->render('mensaje',array(
+						'model'=>$mensaje,
+				));
+	
+			}catch (Exception $e) {
+				//$transaction->rollback();
+				print_r($e->getMessage());
+				Yii::log("Ocurrió un error al enviar la informacion de registro: " . $e->getMessage(), 'error');
+				$success_saving_all = false;
+				Yii::app()->end();
+			}
+		}
+	}
 }
 ?>

@@ -2,8 +2,29 @@
 Yii::app()->theme = 'rnc_theme_panel';
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/speciesSpecial.css');
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.css');
-
+$userRole = Yii::app()->user->getState("roles");
 ?>
+
+<script>
+function activarRegistro(id){
+	
+	if(confirm("Desea reabrir el formulario del registro?") == true){
+		$.post("../activarRegistro", {idRegistro: id},function(data){
+			
+			if(data.status == 'failure'){
+				alert("Ocurrió un problema y no se pudo cancelar el registro");
+				window.location.href ="<?=Yii::app()->createUrl('registros'.DIRECTORY_SEPARATOR.$model->registros->id);?>";
+			}else{
+				alert("El registro fue reabierto con éxito.");
+				window.location.href ="<?=Yii::app()->createUrl('registros'.DIRECTORY_SEPARATOR.$model->registros->id);?>";
+			}
+		},"json");
+	}else{
+		window.stop();
+	}
+	
+}
+</script>
 
 <div id="header-front">Colección número: <?php echo ($model->registros->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->registros->numero_registro); ?></div>
 
@@ -13,6 +34,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 		'buttons'=>array(
 				array('label'=>'Listar colecciones', 'icon'=>'icon-list', 'url'=>array('index')),
 				array('label'=>'Volver a la colección', 'icon'=>'icon-list', 'url'=>Yii::app()->createUrl('registros'.DIRECTORY_SEPARATOR.$model->registros->id)),
+				array('label'=>'Activar Registro', 'icon'=>'icon-check', 'url' => 'javascript:activarRegistro('.$model->id.')','visible' => ($model->estado == 2 && $userRole == "admin") ? true : false),
 		),
 ));
 ?>
