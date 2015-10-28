@@ -217,3 +217,7 @@ pip-log.txt
 
 rnc_files/
 *.pdf
+
+db/
+
+*.old

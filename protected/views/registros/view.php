@@ -83,6 +83,6 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 	<p class="note"><?= $dataMsj;?></p>
 	
 	<?php 
-	$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'registro-cancel-form-submit', 'type'=>'success', 'label'=>'Cerrar', 'htmlOptions' => array('onclick' => 'cerrarModal()')));
+	$this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'registro-cancel-form-submit', 'type'=>'success', 'label'=>'Cerrar', 'htmlOptions' => array('onclick' => 'cerrarModal(\'modalMsj\')')));
 	?>
 <?php $this->endWidget(); ?>

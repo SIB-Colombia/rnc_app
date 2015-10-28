@@ -47,6 +47,7 @@
  * @property Contactos				$contactos
  * @property Dilegenciadores		$dilegenciadores
  * @property Archivos				$archivos
+ * @property Urls_Registros			$urls_registros
  */
 
 class Registros_update extends CActiveRecord
@@ -123,7 +124,8 @@ class Registros_update extends CActiveRecord
 				'county' 				=> array(self::BELONGS_TO, 'County', 'ciudad_id'),
 				'department'			=> array(self::BELONGS_TO, 'Department', 'departamento_id'),
 				'archivos'				=> array(self::HAS_MANY,'Archivos', 'Registros_update_id'),
-				'estado_registro'		=> array(self::BELONGS_TO,'Estado_Registro','estado')
+				'estado_registro'		=> array(self::BELONGS_TO,'Estado_Registro','estado'),
+				'urls_registros'		=> array(self::HAS_MANY, 'Urls_Registros', 'registros_update_id'),
 		);
 	}
 	
@@ -270,6 +272,23 @@ class Registros_update extends CActiveRecord
 				'sort' => false,
 				'pagination'=>array(
 						'pageSize'=>100,
+				)
+		));
+	}
+
+	public function dataUrlsList($id){
+		$criteria = new CDbCriteria;
+	
+		$criteria->compare('t.registros_update_id', $id);
+		$criteria->order = 'id ASC';
+	
+		$modelUrl = Urls_Registros::model();
+	
+		return new CActiveDataProvider($modelUrl, array(
+				'criteria'=>$criteria,
+				'sort' => false,
+				'pagination'=>array(
+						'pageSize'=>5,
 				)
 		));
 	}

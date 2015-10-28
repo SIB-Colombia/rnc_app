@@ -32,6 +32,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploa
 contTipo 		= 0;
 contTipoCol 	= 0;
 contNivelCat 	= 0;
+contUL			= 0;
 
 function validarNumeroColeccion(obj,numero){
 	$.post(urlAjaxValidar,{coleccion: numero},function(data){
@@ -138,6 +139,29 @@ function agregarTipoCol(){
 
 	
 	$("#tipoCole").append(htmlCode);
+}
+
+function agregarUrlReg(){
+	contUL++;
+	htmlCode  = '<div id="ul_'+contUL+'" style="float:left;clear:both;margin-left:210px">';
+	htmlCode += '<input name="Urls_Registros['+contUL+'][nombre]" size="32" maxlength="500" class="textareaA textInline" placeholder="<?=$urls_registros->getAttributeLabel('nombre');?>" id="Urls_Registros_nombre_'+contUL+'" type="text">';
+	htmlCode += '<input name="Urls_Registros['+contUL+'][url]" size="32" maxlength="2000" class="textareaA textInline" placeholder="<?=$urls_registros->getAttributeLabel('url');?>" id="Urls_Registros_url_'+contUL+'" type="text">';
+	htmlCode	+= '<select name="Urls_Registros['+contUL+'][tipo]" class="textareaA textInline" style="width:140px !important" id="Urls_Registros_url_'+contUL+'">';
+
+	<?php
+		$datos = Urls_Registros::model()->listTipo();
+		echo 'htmlCode += \'<option value>Seleccionar...</option>\';';
+		foreach ($datos as $k => $dato){
+			echo 'htmlCode += \'<option value="'.$k.'">'.$dato.'</option>\';';
+		}
+	?>
+	
+	htmlCode	+= '</select>';
+	htmlCode += '<a class="addType btn btn-danger btn-small" onclick="eliminarTipoPres(\'ul_'+contUL+'\',\'\',\'\')" id="yw'+contUL+'">-</a>';
+	htmlCode += '</div>';
+
+	
+	$("#urlReg").append(htmlCode);
 }
 
 function agregarNivelCat(){
@@ -447,6 +471,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		  echo $form->errorSummary($model->registros_update->composicion_general);
 		  echo $form->errorSummary($model->registros_update->contactos);
 		  echo $form->errorSummary($model->registros_update->dilegenciadores);
+		  echo $form->errorSummary($model->registros_update->urls_registros);
 	?>
 	
 	<div class="tab-content">
@@ -849,8 +874,72 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 				<?php 
 					echo $form->textAreaRow($model->registros_update, 'info_adicional', array('class'=>'span4', 'rows'=>4));
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Información complementaria sobre el contenido, contexto y estado de la colección biológica."></i>';
-					echo $form->textFieldRow($model->registros_update, 'pagina_web', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','prepend'=>'http://'));
-					echo '<i class="icon-info-sign" rel="tooltip" title = "URL o vínculo de la colección virtual o del sitio en Internet donde se encuentra la información sobre la colección."></i>';
+					if($this->route == 'registros/validar'){
+				?>
+				
+					<div class="InlineFormDiv" id="urlReg">
+					
+					<div style="padding-top: 10px;float: left;clear: both;margin-left: 220px;">
+					<?php echo '<i style="float:right;" class="icon-info-sign" rel="tooltip" title = "URL o vínculo de la colección virtual o del sitio en Internet donde se encuentra la información sobre la colección."></i>';?>
+						<label class="control-label required inlineLabel2" style="width: 160px !important;text-align: center !important; font-weight: bold;"><?=$urls_registros->getAttributeLabel('nombre');?></label>
+						<label class="control-label required inlineLabel2" style="width: 160px !important;text-align: center !important;margin-left: 20px; font-weight: bold;"><?=$urls_registros->getAttributeLabel('url');?></label>
+						<label class="control-label required inlineLabel2" style="width: 160px !important;text-align: center !important;margin-left: 20px; font-weight: bold;"><?=$urls_registros->getAttributeLabel('tipo');?></label>
+					</div>
+					<?php
+						
+						echo '<div style="float:left;clear:both;margin-left:210px;padding-bottom: 20px">';
+						
+						if(!isset($model->registros_update->id) || count($model->registros_update->urls_registros) == 0){
+							echo "<div>";
+							echo $form->textField($urls_registros, 'nombre', array('name'=>'Urls_Registros[0][nombre]','size'=>32,'maxlength'=>500, 'class'=>'textareaA textInline', 'placeholder' => "Nombre"));
+							echo $form->textField($urls_registros, 'url', array('name'=>'Urls_Registros[0][url]','size'=>32,'maxlength'=>2000, 'class'=>'textareaA textInline', 'placeholder' => "Url"));
+							echo $form->dropDownList($urls_registros, 'tipo', $urls_registros->listTipo(),array('prompt' => 'Seleccionar...','name'=>'Urls_Registros[0][tipo]','class'=>'textareaA textInline','style' => 'width:140px !important;'));
+							
+							$this->widget('bootstrap.widgets.TbButton', array(
+									'label'=>'+',
+									'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+									'size'=>'small', // null, 'large', 'small' or 'mini'
+									'htmlOptions'=>array('class'=>'addType','onclick' => 'agregarUrlReg()')
+							));
+							echo "</div>";
+						}else {
+							
+							$dataTipo	= $model->registros_update->urls_registros;
+							$cont = 0;
+							
+							foreach ($dataTipo as $value){
+								echo '<div id="ul_'.$cont.'">';
+								echo $form->textField($value, 'nombre', array('value' => $value->nombre,'name'=>'Urls_Registros['.$cont.'][nombre]','size'=>32,'maxlength'=>2000, 'class'=>'textareaA textInline', 'placeholder' => "Nombre"));
+								echo $form->textField($value, 'url', array('value' => $value->url,'name'=>'Urls_Registros['.$cont.'][url]','size'=>32,'maxlength'=>2000, 'class'=>'textareaA textInline', 'placeholder' => "Url"));
+								echo $form->dropDownList($value, 'tipo', $value->listTipo(),array('prompt' => 'Seleccionar...','name'=>'Urls_Registros['.$cont.'][tipo]','class'=>'textareaA textInline','style' => 'width:140px !important;'));
+								echo $form->hiddenField($value, 'id',array('value' => $value->id,'name'=>'Urls_Registros['.$cont.'][id]'));
+
+								
+								$this->widget('bootstrap.widgets.TbButton', array(
+										'label'=>($cont == 0) ? "+" : "-",
+										'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+										'size'=>'small', // null, 'large', 'small' or 'mini'
+										'htmlOptions'=>array('class'=>($cont == 0) ? "addType" : "addType btn-danger",'onclick' => ($cont == 0) ? "agregarUrlReg()" : "eliminarTipoPres('ul_".$cont."','','')")
+								));
+								$cont++;
+								echo "</div>";
+							}
+							
+							$cont = $cont - 1;
+							echo '<script type="text/javascript">
+									contUL 	= '.$cont.';
+								</script>';
+						}
+						
+						echo '</div>';
+					?>
+					</div>
+
+
+				<?php	
+						//echo $form->textFieldRow($model->registros_update, 'pagina_web', array('size'=>32,'maxlength'=>2000, 'class'=>'textareaA','prepend'=>'http://'));
+						//echo '<i class="icon-info-sign" rel="tooltip" title = "URL o vínculo de la colección virtual o del sitio en Internet donde se encuentra la información sobre la colección."></i>';
+					}
 					echo $form->fileFieldRow($model->registros_update, 'archivoColeccion');
 					echo '<i class="icon-info-sign" rel="tooltip" title = "Permite adjuntar fotos, videos, folletos y demás material divulgativo de la colección, que puede ser utilizado para las estrategias de visibilidad de las colecciones biológicas."></i>';
 				?>

@@ -196,10 +196,10 @@ img.standalone {
 	margin:0 auto;
 
 	padding-top: 20px;
-	min-height: 100%;
+	min-height: 764px;
 	height: auto !important;
 	height: 100%;
-	margin: 0 auto -120px;
+	margin: 0 auto;
 }
 #container:after {
   content: "";
@@ -379,30 +379,34 @@ footer {
 	clear: both;
 	margin: 0;
 	color: #515254 !important;
-	background: #69665d url("images/shadow_top.png") no-repeat top center;
+	background: #35322C url("images/shadow_top.png") no-repeat top center;
 	line-height: 1.5em;
 	position: relative;
 	bottom: 0px;
-	display: block;
 	width: 100%;
+	text-align: center !important; 
+	display: inline-block !important;
 	
 }
 #container:after, footer {
 	min-height: 120px;
 }
 
-footer section{ margin: 0 auto; max-width: 1100px; padding: 20px 0 !important;}
-footer section div{ display: inline-block; vertical-align: top;}
-footer section div:nth-child(1){ width: 60%; text-align: left;}
-footer section div:nth-child(2){ width: 33%; padding-top: 10px; min-width: 325px;}
+footer section{ margin: 0 auto; max-width: 1100px; padding: 20px 0 !important; }
+footer section div{ display: inline-block !important; vertical-align: top;}
+footer section div:nth-child(1){ width: 100%; text-align: center; display: inline-block;}
+footer section div:nth-child(2){ width: 100%; padding-top: 10px; min-width: 325px; padding-bottom: 10px; display: block !important;}
 footer section div img{
 	height: 70px;
 	width: auto;
-	margin: -5px 0 0 10px;
-	background-color: rgba(255,255,255,0.4);
+	margin: 0 auto !important;
+	/* background-color: rgba(255,255,255,0.4);*/
 	padding: 5px;
+	display: inline-block !important;
+	text-align: center !important;
 	-webkit-border-radius: 7px;
     border-radius: 7px;}
+
 footer section a{
 	color: white !important;
 	text-transform: uppercase;
@@ -411,7 +415,32 @@ footer section a{
 }
 footer section a:hover{
 	color: black !important;
+	display: inline-block !important;
 }
+
+.doscol ul {
+	display: inline-block;
+}
+.lineal {
+	border-right: 1px solid #fff;
+	margin-left: 30px;
+	height: 60px;
+	vertical-align: middle;
+}
+
+.doscol li {
+	display: inline-block;
+}
+
+.doscol p {
+	text-align: left;
+}
+
+footer .nav-pills > li {
+    float: none; 
+    display: inline-block;
+}
+
 footer  p{
 	color: white;
 	font-size: 0.8em;

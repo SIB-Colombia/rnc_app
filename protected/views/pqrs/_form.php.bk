@@ -1,0 +1,277 @@
+<?php
+/* @var $this UsuarioController */
+/* @var $model Usuario */
+/* @var $form CActiveForm */
+
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
+$userRole  = Yii::app()->user->getState("roles");
+
+//Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/jquery.uploadify.js', CClientScript::POS_HEAD);
+//Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploadify.css');
+//Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/css-fileupload/style.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/css-fileupload/jquery.fileupload.css');
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/css-fileupload/jquery.fileupload-ui.css');
+
+?>
+
+<script type="text/javascript">
+
+<?php 
+	if(isset($model->id)){
+		echo 'urlAjax 			= "../deleteFileAjax";';
+	}else{
+		echo 'urlAjax 			= "deleteFileAjax";';
+	}
+?>
+
+function enviarForm(){
+	$("#pqrs-form").submit();
+}
+
+function resetForm(id) {
+	$('#'+id).each(function(){
+	        this.reset();
+	});
+}
+
+function deleteFileUpAjax(divId,name){
+	
+	$.post(urlAjax, {name: name},function(data){
+		if(data == 1){
+			$("#"+divId).remove();
+		}else{
+			alert("Error al eliminar el archivo.");
+		}
+	});
+}
+
+randWord = Math.floor((Math.random()*1000)+1);
+contUp = 0;
+
+
+</script>
+<div class="form">
+
+<?php 
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+		'id'=>'fileupload',
+		'type'=>'horizontal',
+		'enableClientValidation'=>true,
+		'enableAjaxValidation'=>false,
+));
+?>
+
+	<p class="note" style="color: #999">
+	Relacione sus inquietudes, sugerencias y comentarios en este formulario. Si lo requiere anexe los documentos que acompañan su comunicación.
+	</p>
+
+	<?php echo $form->errorSummary($model); ?>
+
+	<fieldset>
+		<legend class="form_legend">Datos de la solicitud</legend>
+		<?php 
+			if(Yii::app()->user->getId() !== null){
+		?>
+			<p class="note">Los campos con <span class="required">*</span> son obligatorios.</p>
+		<?php }else{?>
+			<p class="note" style="color: #999;text-align: justify;margin-bottom: 20px">Los campos con <span class="required">*</span> son obligatorios.</p>
+		<?php }?>
+		
+		<?php 
+			echo $form->textFieldRow($model, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+			echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA'));
+			
+			if(Yii::app()->user->getId() === null || $userRole == "admin"){
+				echo $form->dropDownListRow($model, 'entidad', Entidad::model()->listarEntidades(),array('prompt' => 'Seleccionar...','onchange' => ''));
+				echo $form->textFieldRow($model, 'entidad_otra', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+			}
+			
+			if(Yii::app()->user->getId() === null || $userRole == "admin"){
+				echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+			}else{
+				echo $form->dropDownListRow($model, 'numero_registro', $model->listarColeccion(),array('prompt' => 'Seleccionar...','onchange' => ''));
+			}
+			echo '<i class="icon-info-sign" rel="tooltip" title = "Si la consulta no está relacionada con una colección registrada por favor escriba 0"></i>';
+			if($userRole == 'admin'){
+				echo $form->dropDownListRow($model, 'tipo_solicitud', $model->listarTipoSolicitud(),array('prompt' => 'Seleccionar...'));
+			}
+			echo $form->textAreaRow($model, 'descripcion', array('class'=>'span4', 'rows'=>4));
+		?>
+		<div class="row fileupload-buttonbar">
+			<div class="col-lg-7" style="clear: both;margin-left: 30px;">
+				<span class="btn btn-success fileinput-button">
+                    <i class="icon-white icon-plus"></i>
+                    <span>Agregar Archivos</span>
+					<?php 
+						echo $form->fileField($model, 'archivo',array('multiple'));
+						echo $form->hiddenField($model, 'nombreArchivo');
+					?>	
+				</span>
+				<button type="submit" class="btn btn-primary start">
+                    <i class="icon-white icon-upload"></i>
+                    <span>Iniciar carga</span>
+                </button>
+                <button type="reset" class="btn btn-warning cancel">
+                    <i class="icon-white icon-ban-circle"></i>
+                    <span>Cancel upload</span>
+                </button>
+                <button type="button" class="btn btn-danger delete">
+                    <i class="icon-white icon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                
+                <input type="checkbox" class="toggle">
+                <span class="fileupload-process"></span>
+                
+			</div>
+			<div class="col-lg-5 fileupload-progress fade">
+                <!-- The global progress bar -->
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+		</div>
+		<table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+		<div id = "adjFile">
+		</div>
+		<label class="control-label inlineLabel2" style="clear: left;margin-left: 220px;width: auto">Formatos válidos: PDF (*.pdf), World  (*.doc,*.docx) e Imágenes (*.jpg). Tamaño máximo 20MB.</label>
+		
+		
+		
+	</fieldset>
+	
+	<?php /*if(CCaptcha::checkRequirements() && Yii::app()->user->getId() === null): ?>
+		<div style="padding-left: 220px">
+			<?php echo $form->labelEx($model,'codigoVerificacion'); ?>
+			<?php echo $form->textField($model,'codigoVerificacion', array('class'=>'field','style'=>'width:200px')); ?>
+			<?php $this->widget('CCaptcha'); ?>
+			<div class="hint">
+				Digite las letras que se muestran en el código de verificación.
+				<br/>Puede escribirlas en mayúscula o minúscula.
+			</div>
+			<?php //echo $form->error($model,'codigoVerificacion'); ?>
+		</div>
+	<?php endif; */?>
+		
+	<div id="catalogouser-botones-internos" class="form-actions pull-right">
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'id'=>'catalogo-user-form-interno-submit', 'type'=>'success', 'label'=>$model->isNewRecord ? 'Enviar' : 'Actualizar', 'htmlOptions' => array('onclick' => 'enviarForm()'))); ?>
+	    <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'reset', 'id'=>'catalogo-user-form-interno-reset', 'label'=>'Limpiar campos')); ?>
+	    <?php 
+	    if(Yii::app()->user->getId() !== null){
+			$this->widget('bootstrap.widgets.TbButtonGroup', array(
+				'buttons'=>array(
+					array('label'=>'Cancel', 'url'=>array('admin/panel')),
+				),
+			));
+		}else{
+			$this->widget('bootstrap.widgets.TbButtonGroup', array(
+				'buttons'=>array(
+						array('label'=>'Cancel', 'url'=>array('site/index')),
+				),
+			));
+		}
+		?>
+    </div>
+
+<?php $this->endWidget(); ?>
+
+</div><!-- form -->
+
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td>
+            <span class="preview"></span>
+        </td>
+        <td>
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+        </td>
+        <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+        </td>
+        <td>
+            {% if (!i && !o.options.autoUpload) { %}
+                <button class="btn btn-primary start" disabled>
+                    <i class="icon-white icon-upload"></i>
+                    <span>Start</span>
+                </button>
+            {% } %}
+            {% if (!i) { %}
+                <button class="btn btn-warning cancel">
+                    <i class="icon-white icon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        <td>
+            <span class="preview">
+                {% if (file.thumbnailUrl) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                {% } %}
+            </span>
+        </td>
+        <td>
+            <p class="name">
+                {% if (file.url) { %}
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+                {% } else { %}
+                    <span>{%=file.name%}</span>
+                {% } %}
+            </p>
+            {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+            {% } %}
+        </td>
+        <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+        </td>
+        <td>
+            {% if (file.deleteUrl) { %}
+                <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                    <i class="icon-white icon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
+                <button class="btn btn-warning cancel">
+                    <i class="icon-white icon-ban-circle"></i>
+                    <span>Cancel</span>
+                </button>
+            {% } %}
+        </td>
+    </tr>
+{% } %}
+</script>
+<!-- The Templates plugin is included to render the upload/download listings -->
+<script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+<script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
+<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+<script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<!-- blueimp Gallery script -->
+<script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<?php 
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/vendor/jquery.ui.widget.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/jquery.iframe-transport.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/jquery.fileupload.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/jquery.fileupload-process.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/jquery.fileupload-image.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/jquery.fileupload-audio.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/jquery.fileupload-video.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/jquery.fileupload-validate.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/jquery.fileupload-ui.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/js-fileupload/main.js',CClientScript::POS_END);
+?>

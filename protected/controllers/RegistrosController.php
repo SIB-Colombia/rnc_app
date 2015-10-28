@@ -179,6 +179,7 @@ class RegistrosController extends Controller{
 			$tamano_coleccion 		= Tamano_Coleccion::model();
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
+			$urls_registros			= Urls_Registros::model();
 			
 			if(isset($_POST['Registros_update'])){
 				//print_r($_POST);
@@ -425,7 +426,8 @@ class RegistrosController extends Controller{
 					'model'=>$model,
 					'composicion_general' => $composicion_general,
 					'tamano_coleccion' => $tamano_coleccion,
-					'tipos_en_coleccion' => $tipos_en_coleccion
+					'tipos_en_coleccion' => $tipos_en_coleccion,
+					'urls_registros'	=> $urls_registros,
 			));
 		}else{
 			$this->redirect(array("admin/panel"));
@@ -453,7 +455,7 @@ class RegistrosController extends Controller{
 			$tamano_coleccion 		= Tamano_Coleccion::model();
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
-			
+			$urls_registros			= Urls_Registros::model();
 			
 			$success_saving_all = false;
 			
@@ -743,7 +745,8 @@ class RegistrosController extends Controller{
 					'model'=>$model,
 					'composicion_general' => $composicion_general,
 					'tamano_coleccion' => $tamano_coleccion,
-					'tipos_en_coleccion' => $tipos_en_coleccion
+					'tipos_en_coleccion' => $tipos_en_coleccion,
+					'urls_registros'	=> $urls_registros,
 			));
 			
 		}else{
@@ -756,7 +759,7 @@ class RegistrosController extends Controller{
 		{
 			$criteria = new CDbCriteria;
 			//$criteria->compare("estado", 0);
-			$criteria->with = array('county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos');
+			$criteria->with = array('county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos','urls_registros');
 			$registros_update = Registros_update::model()->findByPk($id,$criteria);
 			
 			$model=$this->loadModel($registros_update->registros->id);
@@ -765,6 +768,7 @@ class RegistrosController extends Controller{
 			$tamano_coleccion 		= Tamano_Coleccion::model();
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
+			$urls_registros			= Urls_Registros::model();
 			
 			if(isset($_POST['Registros']) && isset($_POST['Registros_update'])){
 				
@@ -909,6 +913,30 @@ class RegistrosController extends Controller{
 									$model->registros_update->tipos_en_coleccion->Registros_update_id	= $model->registros_update->id;
 										
 									$model->registros_update->tipos_en_coleccion->save();
+								}
+							}
+						}
+
+						if(isset($_POST['Urls_Registros'])){
+							foreach ($_POST['Urls_Registros'] as $url){
+						
+								if(isset($url['id'])){
+									$dataUrl	= Urls_Registros::model()->findByPk($url['id']);
+									$model->registros_update->urls_registros = $dataUrl;
+									$model->registros_update->urls_registros->nombre			= $url['nombre'];
+									$model->registros_update->urls_registros->url				= $url['url'];
+									$model->registros_update->urls_registros->tipo				= $url['tipo'];
+						
+									$model->registros_update->urls_registros->save();
+								}else{
+									$model->registros_update->urls_registros	= new Urls_Registros();
+										
+									$model->registros_update->urls_registros->nombre			= $url['nombre'];
+									$model->registros_update->urls_registros->url				= $url['url'];
+									$model->registros_update->urls_registros->tipo				= $url['tipo'];
+									$model->registros_update->urls_registros->registros_update_id	= $model->registros_update->id;
+										
+									$model->registros_update->urls_registros->save();
 								}
 							}
 						}
@@ -1123,12 +1151,12 @@ class RegistrosController extends Controller{
 				}
 			}
 
-			
 			$this->render('validar',array(
 					'model'=>$model,
 					'composicion_general' => $composicion_general,
 					'tamano_coleccion' => $tamano_coleccion,
-					'tipos_en_coleccion' => $tipos_en_coleccion
+					'tipos_en_coleccion' => $tipos_en_coleccion,
+					'urls_registros'	=> $urls_registros,
 			));
 			
 		}else{
@@ -1156,6 +1184,7 @@ class RegistrosController extends Controller{
 			$tamano_coleccion 		= Tamano_Coleccion::model();
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
+			$urls_registros			= Urls_Registros::model();
 			
 			if(isset($_POST['Registros_update'])){
 				$modelRegistroUpdate = new Registros_update();
@@ -1386,7 +1415,8 @@ class RegistrosController extends Controller{
 					'model'=>$model,
 					'composicion_general' => $composicion_general,
 					'tamano_coleccion' => $tamano_coleccion,
-					'tipos_en_coleccion' => $tipos_en_coleccion
+					'tipos_en_coleccion' => $tipos_en_coleccion,
+					'urls_registros'	=> $urls_registros,
 			));
 		}else{
 			$this->redirect(array("admin/login"));
@@ -1410,6 +1440,21 @@ class RegistrosController extends Controller{
 		}
 	}
 	
+	public function actionDeleteLevels($id){
+		if(Yii::app()->user->getId() !== null){
+				$modelComposicion = Composicion_General::model()->findByPk($id);
+				if($modelComposicion->delete()){
+					echo CJSON::encode(array(
+							'status'=>'ok',
+							));
+				}else{
+					echo CJSON::encode(array(
+							'status'=>'failure',
+							));
+				}
+		}
+
+	}
 	public function actionDeleteDetail($id){
 		if(Yii::app()->user->getId() !== null)
 		{
@@ -1838,12 +1883,12 @@ class RegistrosController extends Controller{
 		
 		$criteria=new CDbCriteria;
 		$criteria->compare('t.estado', 2);
-		$criteria->with = array('registros','county','contactos');
+		$criteria->with = array('registros','county','contactos','urls_registros');
 		
 		$dataRegitros = $model->findAll($criteria);
 		
 		foreach ($dataRegitros as $registro){
-			$datos[] = array($registro->registros->numero_registro,$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->fecha_fund,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "Y-m-d"),$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono);
+			$datos[] = array($registro->registros->numero_registro.$this->getUrlColection($registro->urls_registros),$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "Y-m-d"),$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono);
 		}
 			
 		$this->render('colecciones',array(
@@ -1852,6 +1897,29 @@ class RegistrosController extends Controller{
 		));
 	}
 	
+	private function getUrlColection($urls){
+		if(is_array($urls)){
+			$urlP = Yii::app();
+			//print_r($urlP);
+			//Yii::app()->end();
+			$html = '<ul style="float:right;margin: 0">';
+			foreach ($urls as $url) {
+				if($url->tipo == 0){
+					$html .= '<li style="float:left; margin-left: 5px"><a href="'.$url->url.'" target="_blank" title="'.$url->nombre.'"><img width="30" src="/themes/rnc_theme/images/sib-40.png"/></a></li>';
+				}else if($url->tipo == 1){
+					$html .= '<li style="float:left; margin-left: 5px"><a href="'.$url->url.'" target="_blank" title="'.$url->nombre.'"><img width="30" src="/themes/rnc_theme/images/otro-40.png"/></a></li>';
+				}
+			}
+			$html .= "</ul>";
+			return $html;
+		}else{
+			$html = "<ul>";
+			$html .= '<li><a href="'.$url->url.'" target="_blank">'.$url->nombre.'</a></li>';
+			$html .= "</ul>";
+			return $html;
+		}
+	}
+
 	public function actionValidarActualizar(){
 		if(isset($_POST['id'])){
 			$modelRegUp = Registros_update::model();

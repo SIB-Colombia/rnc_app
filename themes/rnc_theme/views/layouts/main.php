@@ -88,28 +88,43 @@
 		</div>
 
 	<footer>
-			<section>
-				<div>
-				<?php 
-			$this->widget('bootstrap.widgets.TbMenu', array(
-				'type' => 'pills',
-				'stacked'=>false,
-				'items' => array(
-					array('label' => 'Solicitar usuario', 'url' => array('entidad/solicitud')),
-					array('label' => 'Ingresar', 'url' => array('admin/index')),
-					array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
-					array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
-					array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
-				)
-			));
-		?>
-		<p>2014 · Instituto de investigación de recursos biológicos Alexander von Humboldt · Ministerio de Medio Ambiente de Colombia · SiB Colombia</p>
-			
-			</div>
+		<section>
 			<div>
-				<a href="http://www.minambiente.gov.co/" target="_blank" title="Ministerio de Medio Ambiente"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/logoMinAmbiente.png" width="350px"></a>
-				<a href="http://www.humboldt.org.co" target="_blank" title="Instituto Alexander von Humboldt"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/logoHumboldt.png" width="120px"></a>
-			</section>
-		</footer>
+			<?php 
+				$this->widget('bootstrap.widgets.TbMenu', array(
+					'type' => 'pills',
+					'stacked'=>false,
+					'items' => array(
+						array('label' => 'Solicitar usuario', 'url' => array('entidad/solicitud')),
+						array('label' => 'Ingresar', 'url' => array('admin/index')),
+						array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
+						array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
+						array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
+					)
+				));
+			?>
+			</div>
+
+			<div class="doscol clearfix">
+				
+				<ul>
+				<p> Coordinan:</p>
+				<li> <a href="http://www.minambiente.gov.co/" target="_blank" title="Ministerio de Medio Ambiente"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/MinAmbiente.png" ></a></li>
+				<li> <a href="http://www.humboldt.org.co" target="_blank" title="Instituto Alexander von Humboldt"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/IAvH.png" ></a></li>
+				<li class="lineal"><li>
+				</ul>	
+				
+				
+				<ul>
+				<p> Apoyan:</p>
+
+				<li> <a href="http://grbio.org/" target="_blank" title="Instituto Alexander von Humboldt"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/GRbio.png"></a></li>
+				<li> <a href="http://www.sibcolombia.net" target="_blank" title="Instituto Alexander von Humboldt"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/SIB.png" ></a></li>
+				</ul>
+			</div>	
+
+			<p>2014 · Instituto de Investigación de Recursos Biológicos Alexander Von Humboldt · Ministerio de Medio Ambiente de Colombia · SiB Colombia</p>
+		</section>
+	</footer>
 </body>
 </html>

@@ -52,8 +52,8 @@ return array(
 			'transportType' => 'smtp',
 			'transportOptions' => array(
 				'host' => 'smtp.gmail.com',
-				'username'=>'jdiaz@humboldt.org.co',
-				'password'=>'260216.GIC',
+				'username'=>'rnc@humboldt.org.co',
+				'password'=>'rnc2015.',
 				'port'=>'465',
 				'encryption' => 'ssl'
 			),
@@ -92,8 +92,8 @@ return array(
 		),*/
 		// uncomment the following to use a Postgres database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;port=3306;dbname=rnc_db',
-			//'connectionString' => 'pgsql:host=74.3.218.90;port=5432;dbname=catalogo',
+			'connectionString' => 'mysql:host=localhost;port=3306;dbname=rnc_db_5',
+			//'connectionString' => 'mysql:host=54.81.3.23;port=3306;dbname=rnc_db',
 			//'username' => 'lgrajales',
 			//'password' => 'Lg2013-',
 			//'emulatePrepare' => true,

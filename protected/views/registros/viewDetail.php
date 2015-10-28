@@ -111,7 +111,6 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 						'deorreferenciados',
 						'sistematizacion',
 						'info_adicional',
-						'pagina_web',
 						'comentario'
 					)
 				));
@@ -146,6 +145,11 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 			       	<?php echo $this->renderPartial('_composicion_col_table', array('listComposicion'=>$model->dataComposicionList($model->id))); ?>
 			</fieldset>
 			
+			<fieldset>
+				<legend class="form_legend">Recursos web</legend>
+			       	<?php echo $this->renderPartial('_urls_table', array('listUrls'=>$model->dataUrlsList($model->id))); ?>
+			</fieldset>
+
 			<fieldset>
 				<legend class="form_legend">Archivos</legend>
 			       	<?php echo $this->renderPartial('_archivos_col_table', array('listArchivos'=>$model->dataArchivosList($model->id))); ?>

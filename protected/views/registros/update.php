@@ -24,6 +24,6 @@ $userRole  = Yii::app()->user->getState("roles");
 			),
 	));
 	
-	echo $this->renderPartial('_form', array('model'=>$model,'tamano_coleccion' => $tamano_coleccion, 'tipos_en_coleccion' => $tipos_en_coleccion, 'composicion_general' => $composicion_general)); 
+	echo $this->renderPartial('_form', array('model'=>$model,'tamano_coleccion' => $tamano_coleccion, 'tipos_en_coleccion' => $tipos_en_coleccion, 'composicion_general' => $composicion_general, 'urls_registros' => $urls_registros)); 
 ?>
 </div>

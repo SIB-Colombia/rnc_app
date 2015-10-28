@@ -76,7 +76,6 @@ $(document).ready(function() {
             <th>Titular de la colección</th>
             <th>Nombre colección</th>
             <th>Acrónimo</th>
-            <th>Año Fundación</th>
             <th>Departamento</th>
             <th>Municipio</th>
             <th>Fecha de última actualización</th>
@@ -90,7 +89,6 @@ $(document).ready(function() {
             <th>Titular de la colección</th>
             <th>Nombre colección</th>
             <th>Acrónimo</th>
-            <th>Año Fundación</th>
             <th>Departamento</th>
             <th>Municipio</th>
             <th>Fecha de última actualización</th>
