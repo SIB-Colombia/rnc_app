@@ -52,8 +52,8 @@ return array(
 			'transportType' => 'smtp',
 			'transportOptions' => array(
 				'host' => 'smtp.gmail.com',
-				'username'=>'rnc@humboldt.org.co',
-				'password'=>'registrounico',
+				'username'=>getenv('MAIL_USER_RNC'),
+				'password'=>getenv('MAIL_PWD_RNC'),
 				'port'=>'465',
 				'encryption' => 'ssl'
 			),
@@ -97,8 +97,8 @@ return array(
 			//'username' => 'lgrajales',
 			//'password' => 'Lg2013-',
 			//'emulatePrepare' => true,
-			'username' => 'root', //actualizar usuario
-			'password' => '', //actualizar password
+			'username' => getenv('DB_USER_RNC'), //actualizar usuario
+			'password' => getenv('DB_PWD_RNC'), //actualizar password
 			'charset' => 'utf8',
 			'emulatePrepare' => false,
 			'enableProfiling'=>true,
