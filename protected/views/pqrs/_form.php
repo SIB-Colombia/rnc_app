@@ -8,8 +8,6 @@ $userRole  = Yii::app()->user->getState("roles");
 
 Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/js/jquery.uploadify.js', CClientScript::POS_HEAD);
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploadify.css');
-Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/css-fileupload/jquery.fileupload.css');
-Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/css-fileupload/jquery.fileupload-ui.css');
 
 ?>
 

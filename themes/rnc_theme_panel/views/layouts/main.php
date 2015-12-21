@@ -234,7 +234,6 @@
 				<ul>
 				<p> Apoyan:</p>
 
-				<li> <a href="http://grbio.org/" target="_blank" title="Instituto Alexander von Humboldt"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/GRbio.png"></a></li>
 				<li> <a href="http://www.sibcolombia.net" target="_blank" title="Instituto Alexander von Humboldt"><img alt="Logo MinAmbiente" src="<?=Yii::app()->theme->baseUrl?>/images/SIB.png" ></a></li>
 				</ul>
 			</div>	

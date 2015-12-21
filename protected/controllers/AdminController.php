@@ -119,7 +119,7 @@ class AdminController extends Controller{
 				$op_file = pathinfo($path);
 				
 				$filetime = time() - filemtime($path);
-				if($filetime >= (60*1*1)){
+				if($filetime >= (60*60*1)){
 					unlink($path);
 				}
 				
