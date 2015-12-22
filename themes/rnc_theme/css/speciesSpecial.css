@@ -325,3 +325,9 @@ b{
 	float: right;
 	cursor: pointer;
 }
+#accordion{
+	padding: 10px
+}
+.panel-body li{
+	list-style-type: disc;
+}

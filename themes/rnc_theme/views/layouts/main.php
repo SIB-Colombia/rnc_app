@@ -59,7 +59,6 @@
 <body>
 		 	
 	<header class="sib">
-		<div class="ribbon-wrapper-green"><div class="ribbon-green">BETA</div></div>
 		<a class="logo" href= "<?=Yii::app()->createUrl("site/index");?>" title="Registro Único Nacional de Colecciones Biológicas"><img  src="<?=Yii::app()->theme->baseUrl?>/images/logo_rnc.png"></a>
 		<!--h1><?php echo CHtml::encode(Yii::app()->name);  ?></h1-->
 
@@ -68,6 +67,7 @@
 				'type' => 'pills',
 				'stacked'=>false,
 				'items' => array(
+					array('label' => 'Preguntas frecuentes', 'url' => array('site/preguntas')),
 					array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
 					array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
 					array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
@@ -100,6 +100,7 @@
 						array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
 						array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
 						array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
+						array('label' => 'Preguntas frecuentes', 'url' => array('site/preguntas'))
 					)
 				));
 			?>
