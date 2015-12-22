@@ -29,7 +29,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 			  		<li>Diligenciar formulario</li>
 			  		<li>Anexar soportes:</li>
 			  		<ul>
-			  			<li>Certificado de existencia y representación legal</li>
+			  			<li>Certificado de existencia y representación legal (no mayor a 3 meses de expedición)</li>
 			  			<li>Copia de la cédula del titular</li>
 			  			<li>Formato de autodeclaración</li>
 			  			<li>Documentos que acrediten la obtención legal de los espcímenes</li>
@@ -51,7 +51,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 			  		<ul>
 			  			<li>Certificado de existencia y representación legal</li>
 			  			<li>Copia de la cédula del titular</li>
-			  			<li>Formato de autodeclaración</li>
+			  			<li>Formato de autodeclaración firmado por el titular de la colección (no mayor a 3 meses de expedición)</li>
 			  			<li>Documentos que acrediten la obtención legal de los espcímenes</li>
 			  		</ul>
 			  		<li>Enviar</li>

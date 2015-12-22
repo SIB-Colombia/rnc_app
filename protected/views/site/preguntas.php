@@ -359,7 +359,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
         					</ul>
         					<p>El reporte de los ejemplares depositados en la colección a través del aplicativo del RNC en línea, y publicación de los datos asociados en el SiB, son obligaciones de las colecciones biológicas (Ver <a href="#headingSeven">¿Qué obligaciones tienen las colecciones biológicas?).</a></p>
 
-							<p>El reporte en el aplicativo para generación de Certificado de Reporte CR-SiB es una obligación adquirida con la autoridad ambiental que otorga los permisos de recolección (Ver <a href="headingTwnine">¿Como puedo obtener el certificado de reporte a través del SiB Colombia (CR-SiB)?</a>).</p>
+							<p>El reporte en el aplicativo para generación de Certificado de Reporte CR-SiB es una obligación adquirida con la autoridad ambiental que otorga los permisos de recolección (Ver <a href="#headingTwnine">¿Como puedo obtener el certificado de reporte a través del SiB Colombia (CR-SiB)?</a>).</p>
 
 							<p>Ninguno de estos reportes ampara o legaliza ejemplares obtenidos sin los respectivos permisos u otra documentación (Ver <a href="#headingFour">¿Qué documentos acreditan la obtención legal de los especímenes?</a>).</p>
       					</div>
