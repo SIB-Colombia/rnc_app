@@ -20,6 +20,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploa
 		echo 'urlAjaxTraeTipoPre = "../traerTipoPreAjax";';
 		echo 'urlAjaxActSelectSub = "../actSelectSubgrupoAjax";';
 		echo 'urlAjaxCiudad	= "../../entidad/cargaCiudad";';
+		echo 'urlAjaxNivel 		= "../deleteLevels";';
 	}else{
 		echo 'urlAjax 			= "deleteFileAjax";';
 		echo 'urlAjaxValidar 	= "validarColeccionAjax";';
@@ -27,6 +28,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/uploa
 		echo 'urlAjaxTraeTipoPre = "traerTipoPreAjax";';
 		echo 'urlAjaxActSelectSub = "actSelectSubgrupoAjax";';
 		echo 'urlAjaxCiudad	= "../entidad/cargaCiudad";';
+
 	}
 ?>
 contTipo 		= 0;
@@ -207,7 +209,19 @@ function agregarNivelCat(){
 function eliminarTipoPres(idDiv,clase,id){
 	clase = clase.trim();
 	
-	$("#"+idDiv).remove();
+	id = Number.parseInt(id);
+	if(Number.isInteger(id) && id > 0){
+		$.post(urlAjaxNivel, {id: id},function(data){
+			
+			if(data.status == "ok"){
+				$("#"+idDiv).remove();
+			}else{
+				alert("Error al eliminar el item.");
+			}
+		},"json");	
+	}else{
+		$("#"+idDiv).remove();
+	}
 	
 	if(clase != "" && id != ""){
 		sumarTipo(clase,id);
@@ -742,7 +756,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 								'label'=>($cont == 0) ? "+" : "-",
 								'type'=> ($cont == 0) ? "success" : "danger", // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 								'size'=>'small', // null, 'large', 'small' or 'mini'
-								'htmlOptions'=>array('class'=>'','onclick' => ($cont == 0) ? "agregarNivelCat()" : "eliminarTipoPres('nc_".$cont."','compGeneral','')")
+								'htmlOptions'=>array('class'=>'','onclick' => ($cont == 0) ? "agregarNivelCat()" : "eliminarTipoPres('nc_".$cont."','compGeneral','". $value->id."')")
 						));
 						?>
 						
@@ -917,7 +931,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 								
 								$this->widget('bootstrap.widgets.TbButton', array(
 										'label'=>($cont == 0) ? "+" : "-",
-										'type'=>'success', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+										'type'=>($cont == 0) ? "success" : "danger", // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
 										'size'=>'small', // null, 'large', 'small' or 'mini'
 										'htmlOptions'=>array('class'=>($cont == 0) ? "addType" : "addType btn-danger",'onclick' => ($cont == 0) ? "agregarUrlReg()" : "eliminarTipoPres('ul_".$cont."','','')")
 								));

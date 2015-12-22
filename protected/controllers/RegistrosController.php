@@ -1440,8 +1440,9 @@ class RegistrosController extends Controller{
 		}
 	}
 	
-	public function actionDeleteLevels($id){
+	public function actionDeleteLevels(){
 		if(Yii::app()->user->getId() !== null){
+				$id = $_POST['id'];
 				$modelComposicion = Composicion_General::model()->findByPk($id);
 				if($modelComposicion->delete()){
 					echo CJSON::encode(array(

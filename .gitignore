@@ -8,6 +8,7 @@
 bin/
 tmp/
 assets/
+db/
 *.tmp
 *.bak
 *.swp
@@ -219,5 +220,8 @@ rnc_files/
 *.pdf
 
 db/
+*.sql
 
 *.old
+*.php.old
+info.php

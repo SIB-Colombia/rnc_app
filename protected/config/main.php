@@ -13,7 +13,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Registro Único Nacional de Colecciones Biológicas',
-	'charset'=>'utf-8',
+	'charset'=>'utf-8',	
 	
 	// Bootstrap configuration
 	//'theme'=>'bootstrap', // requires you to copy the theme under your themes directory
@@ -52,8 +52,8 @@ return array(
 			'transportType' => 'smtp',
 			'transportOptions' => array(
 				'host' => 'smtp.gmail.com',
-				'username'=>'rnc@humboldt.org.co',
-				'password'=>'rnc2015.',
+				'username'=>getenv('MAIL_USER_RNC'),
+				'password'=>getenv('MAIL_PWD_RNC'),
 				'port'=>'465',
 				'encryption' => 'ssl'
 			),
@@ -92,13 +92,13 @@ return array(
 		),*/
 		// uncomment the following to use a Postgres database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;port=3306;dbname=rnc_db_5',
-			//'connectionString' => 'mysql:host=54.81.3.23;port=3306;dbname=rnc_db',
+			'connectionString' => 'mysql:host=localhost;port=3306;dbname=rnc_db',
+			//'connectionString' => 'pgsql:host=74.3.218.90;port=5432;dbname=catalogo',
 			//'username' => 'lgrajales',
 			//'password' => 'Lg2013-',
 			//'emulatePrepare' => true,
-			'username' => 'root', //actualizar usuario
-			'password' => '', //actualizar password
+			'username' => getenv('DB_USER_RNC'), //actualizar usuario
+			'password' => getenv('DB_PWD_RNC'), //actualizar password
 			'charset' => 'utf8',
 			'emulatePrepare' => false,
 			'enableProfiling'=>true,

@@ -7,7 +7,7 @@
  * @version 1.0.0
  */
 
-Yii::import('ext.tcpdf.*');
+Yii::import('ext.tcpdf.tcpdf',true);
 class RNCPDF extends TCPDF {
 	
 	// Load table data from file

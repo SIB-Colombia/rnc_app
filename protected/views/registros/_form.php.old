@@ -416,7 +416,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						echo $form->dropDownListRow($model, 'tipo_coleccion_id', Tipo_Coleccion::model()->listarTipoColeccion(),array('prompt' => 'Seleccionar...','disabled' => true));
 					}else{
 						echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'onchange' => 'validarNumeroColeccion(this,this.value);'));
-						echo '<i class="icon-info-sign" rel="tooltip" title = "Ingrese el número 0, el administrador asignará el número de registro correspondiente."></i>';
+						echo '<i class="icon-info-sign" rel="tooltip" title = "Ingrese el número 0, el administrador aignará el número de registro correspondiente."></i>';
 						echo $form->dropDownListRow($model, 'tipo_coleccion_id', Tipo_Coleccion::model()->listarTipoColeccion(),array('prompt' => 'Seleccionar...'));
 					}
 					

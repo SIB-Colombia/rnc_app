@@ -155,4 +155,8 @@ class SiteController extends Controller
 		header("Content-Disposition: attachment; filename=".$outname.";\n\n");
 		readfile($filename);
 	}
+
+	public function actionPreguntas(){
+		$this->render('preguntas');
+	}
 }
