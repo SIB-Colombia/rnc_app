@@ -331,3 +331,9 @@ b{
 .panel-body li{
 	list-style-type: disc;
 }
+.numeral li{
+	list-style-type: decimal;
+}
+.numeral ul li{
+	list-style-type: disc;
+}
