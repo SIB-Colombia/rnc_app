@@ -125,23 +125,7 @@ class SiteController extends Controller
 	}
 	
 	public function actionArchivoAuto(){
-		$filename = "rnc_files".DIRECTORY_SEPARATOR."Certificado_autodeclaracion.docx";
-		header("Expires: -1");
-		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		header("Content-type: application/docx;\n"); //or yours?
-		header("Content-Transfer-Encoding: binary");
-		header("Cache-Control: no-store, no-cache, must-revalidate");
-		header("Cache-Control: post-check=0, pre-check=0");
-		header("Pragma: no-cache");
-		$len = filesize($filename);
-		header("Content-Length: $len;\n");
-		$outname="Certificado_autodeclaracion.docx";
-		header("Content-Disposition: attachment; filename=".$outname.";\n\n");
-		readfile($filename);
-	}
-	
-	public function actionArchivoInstructivo(){
-		$filename = "rnc_files".DIRECTORY_SEPARATOR."Instructivo_RNC_1.1.pdf";
+		$filename = "rnc_files".DIRECTORY_SEPARATOR."certificadoautodeclaracion2.0.pdf";
 		header("Expires: -1");
 		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 		header("Content-type: application/xlsx;\n"); //or yours?
@@ -151,7 +135,23 @@ class SiteController extends Controller
 		header("Pragma: no-cache");
 		$len = filesize($filename);
 		header("Content-Length: $len;\n");
-		$outname="Instructivo_RNC_1.1.pdf";
+		$outname="certificadoautodeclaracion2.0.pdf";
+		header("Content-Disposition: attachment; filename=".$outname.";\n\n");
+		readfile($filename);
+	}
+	
+	public function actionArchivoInstructivo(){
+		$filename = "rnc_files".DIRECTORY_SEPARATOR."InstructivoRNC2.0.2.pdf";
+		header("Expires: -1");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Content-type: application/xlsx;\n"); //or yours?
+		header("Content-Transfer-Encoding: binary");
+		header("Cache-Control: no-store, no-cache, must-revalidate");
+		header("Cache-Control: post-check=0, pre-check=0");
+		header("Pragma: no-cache");
+		$len = filesize($filename);
+		header("Content-Length: $len;\n");
+		$outname="InstructivoRNC2.0.2.pdf";
 		header("Content-Disposition: attachment; filename=".$outname.";\n\n");
 		readfile($filename);
 	}

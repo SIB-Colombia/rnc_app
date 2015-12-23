@@ -14,8 +14,8 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 			  <div class="panel-heading">Documentos para descargar</div>
 			  <div class="panel-body">
 			  	<ul>
-			  		<li>Guía de registro y actualización de colecciones biológicas Versión 2.0  <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'type'=>'success','label'=>'Descargar','htmlOptions' => array('class'=>'btn btn-success btn-xs','onclick' => 'window.location="'.Yii::app()->createUrl("site/archivoAuto").'"')));?></li>
-			  		<li>Formato de autodeclaración Versión 2.0 <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'type'=>'success','label'=>'Descargar','htmlOptions' => array('class'=>'btn btn-success btn-xs','onclick' => 'window.location="'.Yii::app()->createUrl("site/archivoInstructivo").'"')));?></li>
+			  		<li>Guía de registro y actualización de colecciones biológicas Versión 2.0  <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'type'=>'success','label'=>'Descargar','htmlOptions' => array('class'=>'btn btn-success btn-xs','onclick' => 'window.location="'.Yii::app()->createUrl("site/archivoInstructivo").'"')));?></li>
+			  		<li>Formato de autodeclaración Versión 2.0 <?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'button', 'type'=>'success','label'=>'Descargar','htmlOptions' => array('class'=>'btn btn-success btn-xs','onclick' => 'window.location="'.Yii::app()->createUrl("site/archivoAuto").'"')));?></li>
 			  	</ul>
 			  </div>
 			</div>
