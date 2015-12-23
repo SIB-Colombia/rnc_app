@@ -9,7 +9,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 <div class="col-lg-10">
 	<div class="area-contenido">
 		<div id="content">
-			<div id="header-front">Guía e instrutivo</div>
+			<div id="header-front">Registro o Actualización</div>
 			<div class="panel panel-default">
 			  <div class="panel-heading">Documentos para descargar</div>
 			  <div class="panel-body">

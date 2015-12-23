@@ -71,7 +71,7 @@
 					array('label' => 'Preguntas frecuentes', 'url' => array('site/preguntas')),
 					array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
 					array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
-					array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
+					array('label' => 'Registro o Actualización', 'url' => array('site/instructivo')),
 					array('label' => 'Solicitar usuario', 'url' => array('entidad/solicitud')),
 					array('label' => 'Ingresar', 'url' => array('admin/index')),
 				)
@@ -215,7 +215,7 @@
 						array('label' => 'Ingresar', 'url' => array('admin/index')),
 						array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
 						array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
-						array('label' => 'Guía e Instructivo', 'url' => array('site/instructivo')),
+						array('label' => 'Registro o Actualización', 'url' => array('site/instructivo')),
 						array('label' => 'Preguntas frecuentes', 'url' => array('site/preguntas'))
 					)
 				));
