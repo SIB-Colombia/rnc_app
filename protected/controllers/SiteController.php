@@ -159,4 +159,8 @@ class SiteController extends Controller
 	public function actionPreguntas(){
 		$this->render('preguntas');
 	}
+
+	public function actionLey(){
+		$this->render('ley');
+	}
 }

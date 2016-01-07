@@ -238,3 +238,14 @@ div.loading * {
 	color: #333 !important;
   margin-top: 20px;
 }
+
+.jumbotron p{
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px !important;
+  font-style: italic;
+}
+
+.number-list li{
+  list-style-type: decimal;
+}
