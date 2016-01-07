@@ -70,6 +70,7 @@
 				'items' => array(
 					array('label' => 'Preguntas frecuentes', 'url' => array('site/preguntas')),
 					array('label' => 'Colecciones biológicas', 'url' => array('registros/colecciones')),
+					array('label' => 'Ley 1753 de 2015', 'url' => array('site/ley')),
 					array('label' => 'Contáctenos', 'url' => array('pqrs/create')),
 					array('label' => 'Registro o Actualización', 'url' => array('site/instructivo')),
 					array('label' => 'Solicitar usuario', 'url' => array('entidad/solicitud')),
