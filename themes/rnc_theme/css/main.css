@@ -249,3 +249,7 @@ div.loading * {
 .number-list li{
   list-style-type: decimal;
 }
+.fieldsetFront{
+  background: none !important;
+  padding: 0 !important;
+}

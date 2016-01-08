@@ -1889,7 +1889,8 @@ class RegistrosController extends Controller{
 		$dataRegitros = $model->findAll($criteria);
 		
 		foreach ($dataRegitros as $registro){
-			$datos[] = array($registro->registros->numero_registro.$this->getUrlColection($registro->urls_registros),$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "Y-m-d"),$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono);
+			$link_detail = '<a class="btn btn-success" href="'.Yii::app()->createUrl("registros/detail", array("id"=>$registro->id)).'" role="button">Detalle</a>';
+			$datos[] = array($registro->registros->numero_registro.$this->getUrlColection($registro->urls_registros),$registro->registros->entidad->titular,$registro->nombre,$registro->acronimo,$registro->county->department->department_name,$registro->county->county_name,date_format(date_create($registro->fecha_act), "Y-m-d"),$registro->contactos->nombre,$registro->contactos->cargo,$registro->contactos->email,$registro->contactos->telefono,$link_detail);
 		}
 			
 		$this->render('colecciones',array(
@@ -2023,6 +2024,18 @@ class RegistrosController extends Controller{
 	
 			}
 		}
+	}
+
+	public function actionDetail($id){
+		
+		$criteria = new CDbCriteria;
+		$criteria->with = array('registros','county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos');
+		$modelRegistros_update = Registros_update::model()->findByPk($id,$criteria);
+		
+		$this->render('detail',array(
+				'model'=>$modelRegistros_update,
+		));
+		
 	}
 	
 }

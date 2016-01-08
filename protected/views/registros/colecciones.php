@@ -83,6 +83,7 @@ $(document).ready(function() {
             <th>Cargo</th>
             <th>Correo electrónico</th>
             <th>Teléfono</th>
+            <th>Detalle</th>
         </tr>
         <tr id="filters">
             <th>Número de registro</th>
@@ -96,6 +97,7 @@ $(document).ready(function() {
             <th>Cargo</th>
             <th>Correo electrónico</th>
             <th>Teléfono</th>
+            <th>Detalle</th>
         </tr>
     </thead>
  
