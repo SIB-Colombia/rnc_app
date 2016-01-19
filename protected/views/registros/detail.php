@@ -8,17 +8,47 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 <div class="col-lg-10">
 	<div class="area-contenido">
 		<div id="content">
-			<div id="header-front">Colección número: <?php echo ($model->registros->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->registros->numero_registro); ?></div>
+			<div id="header-front">Colección número: <?php echo ($model->registros->numero_registro == 0) ? "Sin Definir" : CHtml::encode($model->registros->numero_registro); ?>
+				<i class="icon-print printR" aria-hidden="true" onclick="print();"></i>
+			</div>
 			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingOne">
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingOne">
+	      					<h4 class="panel-title">
+		        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseOne" class="collapsed">
+		          					DATOS DE CONTACTO
+		        				</a>
+	      					</h4>
+	    				</div>
+	    				<div id="collapseOne" class="panel-collapse collapse  in" role="tabpanel" aria-labelledby="headingOne">
+	      					<div class="panel-body">
+	      						<?php 
+									$this->widget('zii.widgets.CDetailView', array(
+										'data'=>$model,
+										'attributes'=>array(
+											'contactos.nombre',
+											'contactos.cargo',
+											'contactos.dependencia',
+											'contactos.direccion',
+											'contactos.county.department.department_name',
+											'contactos.county.county_name',
+											'contactos.telefono',
+											'contactos.email',
+										)
+									));
+									?>
+	      					</div>
+	      				</div>
+					</div>
+					<div class="panel-heading" role="tab" id="headingTwo">
       					<h4 class="panel-title">
-	        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+	        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
 	          					INFORMACIÓN BÁSICA DE LA COLECCIÓN
 	        				</a>
       					</h4>
     				</div>
-    				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       					<div class="panel-body">
         					<?php 
 								$this->widget('zii.widgets.CDetailView', array(
@@ -104,14 +134,14 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
     				</div>
 				</div>
 				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingTwo">
+					<div class="panel-heading" role="tab" id="headingThree">
       					<h4 class="panel-title">
-	        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" class="collapsed">
+	        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class="collapsed">
 	          					DATOS DEL TITULAR
 	        				</a>
       					</h4>
     				</div>
-    				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+    				<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       					<div class="panel-body">
 
 	    				<?php 
@@ -143,34 +173,6 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 							?>
 						</div>
 					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="headingThree">
-      					<h4 class="panel-title">
-	        				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree" class="collapsed">
-	          					DATOS DE CONTACTO
-	        				</a>
-      					</h4>
-    				</div>
-    				<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-      					<div class="panel-body">
-      						<?php 
-								$this->widget('zii.widgets.CDetailView', array(
-									'data'=>$model,
-									'attributes'=>array(
-										'contactos.nombre',
-										'contactos.cargo',
-										'contactos.dependencia',
-										'contactos.direccion',
-										'contactos.county.department.department_name',
-										'contactos.county.county_name',
-										'contactos.telefono',
-										'contactos.email',
-									)
-								));
-								?>
-      					</div>
-      				</div>
 				</div>
 			</div>
 		</div>

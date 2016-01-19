@@ -80,9 +80,6 @@ $(document).ready(function() {
             <th>Municipio</th>
             <th>Fecha de última actualización</th>
             <th>Nombre de contacto</th>
-            <th>Cargo</th>
-            <th>Correo electrónico</th>
-            <th>Teléfono</th>
             <th>Detalle</th>
         </tr>
         <tr id="filters">
@@ -94,9 +91,6 @@ $(document).ready(function() {
             <th>Municipio</th>
             <th>Fecha de última actualización</th>
             <th>Nombre de contacto</th>
-            <th>Cargo</th>
-            <th>Correo electrónico</th>
-            <th>Teléfono</th>
             <th>Detalle</th>
         </tr>
     </thead>
