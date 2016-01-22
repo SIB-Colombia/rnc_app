@@ -822,6 +822,9 @@ class RegistrosController extends Controller{
 							$model->fecha_prox = Yii::app()->Date->toMysql(Yii::app()->Date->timestamp() + 63072000);
 						}else {
 							$model->registros_update->estado = 3;
+							if(!isset($registros_update_ant->id)){
+								$model->estado = 0;
+							}
 						}
 					}else {
 						$model->registros_update->estado = 1;
