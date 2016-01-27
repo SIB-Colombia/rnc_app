@@ -1465,6 +1465,17 @@ class RegistrosController extends Controller{
 			$criteria = new CDbCriteria;
 			$criteria->with = array('registros','county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos');
 			$modelRegistros_update = Registros_update::model()->findByPk($id,$criteria);
+
+			$criteria2 = new CDbCriteria;
+			$criteria2->compare("estado", 4);
+			$criteria2->compare("registros_id",$modelRegistros_update->registros_id);
+			$criteria2->order = "fecha_act DESC";
+			$registros_update_ant = Registros_Update::model()->findAll($criteria2);
+
+			if(count($registros_update_ant) > 0){
+				$registros_update_ant[0]->estado = 2;
+				$registros_update_ant[0]->save();
+			}
 			
 			foreach ($modelRegistros_update->composicion_general as $value){
 				$value->delete();
@@ -1482,6 +1493,7 @@ class RegistrosController extends Controller{
 			$modelRegistros_update->delete();
 			$modelRegistros_update->dilegenciadores->delete();
 			$modelRegistros_update->contactos->delete();
+
 					
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
