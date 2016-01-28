@@ -390,7 +390,7 @@ class EntidadController extends Controller{
 				$message->setFrom(array('rnc@humboldt.org.co'));
 				$message->setBody($params,'text/html');
 				$message->setTo($mails);
-				//Yii::app()->mail->send($message);
+				Yii::app()->mail->send($message);
 				
 				$this->render('mensaje',array(
 						'model'=>$mensaje,

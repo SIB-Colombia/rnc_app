@@ -23,6 +23,7 @@
 * @property date $fecha_creacion
 * @property int $dilegenciadores_id
 * @property int $tipo_institucion_id
+* @property string $colecciones
 * 
 * The followings are the available model relations:
 * 
@@ -44,8 +45,7 @@ class Entidad extends CActiveRecord
 	private $estado_s;
 	private $usuario_id_s;
 	private $aprobado;
-	public 	$colecciones;
-		
+			
 	
 	public static function model($className=__CLASS__)
 	{
