@@ -55,6 +55,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		echo $form->textFieldRow($model, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA','disabled'=>false));
 		echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>45, 'class'=>'textareaA','disabled'=>false));
 		echo $form->dropDownListRow($model, 'tipo_institucion_id', Tipo_Institucion::model()->listarTipoInstitucion(),array('prompt' => 'Seleccionar...','disabled'=>false));
+		echo $form->textAreaRow($model, 'colecciones', array('class'=>'span4', 'rows'=>5));
 	?>
 </fieldset>
 
