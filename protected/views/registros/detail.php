@@ -57,6 +57,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 										'nombre',
 										'registros.numero_registro',
 										'registros.tipo_coleccion.nombre',
+										'registros.fecha_dil',
 										'acronimo',
 										'fecha_fund',
 										'descripcion',
