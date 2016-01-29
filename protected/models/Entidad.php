@@ -68,7 +68,7 @@ class Entidad extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-				array('tipo_titular,titular,tipo_nit,nit,representante_legal,tipo_id_rep,representante_id,direccion,telefono,email,departamento_id,ciudad_id,colecciones,tipo_institucion_id', 'required'),
+				array('tipo_titular,titular,tipo_nit,nit,representante_legal,tipo_id_rep,representante_id,direccion,telefono,email,departamento_id,ciudad_id,tipo_institucion_id', 'required'),
 				array('titular,telefono,direccion,representante_legal,email', 'length', 'max'=>150),
 				array('nit,representante_id','length', 'max'=>64),
 				array('email', 'email'),
