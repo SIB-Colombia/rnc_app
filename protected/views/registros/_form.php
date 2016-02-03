@@ -471,10 +471,11 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	<ul class="nav nav-tabs">
     	<li class="active"><a href="#tab1" data-toggle="tab">Titular</a></li>
     	<li><a href="#tab2" data-toggle="tab">Información básica</a></li>
-    	<li><a href="#tab3" data-toggle="tab">Contacto</a></li>
-    	<li><a href="#tab4" data-toggle="tab">Elaborado por</a></li>
+    	<li><a href="#tab3" data-toggle="tab">Curador</a></li>
+    	<li><a href="#tab4" data-toggle="tab">Contacto</a></li>
+    	<li><a href="#tab5" data-toggle="tab">Elaborado por</a></li>
     	<?php if($this->route == 'registros/validar'){?>
-    	<li><a href="#tab5" data-toggle="tab">Aprobar</a></li>
+    	<li><a href="#tab6" data-toggle="tab">Aprobar</a></li>
     	<?php }?>
   	</ul>
 	<?php echo $form->errorSummary($model);
@@ -483,6 +484,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		  echo $form->errorSummary($model->registros_update->tamano_coleccion);
 		  echo $form->errorSummary($model->registros_update->tipos_en_coleccion);
 		  echo $form->errorSummary($model->registros_update->composicion_general);
+		  echo $form->errorSummary($model->registros_update->curador);
 		  echo $form->errorSummary($model->registros_update->contactos);
 		  echo $form->errorSummary($model->registros_update->dilegenciadores);
 		  echo $form->errorSummary($model->registros_update->urls_registros);
@@ -987,8 +989,17 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 			</fieldset>
 		</div>
-	
+		
 		<div class="tab-pane fade" id="tab3">
+			<fieldset style="padding-top: 80px;width: 800px">
+				<legend class="form_legend">DATOS DEL CURADOR</legend>
+				<?php 
+					
+				?>
+			</fieldset>
+		</div>
+
+		<div class="tab-pane fade" id="tab4">
 			<fieldset style="padding-top: 80px;width: 800px">
 				<legend class="form_legend">DATOS DE CONTACTO</legend>
 				<?php 
@@ -1013,7 +1024,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 			</fieldset>
 		</div>
 		
-		<div class="tab-pane fade" id="tab4">
+		<div class="tab-pane fade" id="tab5">
 			<fieldset style="padding-top: 60px">
 				<legend class="form_legend">ELABORACIÓN DEL REGISTRO</legend>
 				<?php 
@@ -1051,7 +1062,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		</div>
 		
 		<?php if($this->route == 'registros/validar'){?>
-		<div class="tab-pane fade" id="tab5">
+		<div class="tab-pane fade" id="tab6">
 			<fieldset>
 				<legend class="form_legend">Aprobar Registro</legend>
 				<?php 

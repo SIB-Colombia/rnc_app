@@ -92,7 +92,7 @@ return array(
 		),*/
 		// uncomment the following to use a Postgres database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;port=3306;dbname=rnc_db_6',
+			'connectionString' => 'mysql:host=localhost;port=3306;dbname=rnc_db',
 			//'connectionString' => 'pgsql:host=74.3.218.90;port=5432;dbname=catalogo',
 			//'username' => 'lgrajales',
 			//'password' => 'Lg2013-',

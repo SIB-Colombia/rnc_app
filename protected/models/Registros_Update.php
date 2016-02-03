@@ -48,6 +48,7 @@
  * @property Dilegenciadores		$dilegenciadores
  * @property Archivos				$archivos
  * @property Urls_Registros			$urls_registros
+ * @property Curador				$curador
  */
 
 class Registros_update extends CActiveRecord
@@ -126,6 +127,7 @@ class Registros_update extends CActiveRecord
 				'archivos'				=> array(self::HAS_MANY,'Archivos', 'Registros_update_id'),
 				'estado_registro'		=> array(self::BELONGS_TO,'Estado_Registro','estado'),
 				'urls_registros'		=> array(self::HAS_MANY, 'Urls_Registros', 'registros_update_id'),
+				'curador'				=> array(self::HAS_MANY, 'Curador', 'registros_update_id')
 		);
 	}
 	

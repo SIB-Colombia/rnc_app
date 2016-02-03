@@ -759,7 +759,7 @@ class RegistrosController extends Controller{
 		{
 			$criteria = new CDbCriteria;
 			//$criteria->compare("estado", 0);
-			$criteria->with = array('county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos','urls_registros');
+			$criteria->with = array('county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos','urls_registros','curador');
 			$registros_update = Registros_update::model()->findByPk($id,$criteria);
 			
 			$model=$this->loadModel($registros_update->registros->id);
@@ -769,6 +769,7 @@ class RegistrosController extends Controller{
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
 			$urls_registros			= Urls_Registros::model();
+			$curador				= Curador::model();
 			
 			if(isset($_POST['Registros']) && isset($_POST['Registros_update'])){
 				
@@ -1160,6 +1161,7 @@ class RegistrosController extends Controller{
 					'tamano_coleccion' => $tamano_coleccion,
 					'tipos_en_coleccion' => $tipos_en_coleccion,
 					'urls_registros'	=> $urls_registros,
+					'curador'			=> $curador
 			));
 			
 		}else{
