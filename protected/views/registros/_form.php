@@ -994,7 +994,18 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 			<fieldset style="padding-top: 80px;width: 800px">
 				<legend class="form_legend">DATOS DEL CURADOR</legend>
 				<?php 
-					
+					echo $form->textFieldRow($curador, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
+					echo $form->textFieldRow($curador, 'cargo', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
+					echo $form->textFieldRow($curador, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
+					echo $form->textFieldRow($curador, 'email', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
+					echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
+					echo $form->textFieldRow($curador, 'pagina_web', array('size'=>32,'maxlength'=>2000, 'class'=>'textareaA','prepend'=>'http://'));
+					echo '<i class="icon-info-sign" rel="tooltip" title = "URL o vínculo de la colección virtual o del sitio en Internet donde se encuentra la información sobre la colección."></i>';
+					echo $form->dropDownListRow($composicion_general, 'grupo_taxonomico_id', Grupo_Taxonomico::model()->listarGrupoTaxonomico(),array('onchange' => 'actSelectSubgrupo(this,"Composicion_General_subgrupo_taxonomico_id")','prompt' => 'Seleccionar...'));
+					echo $form->dropDownListRow($composicion_general, 'subgrupo_taxonomico_id', Subgrupo_Taxonomico::model()->listarSubgrupoTaxonomico(),array('prompt' => 'Seleccionar...'));
 				?>
 			</fieldset>
 		</div>
