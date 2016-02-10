@@ -175,11 +175,13 @@ class RegistrosController extends Controller{
 			$model->registros_update->tamano_coleccion 		= new Tamano_Coleccion();
 			$model->registros_update->tipos_en_coleccion 	= new Tipos_En_Coleccion();
 			$model->registros_update->composicion_general	= new Composicion_General();
+			$model->registros_update->curador 				= new Curador();
 			
 			$tamano_coleccion 		= Tamano_Coleccion::model();
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
 			$urls_registros			= Urls_Registros::model();
+			$curador 				= Curador::model();
 			
 			if(isset($_POST['Registros_update'])){
 				//print_r($_POST);
@@ -309,6 +311,22 @@ class RegistrosController extends Controller{
 								}
 							}
 						}
+
+						if(isset($_POST['Registros_update']['curadores'])){
+							$curadores = json_decode($_POST['Registros_update']['curadores']);
+							foreach ($curadores as $key => $value) {
+								$model->registros_update->curador = new Curador();
+								$model->registros_update->curador->nombre 					= $value->name;
+								$model->registros_update->curador->cargo 					= $value->cargo;
+								$model->registros_update->curador->email 					= $value->email;
+								$model->registros_update->curador->telefono					= $value->phone;
+								$model->registros_update->curador->pagina_web				= $value->web;
+								$model->registros_update->curador->subgrupo_taxonomico_id	= $value->subgrupo;
+								$model->registros_update->curador->registros_update_id 		= $model->registros_update->id;
+
+								$model->registros_update->curador->save(false);
+							}
+						}
 						
 						if(isset($_POST['Registros_update']['archivosAnexos']) && $_POST['Registros_update']['archivosAnexos'] != ''){
 							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
@@ -428,6 +446,7 @@ class RegistrosController extends Controller{
 					'tamano_coleccion' => $tamano_coleccion,
 					'tipos_en_coleccion' => $tipos_en_coleccion,
 					'urls_registros'	=> $urls_registros,
+					'curador'			=> $curador
 			));
 		}else{
 			$this->redirect(array("admin/panel"));
@@ -456,6 +475,7 @@ class RegistrosController extends Controller{
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
 			$urls_registros			= Urls_Registros::model();
+			$curador 				= Curador::model();
 			
 			$success_saving_all = false;
 			
@@ -633,6 +653,22 @@ class RegistrosController extends Controller{
 								
 							}
 						}
+
+						if(isset($_POST['Registros_update']['curadores'])){
+							$curadores = json_decode($_POST['Registros_update']['curadores']);
+							foreach ($curadores as $key => $value) {
+								$model->registros_update->curador = new Curador();
+								$model->registros_update->curador->nombre 					= $value->name;
+								$model->registros_update->curador->cargo 					= $value->cargo;
+								$model->registros_update->curador->email 					= $value->email;
+								$model->registros_update->curador->telefono					= $value->phone;
+								$model->registros_update->curador->pagina_web				= $value->web;
+								$model->registros_update->curador->subgrupo_taxonomico_id	= $value->subgrupo;
+								$model->registros_update->curador->registros_update_id 		= $model->registros_update->id;
+
+								$model->registros_update->curador->save(false);
+							}
+						}
 							
 						if(isset($_POST['Registros_update']['archivosAnexos'])  && $_POST['Registros_update']['archivosAnexos'] != ''){
 							$pathDir = 'rnc_files'.DIRECTORY_SEPARATOR.'Registro_Colecciones_Biologicas'.DIRECTORY_SEPARATOR.$model->registros_update->id."_".$model->registros_update->acronimo;
@@ -747,6 +783,7 @@ class RegistrosController extends Controller{
 					'tamano_coleccion' => $tamano_coleccion,
 					'tipos_en_coleccion' => $tipos_en_coleccion,
 					'urls_registros'	=> $urls_registros,
+					'curador'			=> $curador
 			));
 			
 		}else{
@@ -989,6 +1026,22 @@ class RegistrosController extends Controller{
 									$model->registros_update->composicion_general->save();
 								}
 						
+							}
+						}
+
+						if(isset($_POST['Registros_update']['curadores'])){
+							$curadores = json_decode($_POST['Registros_update']['curadores']);
+							foreach ($curadores as $key => $value) {
+								$model->registros_update->curador = new Curador();
+								$model->registros_update->curador->nombre 					= $value->name;
+								$model->registros_update->curador->cargo 					= $value->cargo;
+								$model->registros_update->curador->email 					= $value->email;
+								$model->registros_update->curador->telefono					= $value->phone;
+								$model->registros_update->curador->pagina_web				= $value->web;
+								$model->registros_update->curador->subgrupo_taxonomico_id	= $value->subgrupo;
+								$model->registros_update->curador->registros_update_id 		= $model->registros_update->id;
+
+								$model->registros_update->curador->save(false);
 							}
 						}
 							
@@ -2053,6 +2106,38 @@ class RegistrosController extends Controller{
 				'model'=>$modelRegistros_update,
 		));
 		
+	}
+
+	public function actionCuradores($idRegistro = 0){
+
+		$criteria = new CDbCriteria;
+		$criteria->compare("registros_update_id",$idRegistro);
+		$criteria->with = array('subgrupo_taxonomico');
+		$curador = Curador::model()->findAll($criteria);
+
+		if (count($curador) > 0 && $idRegistro != 0) {
+			$data = array("data" => array());
+			foreach ($curador as $key => $value) {
+				array_push($data["data"], ["nombre" => $value->nombre,"cargo"=>$value->cargo,"telefono"=>$value->telefono,"email"=>$value->email,"pagina_web"=>$value->pagina_web,"grupo_taxonomico" => $value->subgrupo_taxonomico->grupo_taxonomico->nombre, "subgrupo_taxonomico" => $value->subgrupo_taxonomico->nombre]);
+			}
+
+			echo CJSON::encode($data);
+			
+		}else{
+
+			echo CJSON::encode(array("data" => array(
+							"nombre" => "",
+	            			"cargo" => "",
+	            			"telefono" => "",
+	            			"email" => "",
+	            			"pagina_web" => "",
+	            			"grupo_taxonomico" => "",
+	            			"subgrupo_taxonomico" => ""
+	            			)
+					));
+
+		}
+
 	}
 	
 }

@@ -445,7 +445,6 @@ function actSelectCiudad(dato,id){
 		$("#"+id).html(options);
 	},"json");
 }
-
 </script>
 <style>
 <!--
@@ -500,6 +499,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 						echo '<i class="icon-info-sign" rel="tooltip" title = "Fecha en que se creó la colección."></i>';
 					}
 					echo $form->hiddenField($model->registros_update, 'estado');
+					echo $form->hiddenField($model->registros_update, 'curadores');
 					if(isset($act)){
 						echo $form->textFieldRow($model, 'numero_registro', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'disabled'=>true));
 						echo $form->dropDownListRow($model, 'tipo_coleccion_id', Tipo_Coleccion::model()->listarTipoColeccion(),array('prompt' => 'Seleccionar...','disabled' => true));
@@ -991,22 +991,24 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		</div>
 		
 		<div class="tab-pane fade" id="tab3">
-			<fieldset style="padding-top: 80px;width: 800px">
+			<fieldset style="width: 800px">
 				<legend class="form_legend">DATOS DEL CURADOR</legend>
-				<?php 
-					echo $form->textFieldRow($curador, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
-					echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
-					echo $form->textFieldRow($curador, 'cargo', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
-					echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
-					echo $form->textFieldRow($curador, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
-					echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
-					echo $form->textFieldRow($curador, 'email', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA'));
-					echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
-					echo $form->textFieldRow($curador, 'pagina_web', array('size'=>32,'maxlength'=>2000, 'class'=>'textareaA','prepend'=>'http://'));
-					echo '<i class="icon-info-sign" rel="tooltip" title = "URL o vínculo de la colección virtual o del sitio en Internet donde se encuentra la información sobre la colección."></i>';
-					echo $form->dropDownListRow($composicion_general, 'grupo_taxonomico_id', Grupo_Taxonomico::model()->listarGrupoTaxonomico(),array('onchange' => 'actSelectSubgrupo(this,"Composicion_General_subgrupo_taxonomico_id")','prompt' => 'Seleccionar...'));
-					echo $form->dropDownListRow($composicion_general, 'subgrupo_taxonomico_id', Subgrupo_Taxonomico::model()->listarSubgrupoTaxonomico(),array('prompt' => 'Seleccionar...'));
-				?>
+				
+				<?php echo $this->renderPartial('_form_curador', array('model'=>$curador,'ajaxMode' => true,'registro'=>$model->registros_update)); ?>
+
+				<table id="curadores_table" class="display" cellspacing="0" >
+				    <thead>
+				        <tr>
+				            <th><?=$curador->getAttributeLabel('nombre');?></th>
+				            <th><?=$curador->getAttributeLabel('cargo');?></th>
+				            <th><?=$curador->getAttributeLabel('telefono');?></th>
+				            <th><?=$curador->getAttributeLabel('email');?></th>
+				            <th><?=$curador->getAttributeLabel('pagina_web');?></th>
+				            <th><?=$curador->getAttributeLabel('grupo_taxonomico_id');?></th>
+				            <th><?=$curador->getAttributeLabel('subgrupo_taxonomico_id');?></th>
+				        </tr>
+				    </thead>
+				</table>
 			</fieldset>
 		</div>
 

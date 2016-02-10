@@ -18,7 +18,7 @@
  */
 class Curador extends CActiveRecord
 {
-	private $grupo_taxonomico_id;
+	public $grupo_taxonomico_id;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

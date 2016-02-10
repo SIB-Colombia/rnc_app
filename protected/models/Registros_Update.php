@@ -70,6 +70,8 @@ class Registros_update extends CActiveRecord
 	public $elaborado;
 	
 	public $notificar;
+
+	public $curadores;
 	
 	public static function model($className=__CLASS__)
 	{

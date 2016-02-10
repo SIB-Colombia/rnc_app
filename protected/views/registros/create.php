@@ -17,5 +17,5 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/css/main.
 
 <div id="content-front">
 <i class="icon-print printR" onclick="print();"></i>
-<?php echo $this->renderPartial('_form', array('model'=>$model,'tamano_coleccion' => $tamano_coleccion, 'tipos_en_coleccion' => $tipos_en_coleccion, 'composicion_general' => $composicion_general, 'urls_registros' => $urls_registros)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,'tamano_coleccion' => $tamano_coleccion, 'tipos_en_coleccion' => $tipos_en_coleccion, 'composicion_general' => $composicion_general, 'urls_registros' => $urls_registros,'curador' => $curador)); ?>
 </div>
