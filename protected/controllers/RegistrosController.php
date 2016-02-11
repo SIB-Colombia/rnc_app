@@ -2118,23 +2118,14 @@ class RegistrosController extends Controller{
 		if (count($curador) > 0 && $idRegistro != 0) {
 			$data = array("data" => array());
 			foreach ($curador as $key => $value) {
-				array_push($data["data"], ["nombre" => $value->nombre,"cargo"=>$value->cargo,"telefono"=>$value->telefono,"email"=>$value->email,"pagina_web"=>$value->pagina_web,"grupo_taxonomico" => $value->subgrupo_taxonomico->grupo_taxonomico->nombre, "subgrupo_taxonomico" => $value->subgrupo_taxonomico->nombre]);
+				array_push($data["data"], array("nombre" => $value->nombre,"cargo"=>$value->cargo,"telefono"=>$value->telefono,"email"=>$value->email,"pagina_web"=>$value->pagina_web,"grupo_taxonomico" => $value->subgrupo_taxonomico->grupo_taxonomico->nombre, "subgrupo_taxonomico" => $value->subgrupo_taxonomico->nombre));
 			}
 
 			echo CJSON::encode($data);
 			
 		}else{
 
-			echo CJSON::encode(array("data" => array(
-							"nombre" => "",
-	            			"cargo" => "",
-	            			"telefono" => "",
-	            			"email" => "",
-	            			"pagina_web" => "",
-	            			"grupo_taxonomico" => "",
-	            			"subgrupo_taxonomico" => ""
-	            			)
-					));
+			echo CJSON::encode(array("data" => array("nombre" => "","cargo" => "","telefono" => "","email" => "","pagina_web" => "","grupo_taxonomico" => "","subgrupo_taxonomico" => "")));
 
 		}
 
