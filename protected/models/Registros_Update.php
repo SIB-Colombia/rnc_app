@@ -210,6 +210,21 @@ class Registros_update extends CActiveRecord
 					));
 	}
 	
+	public function curadoresList($id){
+		$criteria = new CDbCriteria;
+		$criteria->compare('t.Registros_update_id',$id);
+		$criteria->with = array('subgrupo_taxonomico');
+		$criteria->order = 't.id ASC';
+
+		$modelCurador = Curador::model()->find();
+
+		return new CActiveDataProvider($modelCurador, array(
+			'criteria' => $criteria,
+			'sort' => false,
+			'pagination' => array('pageSize' => 10))
+		);
+	}
+
 	public function dataTamanoList($id){
 		$criteria = new CDbCriteria;
 		

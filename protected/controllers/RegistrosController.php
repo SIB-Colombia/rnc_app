@@ -1486,7 +1486,7 @@ class RegistrosController extends Controller{
 		if(Yii::app()->user->getId() !== null)
 		{
 			$criteria = new CDbCriteria;
-			$criteria->with = array('registros','county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos');
+			$criteria->with = array('registros','county','composicion_general','tamano_coleccion','tipos_en_coleccion','contactos','dilegenciadores','county','archivos','curador');
 			$modelRegistros_update = Registros_update::model()->findByPk($id,$criteria);
 			
 			$this->render('viewDetail',array(

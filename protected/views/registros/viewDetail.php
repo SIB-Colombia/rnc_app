@@ -6,6 +6,10 @@ $userRole = Yii::app()->user->getState("roles");
 ?>
 
 <script>
+$(document).ready(function() {
+    $('#curadores_table').DataTable();
+} );
+
 function activarRegistro(id){
 	
 	if(confirm("Desea reabrir el formulario del registro?") == true){
@@ -43,8 +47,9 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 <ul class="nav nav-tabs">
 		<li class="active"><a href="#tab1" data-toggle="tab">Titular</a></li>
 		<li><a href="#tab2" data-toggle="tab">Información básica</a></li>
-    	<li><a href="#tab3" data-toggle="tab">Contacto</a></li>
-    	<li><a href="#tab4" data-toggle="tab">Elaborado por</a></li>
+		<li><a href="#tab3" data-toggle="tab">Curadores</a></li>
+    	<li><a href="#tab4" data-toggle="tab">Contacto</a></li>
+    	<li><a href="#tab5" data-toggle="tab">Elaborado por</a></li>
   	</ul>
   	
   	<div class="tab-content">
@@ -191,6 +196,31 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 		
 		<div class="tab-pane fade" id="tab3">
 			<fieldset>
+				<legend class="form_legend">DATOS DE CURADORES</legend>
+				<?php 
+					$this->widget('bootstrap.widgets.TbExtendedGridView', array(
+						'type'=>'striped bordered condensed',
+						'id'=>'curadores_lista-grid',
+						//'fixedHeader' => true,
+						'dataProvider'=>$model->curadoresList($model->id),
+						//'responsiveTable' => true,
+						//'filter'=>$model,
+						'columns'=>array(
+							'nombre',
+							'cargo',
+							'telefono',
+							'email',
+							'pagina_web',
+							'subgrupo_taxonomico.grupo_taxonomico.nombre',
+							'subgrupo_taxonomico.nombre'
+						),
+					)); ?>
+
+			</fieldset>
+		</div>
+
+		<div class="tab-pane fade" id="tab4">
+			<fieldset>
 				<legend class="form_legend">DATOS DE CONTACTO</legend>
 				<?php 
 				$this->widget('zii.widgets.CDetailView', array(
@@ -210,7 +240,7 @@ $this->widget('bootstrap.widgets.TbButtonGroup', array(
 			</fieldset>
 		</div>
 		
-		<div class="tab-pane fade" id="tab4">
+		<div class="tab-pane fade" id="tab5">
 			<fieldset>
 				<legend class="form_legend">ELABORACIÓN DEL REGISTRO</legend>
 				<?php 
