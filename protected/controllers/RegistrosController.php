@@ -654,7 +654,7 @@ class RegistrosController extends Controller{
 							}
 						}
 
-						if(isset($_POST['Registros_update']['curadores'])){
+						if(isset($_POST['Registros_update']['curadores']) && ($_POST['Registros_update']['curadores'] != "")){
 							$curadores = json_decode($_POST['Registros_update']['curadores']);
 							foreach ($curadores as $key => $value) {
 								$model->registros_update->curador = new Curador();
@@ -1243,6 +1243,7 @@ class RegistrosController extends Controller{
 			$tipos_en_coleccion		= Tipos_En_Coleccion::model();
 			$composicion_general 	= Composicion_General::model();
 			$urls_registros			= Urls_Registros::model();
+			$curador 				= Curador::model();
 			
 			if(isset($_POST['Registros_update'])){
 				$modelRegistroUpdate = new Registros_update();
@@ -1475,6 +1476,7 @@ class RegistrosController extends Controller{
 					'tamano_coleccion' => $tamano_coleccion,
 					'tipos_en_coleccion' => $tipos_en_coleccion,
 					'urls_registros'	=> $urls_registros,
+					'curador'			=> $curador
 			));
 		}else{
 			$this->redirect(array("admin/login"));

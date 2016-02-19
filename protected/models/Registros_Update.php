@@ -210,13 +210,13 @@ class Registros_update extends CActiveRecord
 					));
 	}
 	
-	public function curadoresList($id){
+	public function curadoresList($id = 0){
 		$criteria = new CDbCriteria;
 		$criteria->compare('t.Registros_update_id',$id);
 		$criteria->with = array('subgrupo_taxonomico');
 		$criteria->order = 't.id ASC';
 
-		$modelCurador = Curador::model()->find();
+		$modelCurador = Curador::model();
 
 		return new CActiveDataProvider($modelCurador, array(
 			'criteria' => $criteria,
