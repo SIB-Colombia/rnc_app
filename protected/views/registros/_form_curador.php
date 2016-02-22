@@ -124,17 +124,22 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php 
 	echo $form->textFieldRow($model, 'nombre', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'required' => true));
-	echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
-	echo $form->textFieldRow($model, 'cargo', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'required' => true));
-	echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
-	echo $form->textFieldRow($model, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'required' => true));
-	echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
-	echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'required' => true));
-	echo '<i class="icon-info-sign" rel="tooltip" title = "Persona o personas de contacto que están asociadas a la colección. Sirven como punto de enlace con usuarios, especialistas e interesados en la colección biológica."></i>';
-	echo $form->textFieldRow($model, 'pagina_web', array('size'=>32,'maxlength'=>2000, 'class'=>'textareaA','prepend'=>'http://'));
-	echo '<i class="icon-info-sign" rel="tooltip" title = "URL o vínculo de la colección virtual o del sitio en Internet donde se encuentra la información sobre la colección."></i>';
+	echo '<i class="icon-info-sign" rel="tooltip" title = "Nombre del curador vinculado a la colección."></i>';
+	echo $form->textFieldRow($model, 'apellido', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'required' => true));
+	echo '<i class="icon-info-sign" rel="tooltip" title = "Apellido del curador vinculado a la colección."></i>';
 	echo $form->dropDownListRow(Grupo_Taxonomico::model(), 'nombre', Grupo_Taxonomico::model()->listarGrupoTaxonomico(),array('onchange' => 'actSelectSubgrupo(this,"Curador_subgrupo_taxonomico_id")','prompt' => 'Seleccionar...'));
+	echo '<i class="icon-info-sign" rel="tooltip" title = "Grupo biológico que tiene a cargo el curador."></i>';
 	echo $form->dropDownListRow($model, 'subgrupo_taxonomico_id', Subgrupo_Taxonomico::model()->listarSubgrupoTaxonomico(),array('prompt' => 'Seleccionar...', 'required' => true));
+	echo '<i class="icon-info-sign" rel="tooltip" title = "Subgrupo biológico que tiene a cargo el curador."></i>';
+	echo $form->textFieldRow($model, 'cargo', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'required' => true));
+	echo '<i class="icon-info-sign" rel="tooltip" title = "Énfasis en investigación del curador. Ej: Flora de alta montaña / Escarabajos coprófagos"></i>';
+	echo $form->textFieldRow($model, 'telefono', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'required' => true));
+	echo '<i class="icon-info-sign" rel="tooltip" title = "Número de contacto del curador."></i>';
+	echo $form->textFieldRow($model, 'email', array('size'=>32,'maxlength'=>150, 'class'=>'textareaA', 'required' => true));
+	echo '<i class="icon-info-sign" rel="tooltip" title = "Correo de contacto del curador."></i>';
+	echo $form->textFieldRow($model, 'pagina_web', array('size'=>32,'maxlength'=>2000, 'class'=>'textareaA','prepend'=>'http://'));
+	echo '<i class="icon-info-sign" rel="tooltip" title = "Información en línea de la trayectoria o intereses en investigación del curador. Ej: CvLac, LinkedIn, Research Gate."></i>';
+
 ?>
 <div id="catalogouser-botones-internos" class="form-actions pull-right">
 <?php 
