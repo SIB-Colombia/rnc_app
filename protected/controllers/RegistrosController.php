@@ -312,7 +312,7 @@ class RegistrosController extends Controller{
 							}
 						}
 
-						if(isset($_POST['Registros_update']['curadores'])){
+						if(isset($_POST['Registros_update']['curadores']) && $_POST['Registros_update']['curadores'] != ""){
 							$curadores = json_decode($_POST['Registros_update']['curadores']);
 							foreach ($curadores as $key => $value) {
 								$model->registros_update->curador = new Curador();
@@ -1029,7 +1029,7 @@ class RegistrosController extends Controller{
 							}
 						}
 
-						if(isset($_POST['Registros_update']['curadores'])){
+						if(isset($_POST['Registros_update']['curadores']) && ($_POST['Registros_update']['curadores'] != "")){
 							$curadores = json_decode($_POST['Registros_update']['curadores']);
 							foreach ($curadores as $key => $value) {
 								$model->registros_update->curador = new Curador();
