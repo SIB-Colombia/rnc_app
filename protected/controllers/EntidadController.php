@@ -76,8 +76,8 @@ class EntidadController extends Controller{
 			if(isset($_POST['Entidad']))
 			{
 				$model->attributes=$_POST['Entidad'];
-				$model->usuario_id = $_REQUEST['Entidad']['usuario_id'];
-				$model->colecciones = "-";
+				//$model->usuario_id = $_REQUEST['Entidad']['usuario_id'];
+				$model->colecciones = (isset($_POST['colecciones']) && $_POST['colecciones'] != "") ? $_POST['colecciones'] : "-";
 				$model->validate();
 				
 				$success_saving_all = true;
@@ -159,7 +159,7 @@ class EntidadController extends Controller{
 			if(isset($_POST['Entidad']))
 			{
 				$model->attributes=$_POST['Entidad'];
-				$model->colecciones = "-";
+				$model->colecciones = $model->colecciones = (isset($_POST['Entidad']['colecciones']) && $_POST['Entidad']['colecciones'] != "") ? $_POST['Entidad']['colecciones'] : "-";
 				$model->validate();
 				
 				$success_saving_all = true;
@@ -454,7 +454,7 @@ class EntidadController extends Controller{
 				$model->estado = ($_REQUEST['Entidad']['aprobado'] == 0) ? 2 : (($_REQUEST['Entidad']['aprobado'] == 1) ? 3 : 1);
 				$model->comentario = $_REQUEST['Entidad']['comentario'];
 				$model->usuario_id = $_REQUEST['Entidad']['usuario_id'];
-				$model->colecciones = "-";
+				$model->colecciones = $model->colecciones = (isset($_POST['Entidad']['colecciones']) && $_POST['Entidad']['colecciones'] != "") ? $_POST['Entidad']['colecciones'] : "-";
 
 				$modelEntidad->attributes=$_POST['Entidad'];
 				$modelEntidad->dilegenciadores->attributes = $_POST['Dilegenciadores'];
